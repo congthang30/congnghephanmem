@@ -1,0 +1,363 @@
+@model EasyBuy.Models.InvoiceWareHouse
+
+@{
+    ViewBag.Title = $"Chi tiết phiếu xuất kho #{Model.InvoiceWareHouseID}";
+    Layout = "~/Areas/NVKho/Views/Layout/_LayoutNVKho.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-file-invoice"></i> Chi tiết phiếu xuất kho #@Model.InvoiceWareHouseID
+                    </h3>
+                    <div>
+                        <a href="@Url.Action("ListInvoiceWarehouse")" class="btn btn-light btn-sm me-2">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>
+                        <button onclick="window.print()" class="btn btn-success btn-sm">
+                            <i class="fas fa-print"></i> In phiếu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thông tin chung -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card border-primary h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-file-alt"></i> Thông tin phiếu xuất</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <p><strong>Mã phiếu:</strong></p>
+                            <p class="text-primary fw-bold">#@Model.InvoiceWareHouseID</p>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Ngày xuất:</strong></p>
+                            <p>@Model.ExportDate.ToString("dd/MM/yyyy HH:mm")</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p><strong>Tổng số lượng:</strong></p>
+                            <h4><span class="badge bg-info">@Model.TotalQuantity sản phẩm</span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-success h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-shopping-cart"></i> Thông tin đơn hàng</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Order != null)
+                    {
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Mã đơn hàng:</strong></p>
+                                <p class="text-success fw-bold">#@Model.Order.OrderId</p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Tổng tiền:</strong></p>
+                                <p class="fw-bold text-success">@(Model.Order.TotalAmount?.ToString("N0") ?? "0") ₫</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Trạng thái:</strong></p>
+                                <span class="badge bg-warning">@Model.Order.Status</span>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Ngày đặt:</strong></p>
+                                <p>@(Model.Order.CreatedAt?.ToString("dd/MM/yyyy HH:mm") ?? "N/A")</p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Không có thông tin đơn hàng</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thông tin khách hàng và nhân viên -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card border-info h-100">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-user"></i> Thông tin khách hàng</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Order?.User != null)
+                    {
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="avatar bg-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">@Model.Order.User.FullName</h6>
+                                <small class="text-muted">Khách hàng</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <strong>Email:</strong> @(Model.Order.User.Email ?? "N/A")
+                            </div>
+                            <div class="col-12 mb-2">
+                                <strong>Điện thoại:</strong> @(Model.Order.User.Phone ?? "N/A")
+                            </div>
+                            <div class="col-12">
+                                <strong>Địa chỉ:</strong><br>
+                                @if (Model.Order.Address != null)
+                                {
+                                    <span>@Model.Order.Address.Street, @Model.Order.Address.Ward, @Model.Order.Address.District, @Model.Order.Address.City</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Không có địa chỉ</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Không có thông tin khách hàng</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-warning h-100">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-user-tie"></i> Nhân viên xuất kho</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Staff != null)
+                    {
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="avatar bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                <i class="fas fa-user-tie text-dark"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">@Model.Staff.FullName</h6>
+                                <small class="text-muted">Nhân viên kho</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <strong>Email:</strong> @(Model.Staff.Email ?? "N/A")
+                            </div>
+                            <div class="col-12">
+                                <strong>Vai trò:</strong> @(Model.Staff.Role ?? "Nhân viên")
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Không có thông tin nhân viên</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chi tiết sản phẩm -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-boxes"></i> Chi tiết sản phẩm xuất kho</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Order.OrderDetails != null && Model.Order.OrderDetails.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th class="text-center" style="width: 60px;">STT</th>
+                                        <th style="width: 250px;">Sản phẩm</th>
+                                        <th style="width: 120px;">Thương hiệu</th>
+                                        <th class="text-center" style="width: 100px;">SL xuất</th>
+                                        <th class="text-center" style="width: 100px;">Tồn trước</th>
+                                        <th class="text-center" style="width: 100px;">Tồn sau</th>
+                                        <th class="text-end" style="width: 120px;">Giá bán</th>
+                                        <th class="text-end" style="width: 130px;">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var index = 1;
+                                        decimal totalAmount = 0;
+                                    }
+                                    @foreach (var detail in Model.Order.OrderDetails)
+                                    {
+                                        var itemTotal = detail.Quantity * (detail.Product?.SellingPrice ?? 0);
+                                        <tr>
+                                            <td class="text-center fw-bold">@index</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="product-icon bg-light rounded p-2 me-2">
+                                                        <i class="fas fa-box text-muted"></i>
+                                                    </div>
+                                                    <div>
+                                                        <strong>@(detail.Product?.ProductName ?? "N/A")</strong><br>
+                                                        <small class="text-muted">ID: @detail.ProductId</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-secondary">@(detail.Product?.Brand?.NameBrand ?? "N/A")</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge bg-primary fs-6">@detail.Quantity</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-info fw-bold">@detail.ExistFirst</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge @(detail.SurviveAfter > 0 ? "bg-success" : "bg-danger") fs-6">
+                                                    @detail.SurviveAfter
+                                                </span>
+                                            </td>
+                                            <td class="text-end">
+                                                <strong>@(detail.Product?.SellingPrice?.ToString("N0") ?? "0") ₫</strong>
+                                            </td>
+                                            <td class="text-end">
+                                                <strong class="text-success">@Model.Order.TotalAmount</strong>
+                                            </td>
+                                        </tr>
+                                        index++;
+                                    }
+                                </tbody>
+                                <tfoot class="table-light">
+                                    <tr>
+                                        <td colspan="6" class="text-end fw-bold">Tổng giá trị xuất kho:</td>
+                                        <td colspan="2" class="text-end">
+                                            <h5 class="text-success mb-0">@totalAmount</h5>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">Không có sản phẩm nào</h5>
+                            <p class="text-muted">Phiếu xuất kho này chưa có chi tiết sản phẩm.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer với thông tin thêm -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <p class="mb-1"><strong>Phiếu xuất kho được tạo vào:</strong> @Model.ExportDate.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p class="mb-0"><small class="text-muted">Hệ thống quản lý kho EasyBuy</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+    
+    .avatar {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .product-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .table th {
+        background-color: #6c757d;
+        color: white;
+        font-weight: 600;
+        border: 1px solid #dee2e6;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .badge {
+        font-size: 0.8em;
+    }
+    
+    .fs-6 {
+        font-size: 1rem !important;
+    }
+    
+    media print {
+        .btn, .card-header .btn {
+            display: none !important;
+        }
+        
+        .card {
+            border: 1px solid #000 !important;
+            box-shadow: none !important;
+        }
+        
+        .bg-primary, .bg-success, .bg-info, .bg-warning, .bg-dark {
+            background-color: #fff !important;
+            color: #000 !important;
+            border: 1px solid #000 !important;
+        }
+    }
+</style>
+
+<script>
+    // Auto hide alerts
+    setTimeout(function() {
+        $('.alert').fadeOut('slow');
+    }, 5000);
+    
+    // Print functionality
+    function printInvoice() {
+        window.print();
+    }
+    
+    // Keyboard shortcuts
+    $(document).keydown(function(e) {
+        // Ctrl + P for print
+        if (e.ctrlKey && e.keyCode === 80) {
+            e.preventDefault();
+            printInvoice();
+        }
+        
+        // ESC to go back
+        if (e.keyCode === 27) {
+            window.history.back();
+        }
+    });
+</script> 

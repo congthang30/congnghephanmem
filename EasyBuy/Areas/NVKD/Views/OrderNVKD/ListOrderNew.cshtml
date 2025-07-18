@@ -1,0 +1,114 @@
+﻿@model IEnumerable<EasyBuy.Models.Order>
+@{
+    ViewData["Title"] = "Danh sách đơn hàng chờ xác nhận";
+    Layout = "~/Areas/NVKD/Views/Layout/_LayoutNVKD.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Danh sách đơn hàng chờ xác nhận</h2>
+        <a href="@Url.Action("ListInvoice", "InvoiceNVKD", new { area = "NVKD" })" class="btn btn-primary">
+            <i class="fas fa-file-invoice me-2"></i> Xem danh sách hóa đơn
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày tạo</th>
+                        <th>Địa chỉ</th>
+                        <th>Thanh toán</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var order in Model)
+                        {
+                            <tr>
+                                <td>#@order.OrderId</td>
+                                <td>@order.User?.FullName</td>
+                                <td>@order.CreatedAt?.ToString("dd/MM/yyyy")</td>
+                                <td>@order.Address?.FullAddress</td>
+                                <td>@order.StatusPayment</td>
+                                <td>@String.Format("{0:N0}₫", order.FinalTotal ?? order.TotalAmount)</td>
+                                <td>@order.Status</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-outline-success export-invoice-btn" data-order-id="@order.OrderId">
+                                        <i class="fas fa-file-invoice me-1"></i> Lập hóa đơn
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-4">
+                                Không có đơn hàng nào chờ xác nhận.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f0f4ff;
+    }
+
+    .card {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.export-invoice-btn').on('click', function () {
+                var button = $(this);
+                var orderId = button.data('order-id');
+                button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Đang xử lý...');
+
+                $.ajax({
+                    url: '/NVKD/OrderNVKD/ExportInvoice',
+                    type: 'POST',
+                    data: { orderId: orderId },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload();
+                        } else {
+                            alert('Lỗi: ' + response.message);
+                            button.prop('disabled', false).html('<i class="fas fa-file-invoice me-1"></i> Lập hóa đơn');
+                        }
+                    },
+                    error: function () {
+                        alert('Có lỗi xảy ra khi kết nối server!');
+                        button.prop('disabled', false).html('<i class="fas fa-file-invoice me-1"></i> Lập hóa đơn');
+                    }
+                });
+            });
+        });
+    </script>
+}

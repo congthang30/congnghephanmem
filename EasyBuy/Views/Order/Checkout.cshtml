@@ -1,0 +1,374 @@
+﻿@model Tuple<List<EasyBuy.Models.CartItem>, List<EasyBuy.Models.Address>, List<EasyBuy.Models.PaymentMethod>>
+@{
+    ViewData["Title"] = "Thanh toán";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+    var cartItems = Model.Item1;
+    var addresses = Model.Item2;
+    var paymentMethods = Model.Item3;
+
+    var totalAmount = cartItems.Sum(i => (i.UnitPrice ?? 0) * (i.Quantity ?? 0));
+}
+
+<div class="checkout-container">
+    <!-- Progress Bar -->
+    <div class="checkout-progress mb-4">
+        <div class="progress-step completed">
+            <div class="step-number">1</div>
+            <div class="step-label">Giỏ hàng</div>
+        </div>
+        <div class="progress-line completed"></div>
+        <div class="progress-step active">
+            <div class="step-number">2</div>
+            <div class="step-label">Thanh toán</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step">
+            <div class="step-number">3</div>
+            <div class="step-label">Hoàn thành</div>
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <form asp-action="Checkout" method="post" id="checkoutForm">
+        <div class="row g-4">
+            <!-- Left Column - Order Summary -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white border-0 pb-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-shopping-cart text-primary me-2"></i>
+                            Thông tin đơn hàng
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="order-items">
+                            @foreach (var item in cartItems)
+                            {
+                                <div class="order-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center">
+                                                <div class="product-image me-3">
+                                                    <img src="~/images/products/@(item.Product.ImagePr ?? "default.jpg")"
+                                                         alt="@item.Product.ProductName"
+                                                         class="img-fluid rounded"
+                                                         style="width: 60px; height: 60px; object-fit: cover;">
+                                                </div>
+                                                <div class="product-info">
+                                                    <h6 class="mb-1">@item.Product.ProductName</h6>
+                                                    <small class="text-muted">SKU: @item.Product.ProductId</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <span class="text-muted">@String.Format("{0:N0} VNĐ", item.UnitPrice)</span>
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <span class="quantity-badge">@item.Quantity</span>
+                                        </div>
+                                        <div class="col-md-2 text-end">
+                                            <strong class="text-primary">@String.Format("{0:N0} VNĐ", (item.UnitPrice ?? 0) * (item.Quantity ?? 0))</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                            Địa chỉ giao hàng
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var addr in addresses)
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <div class="address-option">
+                                        <input type="radio" name="addressId" value="@addr.AddressId"
+                                               id="address_@addr.AddressId" class="address-radio" required>
+                                        <label for="address_@addr.AddressId" class="address-label">
+                                            <div class="address-card">
+                                                <div class="address-header">
+                                                    <i class="fas fa-home me-2"></i>
+                                                    <strong>@(addr.User?.FullName ?? "Người nhận")</strong>
+                                                </div>
+                                                <div class="address-details">
+                                                    <p class="mb-1">@addr.FullAddress</p>
+                                                    <p class="mb-0 text-muted">
+                                                        <i class="fas fa-phone me-1"></i>
+                                                        @addr.Phone
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="mt-3">
+                            <a href="/Account/AddAddress" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-plus me-2"></i>
+                                Thêm địa chỉ mới
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-credit-card text-primary me-2"></i>
+                            Phương thức thanh toán
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="payment-methods">
+                            @foreach (var pm in paymentMethods)
+                            {
+                                <div class="payment-option mb-3">
+                                    <input type="radio" name="paymentMethodId" value="@pm.PaymentMethodId"
+                                           id="payment_@pm.PaymentMethodId" class="payment-radio" required>
+                                    <label for="payment_@pm.PaymentMethodId" class="payment-label">
+                                        <div class="payment-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="payment-icon me-3">
+                                                    @if (pm.MethodName.Contains("VnPay"))
+                                                    {
+                                                        <i class="fab fa-cc-visa text-primary"></i>
+                                                    }
+                                                    else if (pm.MethodName.Contains("MoMo"))
+                                                    {
+                                                        <i class="fas fa-mobile-alt text-danger"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-money-bill-wave text-success"></i>
+                                                    }
+                                                </div>
+                                                <div class="payment-info">
+                                                    <h6 class="mb-1">@pm.MethodName</h6>
+                                                    <small class="text-muted">@pm.Description</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Order Total & Actions -->
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 20px;">
+                    <!-- Voucher Section -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-white border-0">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-ticket-alt text-primary me-2"></i>
+                                Mã giảm giá
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="voucher-input">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="voucherCode"
+                                           name="voucherCode" placeholder="Nhập mã giảm giá">
+                                    <button type="button" class="btn btn-outline-primary" id="btnCheckVoucher">
+                                        <i class="fas fa-tags me-1"></i>
+                                        Áp dụng
+                                    </button>
+                                </div>
+                                <div id="voucherMessage" class="mt-2"></div>
+                                <input type="hidden" id="discountValue" name="discountValue" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-white border-0">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-calculator text-primary me-2"></i>
+                                Tổng kết đơn hàng
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="order-summary">
+                                <div class="summary-row">
+                                    <span>Tạm tính:</span>
+                                    <span id="subtotal">@String.Format("{0:N0} VNĐ", totalAmount)</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Phí vận chuyển:</span>
+                                    <span class="text-success">Miễn phí</span>
+                                </div>
+                                <div class="summary-row discount-row" id="discountRow" style="display: none;">
+                                    <span>Giảm giá:</span>
+                                    <span class="text-success" id="discountAmount">-0 VNĐ</span>
+                                </div>
+                                <hr class="my-3">
+                                <div class="summary-row total-row">
+                                    <span class="fw-bold">Tổng cộng:</span>
+                                    <span class="fw-bold text-primary fs-5" id="totalAmount">@String.Format("{0:N0} VNĐ", totalAmount)</span>
+                                </div>
+                            </div>
+
+                            <div class="checkout-actions mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg w-100 mb-3" id="btnCheckout">
+                                    <i class="fas fa-shopping-cart me-2"></i>
+                                    Hoàn tất đặt hàng
+                                </button>
+                                <a href="/Cart/UserCart" class="btn btn-outline-secondary w-100">
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Quay lại giỏ hàng
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Badge -->
+                    <div class="text-center mt-3">
+                        <div class="security-badge">
+                            <i class="fas fa-shield-alt text-success me-2"></i>
+                            <small class="text-muted">Thanh toán an toàn & bảo mật</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/checkout.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let originalTotal = @totalAmount;
+            let currentDiscount = 0;
+
+            // Voucher validation
+            $('#btnCheckVoucher').click(function () {
+                const $btn = $(this);
+                const code = $('#voucherCode').val().trim();
+
+                if (!code) {
+                    showVoucherMessage('Vui lòng nhập mã giảm giá.', 'danger');
+                    return;
+                }
+
+                // Show loading state
+                $btn.addClass('btn-loading').prop('disabled', true);
+
+                $.get('/Order/ValidateVoucher', { code: code, total: originalTotal })
+                    .done(function (data) {
+                        if (data.success) {
+                            currentDiscount = data.discount;
+                            showVoucherMessage(`Áp dụng thành công! Giảm ${data.discount.toLocaleString()} VNĐ`, 'success');
+                            $('#discountValue').val(data.discount);
+                            updateOrderSummary();
+                        } else {
+                            showVoucherMessage(data.message, 'danger');
+                            resetDiscount();
+                        }
+                    })
+                    .fail(function() {
+                        showVoucherMessage('Có lỗi xảy ra. Vui lòng thử lại.', 'danger');
+                        resetDiscount();
+                    })
+                    .always(function() {
+                        $btn.removeClass('btn-loading').prop('disabled', false);
+                    });
+            });
+
+            // Form submission
+            $('#checkoutForm').submit(function(e) {
+                const $btn = $('#btnCheckout');
+                $btn.addClass('btn-loading').prop('disabled', true);
+
+                // Validate form
+                const addressSelected = $('input[name="addressId"]:checked').length > 0;
+                const paymentSelected = $('input[name="paymentMethodId"]:checked').length > 0;
+
+                if (!addressSelected || !paymentSelected) {
+                    e.preventDefault();
+                    $btn.removeClass('btn-loading').prop('disabled', false);
+
+                    let message = 'Vui lòng chọn:\n';
+                    if (!addressSelected) message += '- Địa chỉ giao hàng\n';
+                    if (!paymentSelected) message += '- Phương thức thanh toán\n';
+
+                    alert(message);
+                    return false;
+                }
+            });
+
+            // Address selection animation
+            $('input[name="addressId"]').change(function() {
+                $('.address-card').removeClass('selected');
+                $(this).closest('.address-option').find('.address-card').addClass('selected');
+            });
+
+            // Payment selection animation
+            $('input[name="paymentMethodId"]').change(function() {
+                $('.payment-card').removeClass('selected');
+                $(this).closest('.payment-option').find('.payment-card').addClass('selected');
+            });
+
+            function showVoucherMessage(message, type) {
+                const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+                const icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-triangle';
+
+                $('#voucherMessage').html(`
+                    <div class="alert ${alertClass} alert-sm">
+                        <i class="${icon} me-2"></i>${message}
+                    </div>
+                `);
+            }
+
+            function updateOrderSummary() {
+                const newTotal = originalTotal - currentDiscount;
+
+                $('#discountRow').show();
+                $('#discountAmount').text(`-${currentDiscount.toLocaleString()} VNĐ`);
+                $('#totalAmount').text(`${newTotal.toLocaleString()} VNĐ`);
+            }
+
+            function resetDiscount() {
+                currentDiscount = 0;
+                $('#discountValue').val('');
+                $('#discountRow').hide();
+                $('#totalAmount').text(`${originalTotal.toLocaleString()} VNĐ`);
+            }
+        });
+    </script>
+}

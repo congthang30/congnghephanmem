@@ -1,0 +1,565 @@
+﻿@model List<EasyBuy.Models.Address>
+
+@{
+    ViewBag.Title = "Danh sách địa chỉ";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+}
+
+@section Scripts {
+    <script>
+        // Search addresses
+        function searchAddresses() {
+            const searchTerm = document.getElementById('addressSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.address-card');
+
+            cards.forEach(card => {
+                const addressText = card.querySelector('.address-details').textContent.toLowerCase();
+                const phone = card.querySelector('.phone-number').textContent.toLowerCase();
+
+                if (addressText.includes(searchTerm) || phone.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.3s ease-out forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            updateResultCount();
+        }
+
+        // Update result count
+        function updateResultCount() {
+            const visibleCards = document.querySelectorAll('.address-card[style*="block"], .address-card:not([style*="none"])');
+            const countElement = document.querySelector('.result-count');
+            countElement.textContent = `${visibleCards.length} địa chỉ`;
+        }
+
+        // Delete address confirmation
+        function confirmDelete(addressId, addressText) {
+            if (confirm(`Bạn có chắc chắn muốn xóa địa chỉ:\n${addressText}?`)) {
+                window.location.href = `/Account/DeleteAddress/${addressId}`;
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in animation to cards
+            const cards = document.querySelectorAll('.address-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+
+            updateResultCount();
+        });
+    </script>
+
+    <style>
+        .addresses-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+
+        .controls-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 400px;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+            .search-input:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                outline: none;
+            }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        .add-address-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+            .add-address-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                color: white;
+            }
+
+        .result-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
+        }
+
+        .result-count {
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .address-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+            .address-card:hover {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+                transform: translateY(-2px);
+            }
+
+        .address-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        }
+
+        .address-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .address-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .address-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .address-body {
+            padding: 1.5rem;
+        }
+
+        .address-details {
+            margin-bottom: 1rem;
+        }
+
+        .address-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+            .address-item i {
+                width: 20px;
+                color: #667eea;
+                font-size: 1.1rem;
+            }
+
+        .address-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #495057;
+        }
+
+        .phone-number {
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .full-address {
+            font-weight: 500;
+            color: #212529;
+            line-height: 1.5;
+        }
+
+        .address-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+            .btn-edit:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+                color: white;
+            }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+            .btn-delete:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
+            }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #6c757d;
+        }
+
+            .empty-state i {
+                font-size: 4rem;
+                color: #dee2e6;
+                margin-bottom: 1rem;
+            }
+
+            .empty-state h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                color: #495057;
+            }
+
+            .empty-state p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+        .fade-in {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        keyframes fadeInUp {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        /* Responsive Design */
+        media (max-width: 768px) {
+            .addresses-container
+
+        {
+            padding: 1rem 0.5rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+        }
+
+        .address-meta {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .address-actions {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-edit, .btn-delete {
+            width: 100%;
+            justify-content: center;
+        }
+
+        }
+    </style>
+}
+
+<div class="addresses-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-map-marker-alt me-2"></i>
+            Danh sách địa chỉ
+        </h1>
+        <p class="page-subtitle">Quản lý các địa chỉ giao hàng của bạn</p>
+    </div>
+
+    <!-- Controls Section -->
+    <div class="controls-section">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="search-box">
+                    <input type="text" id="addressSearch" class="search-input"
+                           placeholder="Tìm kiếm địa chỉ hoặc số điện thoại..."
+                           onkeyup="searchAddresses()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="@Url.Action("AddAdress", "Account")" class="add-address-btn">
+                    <i class="fas fa-plus"></i>
+                    Thêm địa chỉ mới
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Info -->
+    <div class="result-info">
+        <span class="result-count">@Model.Count địa chỉ</span>
+    </div>
+
+    <!-- Address Cards -->
+    <div class="addresses-list">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var address in Model)
+            {
+                <div class="address-card" data-address-id="@address.AddressId">
+                    <div class="address-header">
+                        <div class="address-meta">
+                            <div class="address-title">
+                                <i class="fas fa-home"></i>
+                                Địa chỉ #@address.AddressId
+                            </div>
+                            @if (address.CreatedAt.HasValue)
+                            {
+                                <div class="address-date">
+                                    <i class="fas fa-calendar-alt me-1"></i>
+                                    Tạo ngày @address.CreatedAt.Value.ToString("dd/MM/yyyy")
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="address-body">
+                        <div class="address-details">
+                            <div class="address-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="address-text full-address">
+                                    @address.FullAddress
+                                </div>
+                            </div>
+
+                            <div class="address-item">
+                                <i class="fas fa-phone"></i>
+                                <div class="address-text phone-number">
+                                    @address.Phone
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="address-item">
+                                        <i class="fas fa-city"></i>
+                                        <div class="address-text">
+                                            <strong>Thành phố:</strong> @address.City
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="address-item">
+                                        <i class="fas fa-building"></i>
+                                        <div class="address-text">
+                                            <strong>Quận/Huyện:</strong> @address.District
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="address-item">
+                                        <i class="fas fa-map-signs"></i>
+                                        <div class="address-text">
+                                            <strong>Phường/Xã:</strong> @address.Ward
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="address-item">
+                                        <i class="fas fa-road"></i>
+                                        <div class="address-text">
+                                            <strong>Đường/Số nhà:</strong> @address.Street
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="address-actions">
+                        <a href="@Url.Action("UpdateAddress", "Account", new { id = address.AddressId })"
+                           class="btn-edit">
+                            <i class="fas fa-edit"></i>
+                            Chỉnh sửa
+                        </a>
+                        @using (Html.BeginForm("DeleteAddress", "Account", FormMethod.Post))
+                        {
+                            @Html.Hidden("id", address.AddressId)
+
+                            <button type="submit"
+                                    class="btn-delete"
+                                    onclick="return confirm('Bạn có chắc muốn xóa địa chỉ @address.FullAddress không?');">
+                                <i class="fas fa-trash"></i>
+                                Xóa
+                            </button>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="empty-state">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Chưa có địa chỉ nào</h3>
+                <p>Bạn chưa thêm địa chỉ giao hàng nào. Hãy thêm địa chỉ đầu tiên để thuận tiện cho việc mua sắm.</p>
+                <a href="@Url.Action("AddAdress", "Account")" class="add-address-btn">
+                    <i class="fas fa-plus"></i>
+                    Thêm địa chỉ đầu tiên
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show success message
+            const successMessage = `
+                <div class="alert alert-success alert-dismissible fade show position-fixed"
+                     style="top: 20px; right: 20px; z-index: 1050; min-width: 300px;">
+                    <i class="fas fa-check-circle me-2"></i>
+        @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', successMessage);
+
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                const alert = document.querySelector('.alert-success');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 300);
+                }
+            }, 3000);
+        });
+    </script>
+}
+
+@if (TempData["Error"] != null)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show error message
+            const errorMessage = `
+                <div class="alert alert-danger alert-dismissible fade show position-fixed"
+                     style="top: 20px; right: 20px; z-index: 1050; min-width: 300px;">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+        @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', errorMessage);
+
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                const alert = document.querySelector('.alert-danger');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 300);
+                }
+            }, 3000);
+        });
+    </script>
+}

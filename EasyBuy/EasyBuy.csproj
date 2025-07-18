@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\NVKD\Views\Order\**" />
+    <Content Remove="Areas\NVKD\Views\Order\**" />
+    <EmbeddedResource Remove="Areas\NVKD\Views\Order\**" />
+    <None Remove="Areas\NVKD\Views\Order\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="MailKit" Version="4.13.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\NVKD\Data\" />
+    <Folder Include="Areas\NVKD\Models\" />
+    <Folder Include="Areas\NVKho\Data\" />
+    <Folder Include="Areas\NVKho\Models\" />
+    <Folder Include="Areas\NVKT\Controllers\" />
+    <Folder Include="Areas\NVKT\Data\" />
+    <Folder Include="Areas\NVKT\Models\" />
+    <Folder Include="Areas\NVKT\Views\" />
+    <Folder Include="Areas\NVMKT\Controllers\" />
+    <Folder Include="Areas\NVMKT\Data\" />
+    <Folder Include="Areas\NVMKT\Models\" />
+    <Folder Include="Areas\NVMKT\Views\" />
+  </ItemGroup>
+
+</Project>

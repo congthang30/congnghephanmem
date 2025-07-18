@@ -1,0 +1,42 @@
+﻿@using EasyBuy.Models
+@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Wishlist";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+}
+
+<h2>Danh sách yêu thích của bạn</h2>
+
+@if (!Model.Any())
+{
+    <p>Bạn chưa thêm sản phẩm nào vào danh sách yêu thích.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="@item.ImagePr" class="card-img-top" alt="@item.ProductName" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.ProductName</h5>
+                        <p class="card-text">Giá: @item.SellingPrice</p>
+
+                        @using (Html.BeginForm("RemoveWishList", "Wishlist", FormMethod.Post))
+                        {
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <button type="submit" class="btn btn-danger">Xóa khỏi yêu thích</button>
+                        }
+
+                        @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post)){
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <button type="submit" class="btn btn-danger">Thêm vào giỏ hàng</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

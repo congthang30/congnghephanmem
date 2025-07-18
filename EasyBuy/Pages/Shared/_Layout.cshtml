@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EasyBuy</title>
+    
+
+    
+    <!-- Preconnect to Google Fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts - Roboto with Vietnamese support -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" id="fontawesome-css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="vietnamese-font-fix">
+    <header class="header-modern">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container">
+                <a class="navbar-brand fw-bold" asp-area="" asp-page="/Index">
+                    <i class="fas fa-shopping-bag text-primary me-2"></i>EasyBuy
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Index">
+                                <i class="fas fa-home me-1"></i>Trang chủ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Privacy">
+                                <i class="fas fa-shield-alt me-1"></i>Bảo mật
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="/Cart/UserCart" class="btn btn-outline-primary">
+                            <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
+                        </a>
+                        <a href="/Account/Login" class="btn btn-primary">
+                            <i class="fas fa-user me-1"></i>Đăng nhập
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="container-fluid">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-primary mb-3">
+                        <i class="fas fa-shopping-bag me-2"></i>EasyBuy
+                    </h5>
+                    <p class="text-muted">Nền tảng mua sắm trực tuyến hàng đầu Việt Nam với hàng ngàn sản phẩm chất lượng.</p>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-outline-light btn-sm">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-sm">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <h6 class="mb-3">
+                        <i class="fas fa-link me-2"></i>Liên kết nhanh
+                    </h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Về chúng tôi</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Liên hệ</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Điều khoản</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Chính sách</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <h6 class="mb-3">
+                        <i class="fas fa-headset me-2"></i>Hỗ trợ
+                    </h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none"><i class="fas fa-question-circle me-2"></i>FAQ</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none"><i class="fas fa-truck me-2"></i>Giao hàng</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none"><i class="fas fa-undo me-2"></i>Đổi trả</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none"><i class="fas fa-gift me-2"></i>Khuyến mãi</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <h6 class="mb-3">
+                        <i class="fas fa-envelope me-2"></i>Liên hệ
+                    </h6>
+                    <div class="text-muted">
+                        <p><i class="fas fa-map-marker-alt me-2"></i>123 Đường ABC, Quận 1, TP.HCM</p>
+                        <p><i class="fas fa-phone me-2"></i>+84 123 456 789</p>
+                        <p><i class="fas fa-envelope me-2"></i>support@easybuy.vn</p>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">
+                        <i class="fas fa-copyright me-1"></i>2025 EasyBuy. Tất cả quyền được bảo lưu.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex justify-content-md-end gap-3">
+                        <img src="https://img.icons8.com/color/32/visa.png" alt="Visa" />
+                        <img src="https://img.icons8.com/color/32/mastercard.png" alt="Mastercard" />
+                        <img src="https://img.icons8.com/color/32/paypal.png" alt="PayPal" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (if needed) -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Vietnamese font support
+            document.body.classList.add('vietnamese-font-fix');
+            
+            // Back to top button
+            const backToTop = document.createElement('button');
+            backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
+            backToTop.className = 'btn btn-primary position-fixed bottom-0 end-0 m-4 rounded-circle';
+            backToTop.style.width = '50px';
+            backToTop.style.height = '50px';
+            backToTop.style.display = 'none';
+            backToTop.style.zIndex = '1000';
+            backToTop.setAttribute('aria-label', 'Về đầu trang');
+            document.body.appendChild(backToTop);
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTop.style.display = 'block';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+            });
+            
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
