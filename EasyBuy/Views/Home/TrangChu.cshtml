@@ -414,52 +414,28 @@
             @foreach (var item in Model)
             {
                 <div class="product-card-modern">
-                    <!-- Product Image -->
-                    <div class="product-image-container">
-                        <img src="@item.ImagePr" alt="@item.ProductName" loading="lazy" />
-                        
-                        <!-- Product Badge -->
-                        @if (item.SellingPrice < item.SellingPrice)
-                        {
-                            <span class="product-badge">Giảm giá</span>
-                        }
-                        
-                        <!-- Wishlist Button -->
-                        <button type="button" class="wishlist-btn" onclick="toggleWishlist(this, @item.ProductId)" title="Thêm vào yêu thích">
-                            <i class="far fa-heart"></i>
-                        </button>
-                        
-                    </div>
-                    
-                    <!-- Product Info -->
-                    <div class="product-info">
-                        <h3 class="product-title">@item.ProductName</h3>
-                        <p class="product-description">@(item.Description?.Length > 80 ? item.Description.Substring(0, 80) + "..." : item.Description)</p>
-                        
-                        <!-- Price -->
-                        <div class="product-price">
-                            @if (item.SellingPrice.HasValue && item.SellingPrice > item.SellingPrice)
-                            {
-                                <span class="text-muted text-decoration-line-through me-2">@string.Format("{0:N0}", item.SellingPrice) ₫</span>
-                            }
-                            <span class="text-primary fw-bold">@string.Format("{0:N0}", item.SellingPrice) ₫</span>
-                        </div>
-                        
-                        <!-- Product Actions -->
-                        <div class="product-actions">
-                            @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { @class = "flex-fill" }))
-                            {
-                                <input type="hidden" name="productId" value="@item.ProductId" />
-                                <button type="submit" class="add-to-cart-btn">
-                                    <i class="fas fa-shopping-cart me-2"></i>Thêm vào giỏ
-                                </button>
-                            }
-                            <a href="/product/@item.ProductId" class="btn btn-outline-primary ms-2">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <a href="/product/@item.ProductId" class="product-link">
+        <!-- Product Image -->
+        <div class="product-image-container">
+            <img src="@item.ImagePr" alt="@item.ProductName" loading="lazy" />
+        </div>
+        
+        <!-- Product Info -->
+        <div class="product-info">
+            <h3 class="product-title">@item.ProductName</h3>
+            <p class="product-description">@(item.Description?.Length > 80 ? item.Description.Substring(0, 80) + "..." : item.Description)</p>
+            <div class="product-price">
+                <span class="text-primary fw-bold">@string.Format("{0:N0}", item.SellingPrice) ₫</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- Wishlist Button (ngoài thẻ <a>) -->
+    <button type="button" class="wishlist-btn" onclick="toggleWishlist(this, @item.ProductId)" title="Thêm vào yêu thích">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
             }
         </div>
     }
