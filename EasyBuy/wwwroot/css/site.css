@@ -1,6 +1,10 @@
 /* ==========================================================================
    EasyBuy - Modern UI/UX Design
    ========================================================================== */
+.product-link {
+  text-decoration: none;
+  color: inherit; /* Giữ nguyên màu chữ theo bố cục hiện tại */
+}
 
 /* FontAwesome icon styles */
 .fas, .far, .fab, .fal, .fad, .fass, .fasr, .fasl {
