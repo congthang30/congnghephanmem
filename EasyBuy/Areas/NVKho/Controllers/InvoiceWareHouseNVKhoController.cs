@@ -80,24 +80,6 @@ namespace EasyBuy.Areas.NVKho.Controllers
             }
         }
 
-        //public async Task<IActionResult> PrepareOrder(int orderId)
-        //{
-        //    var order = await _context.Orders
-        //        .FirstOrDefaultAsync(o => o.OrderId == orderId);
-
-        //    if (order == null)
-        //    {
-        //        ViewBag.Error = "Đơn hàng không tồn tại";
-        //        return View();
-        //    }
-
-        //    order.Status = "Đang chuẩn bị hàng";
-
-        //    await _context.SaveChangesAsync();
-
-        //    return RedirectToAction("Details", new { id = orderId });
-        //}
-
         [HttpPost]
         public async Task<IActionResult> MakeInvoiceWarehouse(int orderId)
         {
