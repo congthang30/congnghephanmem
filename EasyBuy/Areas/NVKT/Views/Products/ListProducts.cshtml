@@ -1,0 +1,295 @@
+﻿@model List<EasyBuy.Models.Product>
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "~/Areas/NVKT/Views/Layout/_LayoutNVMKT.cshtml";
+    var categories = ViewBag.Categories as List<EasyBuy.Models.Category>;
+    var brands = ViewBag.Brands as List<EasyBuy.Models.Brand>;
+}
+<style>
+    .product-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 30px auto;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .product-table th, .product-table td {
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        .product-table th {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .product-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .product-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .product-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-right: 12px;
+    }
+
+    .name-cell {
+        display: flex;
+        align-items: center;
+        text-align: left;
+    }
+
+        .name-cell div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name-cell strong {
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .name-cell small {
+            font-size: 12px;
+            color: #666;
+        }
+
+    .badge {
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: white;
+    }
+
+        .badge.green {
+            background-color: #28a745;
+        }
+
+        .badge.gray {
+            background-color: #6c757d;
+        }
+
+    .action-icons {
+        text-align: center;
+    }
+
+        .action-icons a {
+            margin: 0 6px;
+            font-size: 18px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+            .action-icons a:hover {
+                color: #007bff;
+            }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .badge.green {
+        background-color: #28a745;
+        color: white;
+        padding: 3px 6px;
+        border-radius: 4px;
+    }
+
+    .badge.gray {
+        background-color: #6c757d;
+        color: white;
+        padding: 3px 6px;
+        border-radius: 4px;
+    }
+
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 0.85em;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+</style>
+
+<h2>📦 Danh sách sản phẩm</h2>
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<form method="get" asp-action="ListProducts" class="row g-2 mb-4">
+    <div class="col-md-2">
+        <input type="text" name="productname" value="@ViewBag.ProductName" class="form-control" placeholder="Tên sản phẩm" />
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="barcode" value="@ViewBag.Barcode" class="form-control" placeholder="Barcode" />
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="description" value="@ViewBag.Description" class="form-control" placeholder="Mô tả" />
+    </div>
+    <div class="col-md-1">
+        <input type="number" name="quantity" value="@ViewBag.Quantity" class="form-control" placeholder="SL" />
+    </div>
+    <div class="col-md-1">
+        <input type="number" step="0.01" name="importprice" value="@ViewBag.ImportPrice" class="form-control" placeholder="Giá nhập" />
+    </div>
+    <div class="col-md-1">
+        <input type="number" step="0.01" name="sellingprice" value="@ViewBag.SellingPrice" class="form-control" placeholder="Giá bán" />
+    </div>
+    <div class="col-md-1">
+        <select name="statusproduct" class="form-control">
+            <option value="">--Trạng thái--</option>
+            <option value="presently" @(ViewBag.StatusProduct == "presently" ? "selected" : "")>Đang bán</option>
+            <option value="hidden" @(ViewBag.StatusProduct == "hidden" ? "selected" : "")>Ẩn</option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <input type="number" step="0.01" name="discount" value="@ViewBag.Discount" class="form-control" placeholder="Giảm giá" />
+    </div>
+    <div class="col-md-1">
+        <select name="isfeatured" class="form-control">
+            <option value="">--Nổi bật--</option>
+            <option value="true" @(ViewBag.IsFeatured?.ToString().ToLower() == "true" ? "selected" : "")>Có</option>
+            <option value="false" @(ViewBag.IsFeatured?.ToString().ToLower() == "false" ? "selected" : "")>Không</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="brandid" class="form-control">
+            <option value="">--Thương hiệu--</option>
+            @foreach (var b in brands)
+            {
+                <option value="@b.BrandId" @(ViewBag.BrandId?.ToString() == b.BrandId.ToString() ? "selected" : "")>@b.NameBrand</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="cateid" class="form-control">
+            <option value="">--Danh mục--</option>
+            @foreach (var c in categories)
+            {
+                <option value="@c.CateId" @(ViewBag.CateId?.ToString() == c.CateId.ToString() ? "selected" : "")>@c.CategoryName</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-1">
+        <button type="submit" class="btn btn-primary">Lọc</button>
+    </div>
+</form>
+<table class="product-table">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Thời gian đăng</th>
+            <th>Đơn giá</th>
+            <th>Lượt xem</th>
+            <th>SL trong kho</th>
+            <th>Đã bán</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="name-cell">
+                    @if (!string.IsNullOrEmpty(item.ImagePr))
+                    {
+                        <img src="/uploads/products/@item.ImagePr" alt="Ảnh" class="product-img" />
+                    }
+                    else
+                    {
+                        <img src="/images/no-image.png" alt="Không có ảnh" class="product-img" />
+                    }
+                    <div>
+                        <strong>@item.ProductName</strong>
+                        <small>Cập nhật: @item.UpdatedAt?.ToString("HH:mm dd/MM/yy")</small>
+                        <small>Người tạo: admin</small>
+                    </div>
+                </td>
+                <td>@item.UpdatedAt?.ToString("HH:mm dd/MM/yy")</td>
+                <td>@(item.SellingPrice?.ToString("N0") ?? "0") VND</td>
+                <td>@(item.ViewCount ?? 0)</td>
+                <td>@(item.Quantity ?? 0)</td>
+                <td>0 cái</td>
+                <td>
+                    @if (item.StatusProduct == "presently")
+                    {
+                        <span class="badge green">Hiển thị</span>
+                    }
+                    else
+                    {
+                        <span class="badge gray">Ẩn</span>
+                    }
+                </td>
+                <td class="action-icons">
+                    <a href="@Url.Action("CreateProducts", "Products", new { area = "NVKT" })" title="Thêm">+</a>
+                    <a href="@Url.Action("UpdateProducts", "Products", new { area = "NVKT", id = item.ProductId })" title="Sửa">✏️</a>
+                    @using (Html.BeginForm("ToggleStatusProduct", "Products", FormMethod.Post, new { @class = "flex-fill" }))
+                    {
+						<input type="hidden" name="id" value="@item.ProductId" />
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            @(item.StatusProduct == "presently" ? "👁️ Ẩn" : "👁️‍🗨️ Hiện")
+                        </button>
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
