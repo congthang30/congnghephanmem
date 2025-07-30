@@ -1,0 +1,286 @@
+@model EasyBuy.Models.Invoice
+@{
+    ViewData["Title"] = "Chi tiết hóa đơn";
+    Layout = "~/Areas/NVKD/Views/Layout/_LayoutNVKD.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-file-invoice me-2"></i> Chi tiết hóa đơn <span class="badge bg-primary">#@Model.InvoiceId</span></h2>
+        <div>
+            <a href="@Url.Action("ListInvoice", "InvoiceNVKD", new { area = "NVKD" })" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Quay lại
+            </a>
+            <div class="btn-group" role="group">
+                <a href="@Url.Action("DownloadInvoicePdf", "InvoiceNVKD", new { area = "NVKD", invoiceId = Model.InvoiceId })" 
+                   class="btn btn-primary">
+                    <i class="fas fa-download me-1"></i> Tải PDF
+                </a>
+                <button type="button" class="btn btn-success" onclick="showPrintModal()">
+                    <i class="fas fa-print me-1"></i> In hóa đơn
+                </button>
+                <a href="@Url.Action("SaveInvoicePdf", "InvoiceNVKD", new { area = "NVKD", invoiceId = Model.InvoiceId })" 
+                   class="btn btn-info" onclick="return confirm('Bạn có muốn lưu PDF hóa đơn?')">
+                    <i class="fas fa-save me-1"></i> Lưu PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>@TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>@TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Thông tin hóa đơn & khách hàng -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Thông tin hóa đơn</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless mb-0">
+                        <tr><td><strong>Mã hóa đơn:</strong></td><td>#@Model.InvoiceId</td></tr>
+                        <tr><td><strong>Mã đơn hàng:</strong></td><td>#@Model.OrderId</td></tr>
+                        <tr><td><strong>Ngày tạo:</strong></td><td>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td></tr>
+                        <tr><td><strong>Người tạo:</strong></td><td>@Model.CreatedByUser?.FullName</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>Thông tin khách hàng</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless mb-0">
+                        <tr><td><strong>Họ tên:</strong></td><td>@Model.Order?.User?.FullName</td></tr>
+                        <tr><td><strong>Số điện thoại:</strong></td><td>@Model.Order?.User?.Phone</td></tr>
+                        <tr><td><strong>Email:</strong></td><td>@Model.Order?.User?.Email</td></tr>
+                        <tr><td><strong>Địa chỉ:</strong></td><td>@Model.Order?.Address?.FullAddress</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chi tiết sản phẩm -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Chi tiết sản phẩm</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Giảm giá</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Order?.OrderDetails != null)
+                        {
+                            int stt = 1;
+                            foreach (var item in Model.Order.OrderDetails)
+                            {
+                                <tr>
+                                    <td>@stt</td>
+                                    <td>
+                                        <strong>@item.Product?.ProductName</strong><br />
+                                        <small class="text-muted">@item.Product?.Barcode</small>
+                                    </td>
+                                    <td>@item.UnitPrice?.ToString("N0") ₫</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Discount?.ToString("N0") ₫</td>
+                                    <td class="fw-bold text-success">
+                                        @(((item.UnitPrice ?? 0) * (item.Quantity ?? 0) - (item.Discount ?? 0)).ToString("N0")) ₫
+                                    </td>
+                                </tr>
+                                stt++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tổng cộng -->
+    <div class="row justify-content-end mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table table-borderless mb-0">
+                        <tr>
+                            <td><strong>Tổng tiền hàng:</strong></td>
+                            <td class="text-end">@Model.Order?.TotalAmount?.ToString("N0") ₫</td>
+                        </tr>
+                        @if (Model.Order?.Voucher != null)
+                        {
+                            <tr>
+                                <td><strong>Giảm giá (Voucher @Model.Order.Voucher.Code):</strong></td>
+                                <td class="text-end text-danger">
+                                    @(Model.Order.TotalAmount - Model.Order.FinalTotal)
+                                </td>
+                            </tr>
+                        }
+                        <tr class="border-top">
+                            <td><strong>Tổng cộng:</strong></td>
+                            <td class="text-end fw-bold fs-5 text-success">@Model.Order?.FinalTotal?.ToString("N0") ₫</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thanh toán -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="fas fa-credit-card me-2"></i>Thông tin thanh toán</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Phương thức:</strong> @Model.Order?.PaymentMethod?.MethodName</p>
+                    <p>
+                        <strong>Trạng thái thanh toán:</strong>
+                        <span class="badge @(Model.Order?.StatusPayment == "Đã thanh toán" ? "bg-success" : "bg-warning text-dark")">
+                            @Model.Order?.StatusPayment
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        <strong>Trạng thái đơn hàng:</strong>
+                        <span class="badge @(Model.Order?.Status == "Đã xác nhận" ? "bg-success" : "bg-warning text-dark")">
+                            @Model.Order?.Status
+                        </span>
+                    </p>
+                    <p><strong>Ngày đặt hàng:</strong> @Model.Order?.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal chọn máy in -->
+<div class="modal fade" id="printModal" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="printModalLabel">
+                    <i class="fas fa-print me-2"></i>Chọn máy in
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="printerSelect" class="form-label">Máy in:</label>
+                    <select class="form-select" id="printerSelect">
+                        <option value="">Đang tải...</option>
+                    </select>
+                </div>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Hóa đơn sẽ được gửi đến máy in đã chọn. Vui lòng đảm bảo máy in đã sẵn sàng.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-success" onclick="printInvoice()">
+                    <i class="fas fa-print me-1"></i> In hóa đơn
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Auto-hide alerts
+        setTimeout(() => $('.alert').fadeOut('slow'), 5000);
+
+        // Hiển thị modal chọn máy in
+        function showPrintModal() {
+            loadPrinters();
+            $('#printModal').modal('show');
+        }
+
+        // Tải danh sách máy in
+        function loadPrinters() {
+            $.ajax({
+                url: '@Url.Action("GetPrinters", "InvoiceNVKD", new { area = "NVKD" })',
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        var select = $('#printerSelect');
+                        select.empty();
+                        
+                        if (response.printers.length > 0) {
+                            response.printers.forEach(function(printer) {
+                                var option = $('<option></option>')
+                                    .val(printer)
+                                    .text(printer);
+                                
+                                if (printer === response.defaultPrinter) {
+                                    option.prop('selected', true);
+                                }
+                                
+                                select.append(option);
+                            });
+                        } else {
+                            select.append('<option value="">Không có máy in nào</option>');
+                        }
+                    } else {
+                        $('#printerSelect').html('<option value="">Lỗi: ' + response.message + '</option>');
+                    }
+                },
+                error: function() {
+                    $('#printerSelect').html('<option value="">Lỗi khi tải danh sách máy in</option>');
+                }
+            });
+        }
+
+        // In hóa đơn
+        function printInvoice() {
+            var printerName = $('#printerSelect').val();
+            if (!printerName) {
+                alert('Vui lòng chọn máy in!');
+                return;
+            }
+
+            var url = '@Url.Action("PrintInvoice", "InvoiceNVKD", new { area = "NVKD", invoiceId = Model.InvoiceId })';
+            if (printerName) {
+                url += '&printerName=' + encodeURIComponent(printerName);
+            }
+
+            $('#printModal').modal('hide');
+            
+            // Hiển thị loading
+            var loadingHtml = '<div class="text-center p-3"><i class="fas fa-spinner fa-spin me-2"></i>Đang gửi đến máy in...</div>';
+            $('body').append('<div id="loadingOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center;">' + loadingHtml + '</div>');
+
+            window.location.href = url;
+        }
+    </script>
+}

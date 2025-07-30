@@ -1,0 +1,229 @@
+﻿@{
+    Layout = null;
+    var userName = Context.Session.GetString("Phone") ?? "NVMKT";
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - EasyBuy NVMKT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+    <style>
+        body {
+            background: #f9fafb;
+            font-family: "Segoe UI", Roboto, Helvetica, sans-serif;
+        }
+
+        .sidebar-nvmkt {
+            min-height: 100vh;
+            background: #ffffff;
+            color: #333;
+            border-right: 1px solid #e0e0e0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.03);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            width: 280px;
+        }
+
+            .sidebar-nvmkt .sidebar-header {
+                font-size: 1.4rem;
+                font-weight: 600;
+                padding: 2rem 1rem 1rem;
+                text-align: center;
+                color: #e74a3b;
+            }
+
+                .sidebar-nvmkt .sidebar-header div {
+                    font-size: 0.9rem;
+                    font-weight: 400;
+                    opacity: 0.8;
+                }
+
+            .sidebar-nvmkt .nav-link {
+                color: #555;
+                border-radius: 8px;
+                margin: 4px 0;
+                font-weight: 500;
+                transition: all 0.2s;
+                padding: 10px 15px;
+            }
+
+                .sidebar-nvmkt .nav-link.active,
+                .sidebar-nvmkt .nav-link:hover {
+                    color: #e74a3b;
+                    background-color: #fdf2f2;
+                }
+
+                .sidebar-nvmkt .nav-link i {
+                    width: 22px;
+                    text-align: center;
+                    margin-right: 10px;
+                }
+
+            .sidebar-nvmkt .user-info {
+                padding: 1.5rem 1rem;
+                border-top: 1px solid #e0e0e0;
+                margin-top: auto;
+            }
+
+                .sidebar-nvmkt .user-info .fa-user-circle {
+                    font-size: 2rem;
+                    margin-right: 10px;
+                    color: #e74a3b;
+                }
+
+            .sidebar-nvmkt .logout-btn {
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e6e9f0;
+        }
+
+        main.content {
+            background: #fff;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            margin-left: 300px;
+        }
+
+        .dropdown-menu {
+            font-size: 0.95rem;
+        }
+
+        @@media (max-width: 991.98px) {
+            .sidebar-nvmkt {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+            }
+            
+            main.content {
+                margin-left: 1rem;
+            }
+            
+            footer {
+                margin-left: 1rem !important;
+            }
+        }
+        
+        @@media (max-width: 768px) {
+            .sidebar-nvmkt {
+                position: fixed;
+                left: -280px;
+                transition: left 0.3s ease;
+            }
+            
+            .sidebar-nvmkt.show {
+                left: 0;
+            }
+            
+            main.content {
+                margin-left: 1rem;
+            }
+            
+            footer {
+                margin-left: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Sidebar -->
+        <nav class="sidebar-nvmkt d-flex flex-column">
+            <div class="sidebar-header">
+                <i class="fas fa-chart-line me-2"></i> EasyBuy NVMKT
+                <div>Nhân viên marketing</div>
+            </div>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="/NVMKT/Home/Index" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
+                        <i class="fas fa-home"></i> Trang chủ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/NVMKT/Products/ListProducts" class="nav-link @(currentController == "Products" && currentAction == "ListProducts" ? "active" : "")">
+                        <i class="fas fa-boxes"></i> Quản lý sản phẩm
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/NVMKT/Products/CreateProducts" class="nav-link @(currentController == "Products" && currentAction == "CreateProducts" ? "active" : "")">
+                        <i class="fas fa-plus"></i> Thêm sản phẩm
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/NVMKT/Categories/ListCategories" class="nav-link @(currentController == "Categories" ? "active" : "")">
+                        <i class="fas fa-tags"></i> Quản lý danh mục
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/NVMKT/Brands/ListBrands" class="nav-link @(currentController == "Brands" ? "active" : "")">
+                        <i class="fas fa-crown"></i> Quản lý thương hiệu
+                    </a>
+                </li>
+            </ul>
+            <div class="user-info mt-auto d-flex align-items-center flex-column">
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="ms-2">@userName</span>
+                </div>
+                @using (Html.BeginForm("Logout", "Account", new { area = "" }, FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-danger btn-sm logout-btn">
+                        <i class="fas fa-sign-out-alt me-1"></i> Đăng xuất
+                    </button>
+                }
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="content">
+            <!-- Mobile menu button -->
+            <button class="btn btn-primary d-md-none mb-3" id="sidebarToggle" style="position: fixed; top: 10px; left: 10px; z-index: 1001;">
+                <i class="fas fa-bars"></i>
+            </button>
+            @RenderBody()
+        </main>
+
+        <footer class="text-center py-3 small text-muted" style="margin-left: 300px;">
+            &copy; @DateTime.Now.Year EasyBuy NVMKT. All rights reserved.
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.querySelector('.sidebar-nvmkt');
+            sidebar.classList.toggle('show');
+        });
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.querySelector('.sidebar-nvmkt');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+                    sidebar.classList.remove('show');
+                }
+            }
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

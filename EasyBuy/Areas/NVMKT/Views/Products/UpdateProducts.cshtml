@@ -1,0 +1,200 @@
+﻿@model EasyBuy.Models.Product
+@{
+    ViewData["Title"] = "Cập nhật sản phẩm";
+    Layout = "~/Areas/NVMKT/Views/Layout/_LayoutNVMKT.cshtml";
+    var brands = ViewBag.Brands as List<EasyBuy.Models.Brand>;
+    var categories = ViewBag.Categories as List<EasyBuy.Models.Category>;
+}
+
+<h2> Cập nhật sản phẩm</h2>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #2c3e50;
+        font-size: 22px;
+    }
+
+    form {
+        max-width: 550px;
+        margin: 0 auto;
+        background-color: #f8f9fa;
+        padding: 20px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+
+        form div {
+            margin-bottom: 16px;
+        }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        color: #34495e;
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    input[type="checkbox"] {
+        transform: scale(1.1);
+        margin-right: 6px;
+    }
+
+    button[type="submit"] {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s;
+        display: block;
+        margin: 15px auto 0;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .text-danger {
+        font-size: 13px;
+        color: red;
+    }
+</style>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="error-message">@TempData["ErrorMessage"]</div>
+}
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="text-success text-center font-weight-bold">@ViewBag.SuccessMessage</div>
+}
+@using (Html.BeginForm("UpdateProducts", "Products", FormMethod.Post, new { @class = "flex-fill" }))
+{
+    <div>
+        <label>Teen san pham</label>
+        <input type="text" name="productname" />
+    </div>
+
+    <div>
+        <label>Barcode</label>
+        <input type="text" name="barcode" />
+    </div>
+
+    <div>
+        <label>Mô tả:</label>
+        <input type="text" name="description" />
+    </div>
+    <div>
+        <label>Số lượng:</label>
+        <input type="text" name="quantity" />
+    </div>
+    <div>
+        <label for="importprice">Giá nhập:</label>
+        <input type="number" step="0.01" id="importprice" name="importprice" min="0.01" required value="@(ViewData["importprice"] ?? "")" />
+    </div>
+    <div>
+        <label for="sellingprice">Giá bán:</label>
+        <input type="number" step="0.01" id="sellingprice" name="sellingprice" min="0.01" required value="@(ViewData["sellingprice"] ?? "")" />
+    </div>
+    <div>
+        <label for="statusproduct">Trạng thái sản phẩm:</label>
+        <select id="statusproduct" name="statusproduct" required>
+            <option value="">-- Chọn trạng thái --</option>
+            @if ((ViewData["statusproduct"]?.ToString() ?? "") == "presently")
+            {
+                <option value="presently" selected>Presently</option>
+            }
+            else
+            {
+                <option value="presently">Presently</option>
+            }
+            @if ((ViewData["statusproduct"]?.ToString() ?? "") == "hidden")
+            {
+                <option value="hidden" selected>Hidden</option>
+            }
+            else
+            {
+                <option value="hidden">Hidden</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="imagepr">Ảnh sản phẩm:</label>
+        <input type="file" id="imagepr" name="imagepr" accept="image/*" required />
+    </div>
+    <div>
+        <label for="discount">Giảm giá (%):</label>
+        <input type="number" step="0.01" id="discount" name="discount" min="0" value="@(ViewData["discount"] ?? "0")" />
+    </div>
+    <div>
+        <label for="brandid">Thương hiệu (Brand):</label>
+        <select id="brandid" name="brandid" required>
+            @foreach (var brand in ViewBag.Brands)
+            {
+                if (ViewData["brandid"]?.ToString() == brand.BrandId.ToString())
+                {
+                    <option value="@brand.BrandId" selected>@brand.NameBrand</option>
+                }
+                else
+                {
+                    <option value="@brand.BrandId">@brand.NameBrand</option>
+                }
+            }
+        </select>
+    </div>
+    <div>
+        <label for="cateid">Danh mục (Category):</label>
+        <select id="cateid" name="cateid" required>
+            <option value="">-- Chọn danh mục --</option>
+            @foreach (var cate in ViewBag.Categories)
+            {
+                if (ViewData["cateid"]?.ToString() == cate.CateId.ToString())
+                {
+                    <option value="@cate.CateId" selected>@cate.CategoryName</option>
+                }
+                else
+                {
+                    <option value="@cate.CateId">@cate.CategoryName</option>
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit">Cập nhật sản phẩm</button>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

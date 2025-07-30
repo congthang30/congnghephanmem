@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - EasyBuy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="format-detection" content="telephone=no" />
+
+
+
+    <!-- Preconnect to Google Fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts - Roboto with better Vietnamese support -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/animations.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/floating-chat.css" asp-append-version="true" />
+
+    <!-- Page specific styles -->
+    @RenderSection("Styles", required: false)
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="EasyBuy - Nền tảng mua sắm trực tuyến hàng đầu Việt Nam" />
+    <meta name="keywords" content="mua sắm, thương mại điện tử, EasyBuy" />
+</head>
+<body>
+    <!-- Clean Header như trong hình -->
+    <header class="bg-white border-bottom shadow-sm">
+        <div class="container">
+            <div class="d-flex align-items-center py-3">
+                <!-- Logo -->
+                <div class="d-flex align-items-center me-4">
+                    <i class="fas fa-shopping-bag text-primary fs-4 me-2"></i>
+                    <span class="fw-bold fs-4 text-primary">EasyBuy</span>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="flex-grow-1 mx-4 d-none d-md-block">
+                    @using (Html.BeginForm("TrangChu", "Home", FormMethod.Post, new { @class = "d-flex" }))
+                    {
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control border-end-0"
+                                   placeholder="Tìm kiếm sản phẩm..."
+                                   style="border-radius: 25px 0 0 25px; padding: 12px 20px;">
+                            <button class="btn btn-primary px-4" type="submit"
+                                    style="border-radius: 0 25px 25px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    }
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="d-flex align-items-center gap-4">
+                    <!-- Trang chủ -->
+                    <a href="/" class="text-decoration-none text-dark d-flex flex-column align-items-center nav-item">
+                        <i class="fas fa-home fs-5 mb-1"></i>
+                        <small>Trang chủ</small>
+                    </a>
+
+                    <!-- Giỏ hàng -->
+                    <a href="/Cart/UserCart" class="text-decoration-none text-dark d-flex flex-column align-items-center nav-item">
+                        <i class="fas fa-shopping-cart fs-5 mb-1"></i>
+                        <small>Giỏ hàng</small>
+                    </a>
+
+                    <!-- Trang chế (Yêu thích) -->
+                    <a href="/Wishlist/Wishlist" class="text-decoration-none text-dark d-flex flex-column align-items-center nav-item">
+                        <i class="fas fa-heart fs-5 mb-1"></i>
+                        <small>Yêu thích</small>
+                    </a>
+
+                    <!-- Đơn hàng -->
+                    <a href="/Order/ListOrder" class="text-decoration-none text-dark d-flex flex-column align-items-center nav-item">
+                        <i class="fas fa-clipboard-list fs-5 mb-1"></i>
+                        <small>Đơn hàng</small>
+                    </a>
+
+
+
+                    <!-- User Menu -->
+                    @if (Context.Session.GetInt32("UserID") != null)
+                    {
+                        <div class="dropdown">
+                            <button class="btn text-dark d-flex flex-column align-items-center nav-item border-0 bg-transparent dropdown-toggle"
+                                    type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle fs-5 mb-1"></i>
+                                <small>@Context.Session.GetString("Phone")</small>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="/Account/UpdateAccount">
+                                        <i class="fas fa-user-edit me-2"></i>Thông tin tài khoản
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/Account/ChangePassword">
+                                        <i class="fas fa-key me-2"></i>Đổi mật khẩu
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/Account/ListAdress">
+                                        <i class="fas fa-map-marker-alt me-2"></i>Địa chỉ
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { @class = "d-inline w-100" }))
+                                    {
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                                        </button>
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="/Account/Login" class="btn btn-outline-primary">Đăng nhập</a>
+                    }
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="btn d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="collapse d-md-none" id="mobileMenu">
+                <div class="border-top py-2">
+                    <!-- Mobile Search -->
+                    <div class="mb-2">
+                        @using (Html.BeginForm("TrangChu", "Home", FormMethod.Post))
+                        {
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-house-door-fill"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Mobile Navigation Grid -->
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <a href="/" class="btn btn-light w-100 text-center py-3">
+                                <i class="fas fa-home d-block mb-1"></i>
+                                <small>Trang chủ</small>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="/Cart/UserCart" class="btn btn-light w-100 text-center py-3">
+                                <i class="fas fa-shopping-cart d-block mb-1"></i>
+                                <small>Giỏ hàng</small>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="/Wishlist/Wishlist" class="btn btn-light w-100 text-center py-3">
+                                <i class="fas fa-heart d-block mb-1"></i>
+                                <small>Yêu thích</small>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="/Order/ListOrder" class="btn btn-light w-100 text-center py-3">
+                                <i class="bi bi-card-checklist"></i>
+                                <small>Đơn hàng</small>
+                            </a>
+                        </div>
+                    </div>
+
+                    @if (Context.Session.GetInt32("UserID") != null)
+                    {
+                        <div class="border-top pt-2">
+                            <div class="text-center mb-2">
+                                <i class="fas fa-user-circle text-primary fs-3"></i>
+                                <p class="mb-1 fw-bold">@Context.Session.GetString("Phone")</p>
+                            </div>
+                            <div class="row g-1">
+                                <div class="col-6">
+                                    <a href="/Account/UpdateAccount" class="btn btn-outline-secondary btn-sm w-100">
+                                        <i class="fas fa-user-edit d-block mb-1"></i>
+                                        <small>Tài khoản</small>
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="/Account/ChangePassword" class="btn btn-outline-secondary btn-sm w-100">
+                                        <i class="fas fa-key d-block mb-1"></i>
+                                        <small>Mật khẩu</small>
+                                    </a>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <a href="/Account/ListAdress" class="btn btn-outline-secondary btn-sm w-100 mb-2">
+                                        <i class="fas fa-map-marker-alt me-2"></i>Địa chỉ
+                                    </a>
+                                    @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-danger btn-sm w-100">
+                                            <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="border-top pt-2">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <a href="/Account/Login" class="btn btn-primary w-100">Đăng nhập</a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="/Account/Register" class="btn btn-outline-primary w-100">Đăng ký</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container py-4 min-vh-100">
+        @RenderBody()
+    </main>
+
+    <!-- Modern Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Info -->
+                <div class="footer-section">
+                    <h5><i class="fas fa-shopping-bag me-2"></i>EasyBuy</h5>
+                    <p>Nền tảng mua sắm trực tuyến hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tuyệt vời cho mọi khách hàng.</p>
+                    <div class="social-links">
+                        <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h5>Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="#">Sản phẩm</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="footer-section">
+                    <h5>Hỗ trợ khách hàng</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Chính sách đổi trả</a></li>
+                        <li><a href="#">Hướng dẫn mua hàng</a></li>
+                        <li><a href="#">Phương thức thanh toán</a></li>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-section">
+                    <h5>Thông tin liên hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Đường ABC, Quận 1, TP.HCM</li>
+                        <li><i class="fas fa-phone me-2"></i>0123 456 789</li>
+                        <li><i class="fas fa-envelope me-2"></i>support@easybuy.vn</li>
+                        <li><i class="fas fa-clock me-2"></i>24/7 Hỗ trợ khách hàng</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <p>&copy; @DateTime.Now.Year EasyBuy. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Simple font loading and Vietnamese support
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply Vietnamese font fix
+            document.body.classList.add('vietnamese-font-fix');
+        });
+
+
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Back to top button
+        const backToTop = document.createElement('button');
+        backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        backToTop.className = 'btn btn-primary position-fixed bottom-0 end-0 m-4 rounded-circle';
+        backToTop.style.width = '50px';
+        backToTop.style.height = '50px';
+        backToTop.style.display = 'none';
+        backToTop.style.zIndex = '1000';
+        document.body.appendChild(backToTop);
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+
+    <!-- Floating Chat Button -->
+    <div id="floating-chat-btn" class="floating-chat-btn">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- Floating Chat Window -->
+    <div id="floating-chat-window" class="floating-chat-window">
+        <div class="chat-header">
+            <h5><i class="fas fa-robot me-2"></i>AI Assistant</h5>
+            <button id="close-chat-btn" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="floating-chat-area" class="chat-area">
+            <div class="message system">
+                <div class="message-content">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Chào bạn! Tôi là AI Assistant, sẵn sàng hỗ trợ bạn.
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <div class="input-group">
+                <input type="text" id="floating-message-input" class="form-control" placeholder="Nhập tin nhắn..." />
+                <button class="btn btn-primary" onclick="sendFloatingMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/floating-chat.js"></script>
+</body>
+</html>

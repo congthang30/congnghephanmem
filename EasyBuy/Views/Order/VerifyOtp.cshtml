@@ -1,0 +1,499 @@
+﻿@{
+    ViewData["Title"] = "Xác minh OTP";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i> Xác minh OTP
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i> @ViewBag.Error
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="text-center mb-4">
+                        <div class="otp-icon mb-3">
+                            <i class="fas fa-envelope-open text-primary" style="font-size: 3rem;" aria-hidden="true"></i>
+                        </div>
+                        <p class="text-muted">
+                            Mã OTP đã được gửi đến email của bạn.<br>
+                            Vui lòng kiểm tra hộp thư và nhập mã bên dưới.
+                        </p>
+                    </div>
+
+                    <!-- Countdown Timer -->
+                    <div class="text-center mb-3">
+                        <div class="otp-timer">
+                            <span class="badge bg-warning text-dark fs-6" aria-live="polite" aria-atomic="true">
+                                <i class="fas fa-clock" aria-hidden="true"></i>
+                                Mã hết hạn sau: <span id="countdown">5:00</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <form asp-action="VerifyOtp" method="post" id="otpForm">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group mb-4">
+                            <label for="otp" class="form-label fw-bold">Nhập mã OTP (6 chữ số):</label>
+                            <input type="text"
+                                   class="form-control form-control-lg text-center"
+                                   id="otp"
+                                   name="inputOtp"
+                                   maxlength="6"
+                                   pattern="[0-9]{6}"
+                                   placeholder="000000"
+                                   autocomplete="one-time-code"
+                                   aria-describedby="otp-help otp-feedback"
+                                   aria-label="Nhập mã OTP gồm 6 chữ số"
+                                   inputmode="numeric"
+                                   required />
+                            <div id="otp-help" class="form-text text-muted">
+                                <small>Mã OTP gồm 6 chữ số được gửi đến email của bạn</small>
+                            </div>
+                            <div id="otp-feedback" class="invalid-feedback">
+                                Vui lòng nhập mã OTP gồm 6 chữ số
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg" id="verifyBtn" aria-describedby="otp-help">
+                                <i class="fas fa-check" aria-hidden="true"></i> Xác minh OTP
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mb-3">
+                        @using (Html.BeginForm("ResendOtp", "Order", FormMethod.Post, new { style = "display:inline;" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit"
+                                    class="btn btn-outline-secondary"
+                                    id="resendBtn"
+                                    aria-label="Gửi lại mã OTP đến email">
+                                <i class="fas fa-paper-plane" aria-hidden="true"></i> Gửi lại OTP
+                            </button>
+                        }
+                        <div id="resendMessage" class="mt-2" aria-live="polite"></div>
+                    </div>
+
+
+                    <!-- Cancel Checkout -->
+                    <div class="text-center">
+                        @using (Html.BeginForm("CancelCheckout", "Order", FormMethod.Post, new { style = "display:inline;" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit"
+                                    id="cancelBtn"
+                                    class="btn btn-outline-danger"
+                                    aria-label="Hủy quá trình đặt hàng và quay lại trang giỏ hàng"
+                                    onclick="return confirmCancelOrder();">
+                                <i class="fas fa-times" aria-hidden="true"></i> Hủy đặt hàng
+                            </button>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <i class="fas fa-lightbulb text-warning" aria-hidden="true"></i> Lưu ý:
+                    </h6>
+                    <ul class="list-unstyled small text-muted mb-0">
+                        <li><i class="fas fa-check text-success" aria-hidden="true"></i> Mã OTP có hiệu lực trong 5 phút</li>
+                        <li><i class="fas fa-check text-success" aria-hidden="true"></i> Bạn có tối đa 3 lần thử</li>
+                        <li><i class="fas fa-check text-success" aria-hidden="true"></i> Kiểm tra cả thư mục Spam/Junk</li>
+                        <li><i class="fas fa-check text-success" aria-hidden="true"></i> Có thể gửi lại OTP nếu cần</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .otp-timer {
+        animation: pulse 2s infinite;
+    }
+
+    keyframes pulse {
+        0%
+
+    {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+    }
+
+    .otp-icon {
+        animation: bounce 2s infinite;
+    }
+
+    keyframes bounce {
+        0%, 20%, 50%, 80%, 100%
+
+    {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+
+    }
+
+    #otp {
+        font-size: 1.5rem;
+        letter-spacing: 0.5rem;
+        font-weight: bold;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+    }
+
+    .btn-lg {
+        padding: 12px 24px;
+        font-size: 1.1rem;
+    }
+
+    .loading {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .countdown-expired {
+        color: #dc3545 !important;
+        background-color: #f8d7da !important;
+    }
+
+    /* ✅ Responsive Design */
+    media (max-width: 768px) {
+        .container
+
+    {
+        padding: 0 15px;
+    }
+
+    .card {
+        margin: 0 10px;
+    }
+
+    #otp {
+        font-size: 1.2rem;
+        letter-spacing: 0.3rem;
+    }
+
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    .otp-icon i {
+        font-size: 2rem !important;
+    }
+
+    }
+
+    /* ✅ Accessibility */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* ✅ Focus styles */
+    #otp:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        outline: 0;
+    }
+
+    /* ✅ Button hover effects */
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    /* ✅ Form validation feedback */
+    .is-valid {
+        border-color: #198754;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='m2.3 6.73.4.4c.2.2.5.2.7 0l2.85-2.85c.2-.2.2-.5 0-.7l-.4-.4c-.2-.2-.5-.2-.7 0L3.7 5.6 2.3 4.2c-.2-.2-.5-.2-.7 0l-.4.4c-.2.2-.2.5 0 .7l1.1 1.1z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+
+    .is-invalid {
+        border-color: #dc3545;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 5.8 2.4 2.4M8.2 5.8l-2.4 2.4'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+      let timeLeft = 5 * 60; // Tổng giây: 5 phút
+      const countdownElement = $('#countdown'); // ✅ Thêm dòng này
+      const resendBtn = $('#resendBtn'); // ✅ Và dòng này
+
+      function updateCountdown() {
+          const minutes = Math.floor(timeLeft / 60);
+          const seconds = timeLeft % 60;
+
+          countdownElement.text(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+
+          if (timeLeft <= 0) {
+              countdownElement.parent()
+                  .removeClass('bg-warning text-dark')
+                  .addClass('bg-danger text-white countdown-expired');
+              countdownElement.parent().html('<i class="fas fa-times"></i> Mã OTP đã hết hạn');
+              resendBtn.prop('disabled', false);
+              $('#verifyBtn').prop('disabled', true);
+              clearInterval(countdownInterval);
+              return;
+          }
+
+          if (timeLeft <= 60) {
+              countdownElement.parent().removeClass('bg-warning text-dark').addClass('bg-danger text-white');
+          }
+
+          timeLeft--;
+      }
+
+      const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // ✅ OTP Input Validation
+        $('#otp').on('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+
+            if (this.value.length === 6) {
+                $(this).removeClass('is-invalid').addClass('is-valid');
+                $('#verifyBtn').prop('disabled', false);
+            } else {
+                $(this).removeClass('is-valid');
+                if (this.value.length > 0) {
+                    $(this).addClass('is-invalid');
+                }
+            }
+        });
+
+        // ✅ Auto-focus OTP input
+        $('#otp').focus();
+
+        // ✅ Handle paste events for OTP
+        $('#otp').on('paste', function(e) {
+            setTimeout(function() {
+                const value = $('#otp').val();
+                $('#otp').val(value.replace(/[^0-9]/g, '').substring(0, 6));
+                $('#otp').trigger('input');
+            }, 10);
+        });
+
+        // ✅ Handle keyboard events
+        $('#otp').on('keydown', function(e) {
+            // Allow: backspace, delete, tab, escape, enter
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
+                // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                (e.keyCode === 65 && e.ctrlKey === true) ||
+                (e.keyCode === 67 && e.ctrlKey === true) ||
+                (e.keyCode === 86 && e.ctrlKey === true) ||
+                (e.keyCode === 88 && e.ctrlKey === true)) {
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+        // ✅ Form submission
+        $('#otpForm').on('submit', function(e) {
+            const otpValue = $('#otp').val();
+
+            if (otpValue.length !== 6) {
+                e.preventDefault();
+                $('#otp').addClass('is-invalid');
+                return false;
+            }
+
+            // Show loading state
+            $('#verifyBtn').html('<i class="fas fa-spinner fa-spin"></i> Đang xác minh...');
+            $('#verifyBtn').prop('disabled', true);
+            $(this).addClass('loading');
+            showLoading();
+            announceToScreenReader('Đang xác minh mã OTP');
+        });
+
+        // ✅ Resend OTP
+        $('#resendBtn').on('click', function() {
+            const btn = $(this);
+            const originalText = btn.html();
+
+            btn.html('<i class="fas fa-spinner fa-spin"></i> Đang gửi...').prop('disabled', true);
+
+            $.ajax({
+                url: '@Url.Action("ResendOtp", "Order")',
+                type: 'POST',
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#resendMessage').html('<div class="alert alert-success alert-sm"><i class="fas fa-check"></i> ' + response.message + '</div>');
+
+                        // Reset countdown
+                        timeLeft = 5 * 60;
+                        countdownElement.parent().removeClass('bg-danger countdown-expired').addClass('bg-warning text-dark');
+                        $('#verifyBtn').prop('disabled', false);
+                        $('#otp').val('').focus();
+
+                        announceToScreenReader('OTP mới đã được gửi thành công');
+                    } else {
+                        $('#resendMessage').html('<div class="alert alert-danger alert-sm"><i class="fas fa-exclamation-triangle"></i> ' + response.message + '</div>');
+                        announceToScreenReader('Có lỗi khi gửi lại OTP: ' + response.message);
+                    }
+                },
+                error: function() {
+                    $('#resendMessage').html('<div class="alert alert-danger alert-sm"><i class="fas fa-exclamation-triangle"></i> Có lỗi xảy ra. Vui lòng thử lại!</div>');
+                    announceToScreenReader('Có lỗi xảy ra khi gửi lại OTP');
+                },
+                complete: function() {
+                    btn.html(originalText).prop('disabled', false);
+
+                    // Auto hide message after 5 seconds
+                    setTimeout(function() {
+                        $('#resendMessage').fadeOut();
+                    }, 5000);
+                }
+            });
+        });
+
+        // ✅ Cancel Checkout
+        $('#cancelBtn').on('click', function() {
+            if (confirm('Bạn có chắc chắn muốn hủy đặt hàng?')) {
+                const btn = $(this);
+                const originalText = btn.html();
+
+                btn.html('<i class="fas fa-spinner fa-spin"></i> Đang hủy...').prop('disabled', true);
+                showLoading();
+                announceToScreenReader('Đang hủy quá trình đặt hàng');
+
+                $.ajax({
+                    url: '@Url.Action("CancelCheckout", "Order")',
+                    type: 'POST',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            clearInterval(countdownInterval);
+                            window.location.href = '@Url.Action("Checkout", "Order")';
+                        } else {
+                            alert('Có lỗi xảy ra: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra khi hủy đặt hàng!');
+                    },
+                    complete: function() {
+                        btn.html(originalText).prop('disabled', false);
+                        hideLoading();
+                    }
+                });
+            }
+        });
+
+        // ✅ Enable resend button after 1 minute
+        setTimeout(function() {
+            if (timeLeft > 0) {
+                resendBtn.prop('disabled', false);
+            }
+        }, 60000);
+
+        // ✅ Prevent page refresh/close warning
+        $(window).on('beforeunload', function() {
+            if (timeLeft > 0) {
+                return 'Bạn đang trong quá trình xác minh OTP. Rời khỏi trang sẽ hủy quá trình đặt hàng.';
+            }
+        });
+
+        // ✅ Show loading overlay
+        function showLoading() {
+            if ($('#loadingOverlay').length === 0) {
+                $('body').append(`
+                    <div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                         style="background-color: rgba(0,0,0,0.5); z-index: 9999;">
+                        <div class="bg-white p-4 rounded shadow text-center">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mb-0">Đang xử lý...</p>
+                        </div>
+                    </div>
+                `);
+            }
+        }
+
+        function hideLoading() {
+            $('#loadingOverlay').remove();
+        }
+
+        // ✅ Improve accessibility announcements
+        function announceToScreenReader(message) {
+            const announcement = $('<div>', {
+                'aria-live': 'polite',
+                'aria-atomic': 'true',
+                'class': 'sr-only'
+            }).text(message);
+
+            $('body').append(announcement);
+            setTimeout(() => announcement.remove(), 1000);
+        }
+          function confirmCancelOrder() {
+        // Ví dụ: hiện hộp thoại xác nhận
+        return confirm("Bạn có chắc chắn muốn hủy đơn hàng không?");
+        // Nếu trả về true: sẽ thực hiện chuyển hướng theo href
+        // Nếu trả về false: sẽ ngăn không cho chuyển hướng
+    }
+    });
+</script>

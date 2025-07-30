@@ -1,0 +1,634 @@
+@model EasyBuy.Models.Product
+
+@{
+    ViewData["Title"] = Model?.ProductName ?? "Chi tiết sản phẩm";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Image zoom effect
+            const productImage = document.querySelector('.product-image');
+            if (productImage) {
+                productImage.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const xPercent = (x / rect.width) * 100;
+                    const yPercent = (y / rect.height) * 100;
+                    this.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+                });
+            }
+            
+            // Quantity controls
+            const quantityInput = document.querySelector('#quantity');
+            const decreaseBtn = document.querySelector('.quantity-decrease');
+            const increaseBtn = document.querySelector('.quantity-increase');
+            
+            if (decreaseBtn && increaseBtn && quantityInput) {
+                decreaseBtn.addEventListener('click', function() {
+                    let value = parseInt(quantityInput.value) || 1;
+                    if (value > 1) {
+                        quantityInput.value = value - 1;
+                    }
+                });
+                
+                increaseBtn.addEventListener('click', function() {
+                    let value = parseInt(quantityInput.value) || 1;
+                    quantityInput.value = value + 1;
+                });
+            }
+            
+            // Rating stars interaction
+            const ratingStars = document.querySelectorAll('.rating-star');
+            const ratingInput = document.querySelector('#star');
+            
+            ratingStars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    const rating = index + 1;
+                    ratingInput.value = rating;
+                    updateStarDisplay(rating);
+                });
+                
+                star.addEventListener('mouseenter', function() {
+                    const rating = index + 1;
+                    updateStarDisplay(rating, true);
+                });
+            });
+            
+            const ratingContainer = document.querySelector('.rating-input');
+            if (ratingContainer) {
+                ratingContainer.addEventListener('mouseleave', function() {
+                    const currentRating = parseInt(ratingInput.value) || 0;
+                    updateStarDisplay(currentRating);
+                });
+            }
+            
+            function updateStarDisplay(rating, isHover = false) {
+                ratingStars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.add(isHover ? 'hover' : 'active');
+                        star.classList.remove(isHover ? 'active' : 'hover');
+                    } else {
+                        star.classList.remove('active', 'hover');
+                    }
+                });
+            }
+            
+            // Image preview for rating
+            const imageInput = document.querySelector('#ratingImage');
+            const imagePreview = document.querySelector('#imagePreview');
+            
+            if (imageInput && imagePreview) {
+                imageInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            imagePreview.innerHTML = `<img src="${e.target.result}" alt="Preview" class="img-thumbnail" style="max-width: 200px;">`;
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        imagePreview.innerHTML = '';
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <style>
+        .product-container {
+            background: #fafbfc;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius-lg);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+        }
+        
+        .product-image:hover {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--success-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .product-info {
+            padding: 2rem;
+        }
+        
+        .product-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        .product-category {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--danger-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-description {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .product-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .quantity-btn {
+            background: var(--border-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .quantity-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .quantity-input {
+            width: 80px;
+            height: 40px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .btn-add-to-cart {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .ratings-section {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .rating-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+        
+        .rating-item:hover {
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .rating-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-user {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .rating-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .rating-stars {
+            color: #ffc107;
+            margin-bottom: 0.5rem;
+        }
+        
+        .rating-comment {
+            color: var(--text-color);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-image {
+            max-width: 200px;
+            border-radius: var(--border-radius);
+        }
+        
+        .rating-form {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .rating-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-star {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .rating-star.active,
+        .rating-star.hover {
+            color: #ffc107;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .form-control-modern {
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control-modern:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+        
+        .btn-submit-rating {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn-submit-rating:hover {
+            background: #198754;
+            transform: translateY(-1px);
+        }
+        
+        .empty-ratings {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+        
+        .empty-ratings i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--border-color);
+        }
+        
+        media (max-width: 768px) {
+            .product-info {
+                padding: 1.5rem;
+            }
+            
+            .product-title {
+                font-size: 1.5rem;
+            }
+            
+            .product-price {
+                font-size: 1.5rem;
+            }
+            
+            .product-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .quantity-selector {
+                justify-content: center;
+            }
+        }
+    </style>
+}
+
+@if (Model == null)
+{
+    <div class="product-container">
+        <div class="container">
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Sản phẩm không tồn tại hoặc đã bị xóa.
+            </div>
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-2"></i>Quay về trang chủ
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="product-container">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="#">@Model.Cate?.CategoryName</a></li>
+                    <li class="breadcrumb-item active">@Model.ProductName</li>
+                </ol>
+            </nav>
+            
+            <!-- Product Details -->
+            <div class="product-card">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <div class="product-image-container">
+                            <img src="@Model.ImagePr" alt="@Model.ProductName" class="product-image" />
+                            <div class="product-badge">Mới</div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="product-info">
+                            <h1 class="product-title">@Model.ProductName</h1>
+                            <p class="product-category">
+                                <i class="fas fa-tag me-2"></i>@Model.Cate?.CategoryName
+                            </p>
+                            <div class="product-price">
+                                @Model.SellingPrice?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                            </div>
+                            
+                            <!-- Product Stats -->
+                            <div class="product-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">@(Model.ViewCount ?? 0)</div>
+                                    <div class="stat-label">Lượt xem</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">@(Model.Ratings?.Count ?? 0)</div>
+                                    <div class="stat-label">Đánh giá</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">
+                                        @if (Model.Ratings?.Any() == true)
+                                        {
+                                            @Model.Ratings.Average(r => r.Star ?? 0).ToString("F1")
+                                        }
+                                        else
+                                        {
+                                            @:0.0
+                                        }
+                                    </div>
+                                    <div class="stat-label">Điểm</div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-description">
+                                @Model.Description
+                            </div>
+                            
+                            <!-- Add to Cart Form -->
+                            @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post))
+                            {
+                                <input type="hidden" name="productId" value="@Model.ProductId" />
+                                
+                                <div class="quantity-selector">
+                                    <label class="form-label me-3">Số lượng:</label>
+                                    <button type="button" class="quantity-btn quantity-decrease">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input type="number" name="quantity" id="quantity" value="1" min="1" class="quantity-input form-control-modern" />
+                                    <button type="button" class="quantity-btn quantity-increase">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                
+                                <button type="submit" class="btn-add-to-cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Thêm vào giỏ hàng
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ratings Section -->
+            <div class="ratings-section">
+                <h3 class="section-title">
+                    <i class="fas fa-star text-warning"></i>
+                    Đánh giá sản phẩm
+                </h3>
+
+                @if (Model.Ratings == null || !Model.Ratings.Any())
+                {
+                    <div class="empty-ratings">
+                        <i class="fas fa-comment-dots"></i>
+                        <h5>Chưa có đánh giá nào</h5>
+                        <p>Hãy là người đầu tiên đánh giá sản phẩm này!</p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var rating in Model.Ratings)
+                    {
+                        <div class="rating-item">
+                            <div class="rating-header">
+                                <div>
+                                    <div class="rating-user">
+                                        <i class="fas fa-user-circle me-2"></i>
+                                        @(rating.User?.FullName ?? "Người dùng ẩn danh")
+                                    </div>
+                                    <div class="rating-stars">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <i class="fas fa-star @(i <= (rating.Star ?? 0) ? "" : "text-muted")"></i>
+                                        }
+                                        <span class="ms-2">(@(rating.Star ?? 0)/5)</span>
+                                    </div>
+                                </div>
+                                <div class="rating-date">
+                                    @rating.CreatedAt?.ToString("dd/MM/yyyy HH:mm")
+                                </div>
+                            </div>
+                            
+                            @if (!string.IsNullOrEmpty(rating.Comment))
+                            {
+                                <div class="rating-comment">
+                                    @rating.Comment
+                                </div>
+                            }
+                            
+                            @if (!string.IsNullOrEmpty(rating.ImagePath))
+                            {
+                                <img src="@rating.ImagePath" alt="Ảnh đánh giá" class="rating-image" />
+                            }
+                        </div>
+                    }
+                }
+                
+                <!-- Rating Form -->
+                @if (Context.Session.GetInt32("UserID") != null)
+                {
+                    @if ((ViewBag.HasPurchased == true) && ViewBag.ExistingRating == false)
+                    {
+                        <div class="rating-form">
+                            <h5 class="mb-3">
+                                <i class="fas fa-edit me-2"></i>
+                                Viết đánh giá của bạn
+                            </h5>
+
+                            @using (Html.BeginForm("PostRating", "Rating", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <input type="hidden" name="productId" value="@Model.ProductId" />
+                                <input type="hidden" name="star" id="star" value="5" />
+
+                                <div class="form-group">
+                                    <label class="form-label">Đánh giá của bạn:</label>
+                                    <div class="rating-input">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <span class="rating-star @(i <= 5 ? "active" : "")" data-rating="@i">
+                                                <i class="fas fa-star"></i>
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Nhận xét:</label>
+                                    <textarea name="comment" class="form-control-modern" rows="4" placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này..."></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Hình ảnh minh họa:</label>
+                                    <input type="file" name="image" id="ratingImage" class="form-control-modern" accept="image/*" />
+                                    <div id="imagePreview" class="mt-2"></div>
+                                </div>
+
+                                <button type="submit" class="btn-submit-rating">
+                                    <i class="fas fa-paper-plane me-2"></i>
+                                    Gửi đánh giá
+                                </button>
+                            }
+                        </div>
+                    }
+                    
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <a href="/Account/Login">Đăng nhập</a> để có thể đánh giá sản phẩm này.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

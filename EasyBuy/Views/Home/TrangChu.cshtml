@@ -1,0 +1,466 @@
+﻿@using EasyBuy.Models
+@model IEnumerable<Product> 
+
+@{
+    ViewData["Title"] = "Trang chủ - Mua sắm dễ dàng";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+}
+
+@* Anti-forgery token for AJAX requests *@
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    <script>
+        // Product interactions
+        function toggleWishlist(button, productId) {
+            // Add loading state
+            button.disabled = true;
+            const icon = button.querySelector('i');
+            const originalClasses = icon.className;
+            
+            // Show loading
+            icon.className = 'fas fa-spinner fa-spin';
+            
+            // Send AJAX request
+            fetch('/Wishlist/AddWishListAjax', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                },
+                body: `productId=${productId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update icon based on whether item was added or removed
+                    if (data.added) {
+                        icon.className = 'fas fa-heart';
+                        button.style.color = '#ff6b6b';
+                        button.title = 'Xóa khỏi yêu thích';
+                    } else {
+                        icon.className = 'far fa-heart';
+                        button.style.color = '#6c757d';
+                        button.title = 'Thêm vào yêu thích';
+                    }
+                    
+                    // Show success message
+                    showToast(data.message, 'success');
+                } else {
+                    // Restore original icon
+                    icon.className = originalClasses;
+                    
+                    // Show error message
+                    showToast(data.message, 'error');
+                    
+                    // If login required, redirect to login
+                    if (data.requireLogin) {
+                        setTimeout(() => {
+                            window.location.href = '/Account/Login';
+                        }, 2000);
+                    }
+                }
+            })
+            .catch(error => {
+                // Restore original icon
+                icon.className = originalClasses;
+                showToast('Có lỗi xảy ra. Vui lòng thử lại sau.', 'error');
+            })
+            .finally(() => {
+                button.disabled = false;
+                
+                // Add animation
+                button.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 200);
+            });
+        }
+        
+        // Toast notification function
+        function showToast(message, type = 'info') {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = `toast-notification toast-${type}`;
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            // Add to page
+            document.body.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+        
+        // Search functionality
+        function performSearch() {
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput.value.trim()) {
+                document.querySelector('.filter-form').submit();
+            }
+        }
+        
+        // Filter animations and wishlist status check
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.product-card-modern');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+            
+            // Check wishlist status for all products
+            const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+            wishlistButtons.forEach(button => {
+                const productId = button.getAttribute('onclick').match(/\d+/)[0];
+                checkWishlistStatus(button, productId);
+            });
+        });
+        
+        // Check if product is in wishlist
+        function checkWishlistStatus(button, productId) {
+            fetch(`/Wishlist/CheckWishlistStatus?productId=${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const icon = button.querySelector('i');
+                    if (data.inWishlist) {
+                        icon.className = 'fas fa-heart';
+                        button.style.color = '#ff6b6b';
+                        button.title = 'Xóa khỏi yêu thích';
+                    } else {
+                        icon.className = 'far fa-heart';
+                        button.style.color = '#6c757d';
+                        button.title = 'Thêm vào yêu thích';
+                    }
+                })
+                .catch(error => {
+                    // Default to not in wishlist if error
+                    const icon = button.querySelector('i');
+                    icon.className = 'far fa-heart';
+                    button.style.color = '#6c757d';
+                    button.title = 'Thêm vào yêu thích';
+                });
+        }
+    </script>
+    
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)), url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+            border-radius: var(--border-radius-lg);
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .search-hero {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-hero .input-group {
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .search-hero .form-control {
+            border: none;
+            height: 60px;
+            font-size: 1.1rem;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+        
+        .search-hero .btn {
+            height: 60px;
+            padding: 0 2rem;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .filter-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stats-section {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 3rem 0;
+            margin: 3rem 0;
+            border-radius: var(--border-radius-lg);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Toast Notifications */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 500;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            max-width: 400px;
+        }
+        
+        .toast-notification.show {
+            transform: translateX(0);
+        }
+        
+        .toast-success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        
+        .toast-error {
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+        }
+        
+        .toast-info {
+            background: linear-gradient(135deg, #17a2b8, #6f42c1);
+        }
+        
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .toast-content i {
+            font-size: 1.2rem;
+        }
+        
+        /* Wishlist button loading state */
+        .wishlist-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    </style>
+}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content text-center">
+            <h1>Chào mừng đến với EasyBuy</h1>
+            <p>Khám phá hàng ngàn sản phẩm chất lượng với giá tốt nhất</p>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section">
+    <h4 class="mb-3"><i class="fas fa-filter me-2"></i>Bộ lọc sản phẩm</h4>
+    @using (Html.BeginForm("TrangChu", "Home", FormMethod.Post, new { @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            
+            <div class="form-group">
+                <label class="form-label">Danh mục</label>
+                <select name="cate" class="form-control">
+                    <option value="">Tất cả danh mục</option>
+                    @foreach (var c in ViewBag.Categories as List<Category>)
+                    {
+                        <option value="@c.CateId">@c.CategoryName</option>
+                    }
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Thương hiệu</label>
+                <select name="brandId" class="form-control">
+                    <option value="">Tất cả thương hiệu</option>
+                    @foreach (var b in ViewBag.Brands as List<Brand>)
+                    {
+                        <option value="@b.BrandId">@b.NameBrand</option>
+                    }
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Giá từ</label>
+                <input type="number" name="minPrice" class="form-control" placeholder="0" />
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Giá đến</label>
+                <input type="number" name="maxPrice" class="form-control" placeholder="10000000" />
+            </div>
+            
+            <div class="form-group align-self-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-search me-2"></i>Áp dụng bộ lọc
+                </button>
+            </div>
+        </div>
+    }
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Sản phẩm</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Khách hàng</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Thương hiệu</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Hỗ trợ</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section>
+    <h2 class="section-title">Sản phẩm nổi bật</h2>
+    
+    @if (Model != null && Model.Any())
+    {
+        <div class="product-grid">
+            @foreach (var item in Model)
+            {
+                <div class="product-card-modern">
+    <a href="/product/@item.ProductId" class="product-link">
+        <!-- Product Image -->
+        <div class="product-image-container">
+            <img src="@item.ImagePr" alt="@item.ProductName" loading="lazy" />
+        </div>
+        
+        <!-- Product Info -->
+        <div class="product-info">
+            <h3 class="product-title">@item.ProductName</h3>
+            <p class="product-description">@(item.Description?.Length > 80 ? item.Description.Substring(0, 80) + "..." : item.Description)</p>
+            <div class="product-price">
+                <span class="text-primary fw-bold">@string.Format("{0:N0}", item.SellingPrice) ₫</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- Wishlist Button (ngoài thẻ <a>) -->
+    <button type="button" class="wishlist-btn" onclick="toggleWishlist(this, @item.ProductId)" title="Thêm vào yêu thích">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+            <h4 class="text-muted">Không tìm thấy sản phẩm nào</h4>
+            <p class="text-muted">Hãy thử điều chỉnh bộ lọc hoặc tìm kiếm với từ khóa khác</p>
+        </div>
+    }
+</section>
+
+<!-- Newsletter Section -->
+<section class="bg-light p-5 rounded-3 mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h3 class="mb-2">Đăng ký nhận tin</h3>
+            <p class="text-muted mb-0">Nhận thông tin về sản phẩm mới và ưu đãi đặc biệt</p>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <input type="email" class="form-control" placeholder="Email của bạn">
+                <button class="btn btn-primary" type="button">Đăng ký</button>
+            </div>
+        </div>
+    </div>
+</section>

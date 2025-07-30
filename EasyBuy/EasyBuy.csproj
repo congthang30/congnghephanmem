@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\NVKD\Data\**" />
+    <Compile Remove="Areas\NVKD\Models\**" />
+    <Compile Remove="Areas\NVKD\Views\Order\**" />
+    <Compile Remove="Areas\NVKho\Data\**" />
+    <Compile Remove="Areas\NVKho\Models\**" />
+    <Compile Remove="Areas\NVKT\Data\**" />
+    <Compile Remove="Areas\NVKT\Models\**" />
+    <Compile Remove="Areas\NVMKT\Data\**" />
+    <Compile Remove="Areas\NVMKT\Models\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\NVKD\Data\**" />
+    <Content Remove="Areas\NVKD\Models\**" />
+    <Content Remove="Areas\NVKD\Views\Order\**" />
+    <Content Remove="Areas\NVKho\Data\**" />
+    <Content Remove="Areas\NVKho\Models\**" />
+    <Content Remove="Areas\NVKT\Data\**" />
+    <Content Remove="Areas\NVKT\Models\**" />
+    <Content Remove="Areas\NVMKT\Data\**" />
+    <Content Remove="Areas\NVMKT\Models\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\NVKD\Data\**" />
+    <EmbeddedResource Remove="Areas\NVKD\Models\**" />
+    <EmbeddedResource Remove="Areas\NVKD\Views\Order\**" />
+    <EmbeddedResource Remove="Areas\NVKho\Data\**" />
+    <EmbeddedResource Remove="Areas\NVKho\Models\**" />
+    <EmbeddedResource Remove="Areas\NVKT\Data\**" />
+    <EmbeddedResource Remove="Areas\NVKT\Models\**" />
+    <EmbeddedResource Remove="Areas\NVMKT\Data\**" />
+    <EmbeddedResource Remove="Areas\NVMKT\Models\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\NVKD\Data\**" />
+    <None Remove="Areas\NVKD\Models\**" />
+    <None Remove="Areas\NVKD\Views\Order\**" />
+    <None Remove="Areas\NVKho\Data\**" />
+    <None Remove="Areas\NVKho\Models\**" />
+    <None Remove="Areas\NVKT\Data\**" />
+    <None Remove="Areas\NVKT\Models\**" />
+    <None Remove="Areas\NVMKT\Data\**" />
+    <None Remove="Areas\NVMKT\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="MailKit" Version="4.13.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\NVKT\Views\Layout\" />
+  </ItemGroup>
+
+</Project>

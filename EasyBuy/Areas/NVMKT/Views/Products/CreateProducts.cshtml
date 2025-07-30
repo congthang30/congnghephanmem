@@ -1,0 +1,186 @@
+﻿@{
+    ViewData["Title"] = "CreateProducts";
+    Layout = "~/Areas/NVMKT/Views/Layout/_LayoutNVMKT.cshtml";
+}
+
+<h2>Tạo mới sản phẩm</h2>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #2c3e50;
+        font-size: 22px;
+    }
+    form {
+        max-width: 550px;
+        margin: 0 auto;
+        background-color: #f8f9fa;
+        padding: 20px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+        form div {
+            margin-bottom: 16px;
+        }
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        color: #34495e;
+        font-size: 14px;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    textarea {
+        resize: vertical;
+    }
+    input[type="checkbox"] {
+        transform: scale(1.1);
+        margin-right: 6px;
+    }
+    button[type="submit"] {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s;
+        display: block;
+        margin: 15px auto 0;
+    }
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+    .error-message {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+</style>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="error-message">
+        @TempData["ErrorMessage"]
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="error-message">
+        @ViewBag.Error
+    </div>
+}
+<form asp-action="CreateProducts" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="productname">Tên sản phẩm:</label>
+        <input type="text" id="productname" name="productname" required value="@(ViewData["productname"] ?? "")" />
+    </div>
+    <div>
+        <label for="barcode">Barcode:</label>
+        <input type="text" id="barcode" name="barcode" required value="@(ViewData["barcode"] ?? "")" />
+    </div>
+    <div>
+        <label for="description">Mô tả:</label>
+        <textarea id="description" name="description" rows="3" required>@(ViewData["description"] ?? "")</textarea>
+    </div>
+    <div>
+        <label for="quantity">Số lượng:</label>
+        <input type="number" id="quantity" name="quantity" min="1" required value="@(ViewData["quantity"] ?? "")" />
+    </div>
+    <div>
+        <label for="importprice">Giá nhập:</label>
+        <input type="number" step="0.01" id="importprice" name="importprice" min="0.01" required value="@(ViewData["importprice"] ?? "")" />
+    </div>
+    <div>
+        <label for="sellingprice">Giá bán:</label>
+        <input type="number" step="0.01" id="sellingprice" name="sellingprice" min="0.01" required value="@(ViewData["sellingprice"] ?? "")" />
+    </div>
+    <div>
+        <label for="statusproduct">Trạng thái sản phẩm:</label>
+        <select id="statusproduct" name="statusproduct" required>
+            <option value="">-- Chọn trạng thái --</option>
+            @if ((ViewData["statusproduct"]?.ToString() ?? "") == "presently")
+            {
+                <option value="presently" selected>Presently</option>
+            }
+            else
+            {
+                <option value="presently">Presently</option>
+            }
+            @if ((ViewData["statusproduct"]?.ToString() ?? "") == "hidden")
+            {
+                <option value="hidden" selected>Hidden</option>
+            }
+            else
+            {
+                <option value="hidden">Hidden</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="discount">Giảm giá (%):</label>
+        <input type="number" step="0.01" id="discount" name="discount" min="0" value="@(ViewData["discount"] ?? "0")" />
+    </div>
+    <div>
+        <label>
+            <input type="checkbox" id="isfeatured" name="isfeatured" @( (ViewData["isfeatured"] != null && (bool)ViewData["isfeatured"]) ? "checked" : "" ) />
+            Nổi bật
+        </label>
+    </div>
+    <div>
+        <label for="imagepr">Ảnh sản phẩm:</label>
+        <input type="file" id="imagepr" name="imagepr" accept="image/*" required />
+    </div>
+    <div>
+        <label for="brandid">Thương hiệu (Brand):</label>
+        <select id="brandid" name="brandid" required>
+            <option value="">-- Chọn thương hiệu --</option>
+            @foreach (var brand in ViewBag.Brands)
+            {
+                if (ViewData["brandid"]?.ToString() == brand.BrandId.ToString())
+                {
+                    <option value="@brand.BrandId" selected>@brand.NameBrand</option>
+                }
+                else
+                {
+                    <option value="@brand.BrandId">@brand.NameBrand</option>
+                }
+            }
+        </select>
+    </div>
+    <div>
+        <label for="cateid">Danh mục (Category):</label>
+        <select id="cateid" name="cateid" required>
+            <option value="">-- Chọn danh mục --</option>
+            @foreach (var cate in ViewBag.Categories)
+            {
+                if (ViewData["cateid"]?.ToString() == cate.CateId.ToString())
+                {
+                    <option value="@cate.CateId" selected>@cate.CategoryName</option>
+                }
+                else
+                {
+                    <option value="@cate.CateId">@cate.CategoryName</option>
+                }
+            }
+        </select>
+    </div>
+    <button type="submit">Tạo sản phẩm</button>
+</form>

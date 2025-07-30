@@ -1,0 +1,367 @@
+﻿
+@{
+    ViewData["Title"] = "Đăng nhập - EasyBuy";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+}
+
+@section Scripts {
+    <script>
+        // Form validation and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.login-form');
+            const inputs = form.querySelectorAll('.form-control');
+            
+            // Add floating label effect
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+                
+                // Check if input has value on load
+                if (input.value) {
+                    input.parentElement.classList.add('focused');
+                }
+            });
+            
+            // Password visibility toggle
+            const passwordToggle = document.querySelector('.password-toggle');
+            const passwordInput = document.querySelector('#password');
+            
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
+    
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem 0;
+        }
+        
+        .auth-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .auth-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .auth-header h2 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .auth-header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+        }
+        
+        .auth-body {
+            padding: 2rem;
+        }
+        
+        .form-floating-custom {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-floating-custom .form-control {
+            height: 56px;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #fafbfc;
+        }
+        
+        .form-floating-custom .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background-color: white;
+        }
+        
+        .form-floating-custom .form-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            z-index: 2;
+        }
+        
+        .form-floating-custom label {
+            position: absolute;
+            top: 50%;
+            left: 3rem;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: var(--transition);
+            background: transparent;
+            padding: 0;
+        }
+        
+        .form-floating-custom.focused label,
+        .form-floating-custom .form-control:focus ~ label {
+            top: 0;
+            left: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            background: white;
+            padding: 0 0.25rem;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            z-index: 2;
+        }
+        
+        .password-toggle:hover {
+            color: var(--primary-color);
+        }
+        
+        .btn-login {
+            width: 100%;
+            height: 56px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-login:hover::before {
+            left: 100%;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+        }
+        
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background: white;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .btn-social:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            color: var(--text-muted);
+        }
+        
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .alert-modern {
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            background: #fee;
+            color: var(--danger-color);
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        media (max-width: 480px) {
+            .auth-container {
+                padding: 1rem;
+            }
+            
+            .auth-header,
+            .auth-body {
+                padding: 1.5rem;
+            }
+            
+            .social-login {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+}
+
+<div class="auth-container">
+    <div class="container">
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <h2><i class="fas fa-shopping-bag me-2"></i>Đăng nhập</h2>
+                <p>Chào mừng bạn quay trở lại!</p>
+            </div>
+            
+            <!-- Body -->
+            <div class="auth-body">
+                <!-- Error Alert -->
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert-modern">
+                        <i class="fas fa-exclamation-circle me-2"></i>@ViewBag.Error
+                    </div>
+                }
+                
+                <!-- Social Login -->
+                <div class="social-login">
+                    <a href="@Url.Action("LoginByGoogle", "Account")" class="btn-social">
+                        <i class="fab fa-google text-danger"></i> Google
+                    </a>
+
+                    <a href="#" class="btn-social">
+                        <i class="fab fa-facebook-f text-primary"></i>
+                        Facebook
+                    </a>
+                </div>
+                
+                <!-- Divider -->
+                <div class="divider">
+                    <span>hoặc</span>
+                </div>
+                
+                <!-- Login Form -->
+                <form asp-action="Login" method="post" class="login-form">
+                    <!-- Username/Email Field -->
+                    <div class="form-floating-custom">
+                        <i class="form-icon fas fa-user"></i>
+                        <input type="text" class="form-control" id="name" name="name" required />
+                        <label for="name">Số điện thoại hoặc Email</label>
+                    </div>
+                    
+                    <!-- Password Field -->
+                    <div class="form-floating-custom">
+                        <i class="form-icon fas fa-lock"></i>
+                        <input type="password" class="form-control" id="password" name="password" required />
+                        <label for="password">Mật khẩu</label>
+                        <button type="button" class="password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Remember & Forgot -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                            <label class="form-check-label" for="remember">
+                                Ghi nhớ đăng nhập
+                            </label>
+                        </div>
+                        <a href="#" class="text-decoration-none">Quên mật khẩu?</a>
+                    </div>
+                    
+                    <!-- Login Button -->
+                    <button type="submit" class="btn-login">
+                        <i class="fas fa-sign-in-alt me-2"></i>
+                        Đăng nhập
+                    </button>
+                </form>
+                
+                <!-- Footer -->
+                <div class="auth-footer mt-3">
+                    <p>Chưa có tài khoản? <a href="/Account/Register">Đăng ký ngay</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

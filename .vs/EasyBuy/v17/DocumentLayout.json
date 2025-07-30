@@ -1,0 +1,1174 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Cong Thang\\congnghephanmem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\account\\updateaddress.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\account\\updateaddress.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\shared\\notfound.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\shared\\notfound.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\admin\\views\\layout\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\admin\\views\\layout\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\admin\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\admin\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkho\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkho\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkt\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkt\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\admin\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\admin\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkd\\controllers\\invoicenvkdcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkd\\controllers\\invoicenvkdcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkd\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkd\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\attributes\\authorizeroleattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\attributes\\authorizeroleattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvmkt\\views\\products\\listproducts.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvmkt\\views\\products\\listproducts.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvmkt\\views\\products\\updateproducts.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvmkt\\views\\products\\updateproducts.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvmkt\\views\\products\\createproducts.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvmkt\\views\\products\\createproducts.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvmkt\\views\\layout\\_layoutnvmkt.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvmkt\\views\\layout\\_layoutnvmkt.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvmkt\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvmkt\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvmkt\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvmkt\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkho\\views\\invoicewarehousenvkho\\detailsinvoicewarehouse.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkho\\views\\invoicewarehousenvkho\\detailsinvoicewarehouse.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\error\\notfoundpage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\error\\notfoundpage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvmkt\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvmkt\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkho\\views\\layout\\_layoutnvkho.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkho\\views\\layout\\_layoutnvkho.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkd\\views\\layout\\_layoutnvkd.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkd\\views\\layout\\_layoutnvkd.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkd\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkd\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkho\\views\\invoicewarehousenvkho\\listinvoicewarehouse.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkho\\views\\invoicewarehousenvkho\\listinvoicewarehouse.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkho\\views\\invoicewarehousenvkho\\listorderconfirm.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkho\\views\\invoicewarehousenvkho\\listorderconfirm.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkd\\views\\invoicenvkd\\listinvoice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkd\\views\\invoicenvkd\\listinvoice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkd\\views\\invoicenvkd\\detailsinvoice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkd\\views\\invoicenvkd\\detailsinvoice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\layout\\_layoutuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\layout\\_layoutuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkho\\controllers\\invoicewarehousenvkhocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkho\\controllers\\invoicewarehousenvkhocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkd\\controllers\\ordernvkdcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkd\\controllers\\ordernvkdcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\controllers\\ratingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\controllers\\ratingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\account\\updateaccount.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\account\\updateaccount.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\account\\changepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\account\\changepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\account\\addadress.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\account\\addadress.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\error\\error404.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\error\\error404.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\account\\setpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\account\\setpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\views\\wishlist\\wishlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\views\\wishlist\\wishlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\services\\auth\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\services\\auth\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\services\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\services\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\controllers\\errorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\controllers\\errorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\controllers\\chatapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\controllers\\chatapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\services\\simplechat\\simplechatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\services\\simplechat\\simplechatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\wwwroot\\js\\floating-chat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\wwwroot\\js\\floating-chat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\services\\vnpay\\vnpayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\services\\vnpay\\vnpayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\services\\vnpay\\ivnpayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\services\\vnpay\\ivnpayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\easybuycontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\easybuycontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\easybuy.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\easybuy.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\areas\\nvkho\\views\\invoicewarehousenvkho\\makeinvoicewarehouse.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\areas\\nvkho\\views\\invoicewarehousenvkho\\makeinvoicewarehouse.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\invoicewarehouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\invoicewarehouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\controllers\\wishlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\controllers\\wishlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\orderdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\orderdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\services\\momo\\momoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\services\\momo\\momoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\orderinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\orderinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\paymentmethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\paymentmethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\feedback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\feedback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\logactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\logactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\logo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\logo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|c:\\users\\cong thang\\congnghephanmem\\easybuy\\models\\brand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6B402FB-908A-4437-AD97-B83B6C0B73FA}|EasyBuy\\EasyBuy.csproj|solutionrelative:easybuy\\models\\brand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\appsettings.json",
+              "RelativeDocumentMoniker": "EasyBuy\\appsettings.json",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\appsettings.json",
+              "RelativeToolTip": "EasyBuy\\appsettings.json",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAADAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-18T15:06:01.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "EasyBuy\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\appsettings.Development.json",
+              "RelativeToolTip": "EasyBuy\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-28T16:06:58.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NotFound.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Shared\\NotFound.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Shared\\NotFound.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Shared\\NotFound.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Shared\\NotFound.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T03:48:02.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UpdateAddress.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\UpdateAddress.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Account\\UpdateAddress.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\UpdateAddress.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Account\\UpdateAddress.cshtml",
+              "ViewState": "AgIAAEECAAAAAAAAAADgv1oCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:12:48.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Program.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Program.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Program.cs",
+              "RelativeToolTip": "EasyBuy\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-18T15:06:03.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "EasyBuy\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAOICAAAAAAAAAAAAAKkCAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:37:37.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T07:31:24.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKho\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKho\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:48:42.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKT\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKT\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKT\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKT\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T07:00:30.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_LayoutAdmin.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\Admin\\Views\\Layout\\_LayoutAdmin.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\Admin\\Views\\Layout\\_LayoutAdmin.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\Admin\\Views\\Layout\\_LayoutAdmin.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\Admin\\Views\\Layout\\_LayoutAdmin.cshtml",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAAHQAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T07:37:52.811Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\Admin\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\Admin\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\Admin\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "EasyBuy\\Areas\\Admin\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T07:30:26.979Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "InvoiceNVKDController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Controllers\\InvoiceNVKDController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKD\\Controllers\\InvoiceNVKDController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Controllers\\InvoiceNVKDController.cs",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKD\\Controllers\\InvoiceNVKDController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T06:04:54.022Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKD\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKD\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T06:29:26.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AuthorizeRoleAttribute.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Attributes\\AuthorizeRoleAttribute.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Attributes\\AuthorizeRoleAttribute.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Attributes\\AuthorizeRoleAttribute.cs",
+              "RelativeToolTip": "EasyBuy\\Attributes\\AuthorizeRoleAttribute.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T05:51:25.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAC0BAAAAAAAAAAAAAF8BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-28T14:36:10.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ListProducts.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Products\\ListProducts.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVMKT\\Views\\Products\\ListProducts.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Products\\ListProducts.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVMKT\\Views\\Products\\ListProducts.cshtml",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAnwH0AAACTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T07:04:03.337Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ProductsController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Controllers\\ProductsController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVMKT\\Controllers\\ProductsController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Controllers\\ProductsController.cs",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVMKT\\Controllers\\ProductsController.cs",
+              "ViewState": "AgIAAEsBAAAAAAAAAAAwwEsBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T06:54:09.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CreateProducts.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Products\\CreateProducts.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVMKT\\Views\\Products\\CreateProducts.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Products\\CreateProducts.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVMKT\\Views\\Products\\CreateProducts.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAHsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T07:03:56.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "_LayoutNVMKT.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Layout\\_LayoutNVMKT.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVMKT\\Views\\Layout\\_LayoutNVMKT.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Layout\\_LayoutNVMKT.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVMKT\\Views\\Layout\\_LayoutNVMKT.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAK4AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:54:15.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "UpdateProducts.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Products\\UpdateProducts.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVMKT\\Views\\Products\\UpdateProducts.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Products\\UpdateProducts.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVMKT\\Views\\Products\\UpdateProducts.cshtml",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAtwI4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T07:04:07.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVMKT\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVMKT\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T07:08:35.882Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DetailsInvoiceWarehouse.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\DetailsInvoiceWarehouse.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\DetailsInvoiceWarehouse.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\DetailsInvoiceWarehouse.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\DetailsInvoiceWarehouse.cshtml",
+              "ViewState": "AgIAADABAAAAAAAAAAAhwEEBAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T15:09:24.521Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "NotFoundPage.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Error\\NotFoundPage.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Error\\NotFoundPage.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Error\\NotFoundPage.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Error\\NotFoundPage.cshtml",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAhwHEAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T05:56:12.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "EasyBuy\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAIA1wBoAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T05:36:46.354Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVMKT\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVMKT\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVMKT\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T07:06:43.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ListInvoiceWarehouse.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\ListInvoiceWarehouse.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\ListInvoiceWarehouse.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\ListInvoiceWarehouse.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\ListInvoiceWarehouse.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACABAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T14:58:12.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "_LayoutNVKho.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\Layout\\_LayoutNVKho.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKho\\Views\\Layout\\_LayoutNVKho.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\Layout\\_LayoutNVKho.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKho\\Views\\Layout\\_LayoutNVKho.cshtml",
+              "ViewState": "AgIAAMEAAAAAAAAAAAAAAOEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:41:20.972Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "_LayoutNVKD.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Views\\Layout\\_LayoutNVKD.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKD\\Views\\Layout\\_LayoutNVKD.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Views\\Layout\\_LayoutNVKD.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKD\\Views\\Layout\\_LayoutNVKD.cshtml",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAAAHwAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:22:32.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "ListOrderConfirm.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\ListOrderConfirm.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\ListOrderConfirm.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\ListOrderConfirm.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\ListOrderConfirm.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T08:15:42.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKD\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKD\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAAJMAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:32:12.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "DetailsInvoice.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Views\\InvoiceNVKD\\DetailsInvoice.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKD\\Views\\InvoiceNVKD\\DetailsInvoice.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Views\\InvoiceNVKD\\DetailsInvoice.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKD\\Views\\InvoiceNVKD\\DetailsInvoice.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T14:42:48.032Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "ListInvoice.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Views\\InvoiceNVKD\\ListInvoice.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKD\\Views\\InvoiceNVKD\\ListInvoice.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Views\\InvoiceNVKD\\ListInvoice.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKD\\Views\\InvoiceNVKD\\ListInvoice.cshtml",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAgwD4AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T07:58:45.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "ChangePassword.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\ChangePassword.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Account\\ChangePassword.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\ChangePassword.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Account\\ChangePassword.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:12:50.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "InvoiceWareHouseNVKhoController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Controllers\\InvoiceWareHouseNVKhoController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKho\\Controllers\\InvoiceWareHouseNVKhoController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Controllers\\InvoiceWareHouseNVKhoController.cs",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKho\\Controllers\\InvoiceWareHouseNVKhoController.cs",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAowBIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T07:47:23.212Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "UpdateAccount.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\UpdateAccount.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Account\\UpdateAccount.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\UpdateAccount.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Account\\UpdateAccount.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:12:52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "_LayoutUser.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Layout\\_LayoutUser.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Layout\\_LayoutUser.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Layout\\_LayoutUser.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Layout\\_LayoutUser.cshtml",
+              "ViewState": "AgIAAMAAAAAAAAAAAAAAAMwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-28T15:53:27.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "AddAdress.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\AddAdress.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Account\\AddAdress.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\AddAdress.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Account\\AddAdress.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T06:12:49.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "OrderNVKDController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Controllers\\OrderNVKDController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKD\\Controllers\\OrderNVKDController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKD\\Controllers\\OrderNVKDController.cs",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKD\\Controllers\\OrderNVKDController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T06:12:58.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "ChatApiController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\ChatApiController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Controllers\\ChatApiController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\ChatApiController.cs",
+              "RelativeToolTip": "EasyBuy\\Controllers\\ChatApiController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T03:48:58.589Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Controllers\\CartController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\CartController.cs",
+              "RelativeToolTip": "EasyBuy\\Controllers\\CartController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T06:07:39.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "ErrorController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\ErrorController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Controllers\\ErrorController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\ErrorController.cs",
+              "RelativeToolTip": "EasyBuy\\Controllers\\ErrorController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T05:59:00.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "RatingController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\RatingController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Controllers\\RatingController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\RatingController.cs",
+              "RelativeToolTip": "EasyBuy\\Controllers\\RatingController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T14:38:18.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Error404.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Error\\Error404.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Error\\Error404.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Error\\Error404.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Error\\Error404.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T05:59:40.815Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Wishlist.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Wishlist\\Wishlist.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Wishlist\\Wishlist.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Wishlist\\Wishlist.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Wishlist\\Wishlist.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T05:18:04.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "SetPassword.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\SetPassword.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Views\\Account\\SetPassword.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Views\\Account\\SetPassword.cshtml",
+              "RelativeToolTip": "EasyBuy\\Views\\Account\\SetPassword.cshtml",
+              "ViewState": "AgIAANMAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-28T15:45:27.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\AUTH\\IAuthService.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Services\\AUTH\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\AUTH\\IAuthService.cs",
+              "RelativeToolTip": "EasyBuy\\Services\\AUTH\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T05:44:35.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\AUTH\\AuthService.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Services\\AUTH\\AuthService.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\AUTH\\AuthService.cs",
+              "RelativeToolTip": "EasyBuy\\Services\\AUTH\\AuthService.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T05:44:26.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "SimpleChatService.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\SIMPLECHAT\\SimpleChatService.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Services\\SIMPLECHAT\\SimpleChatService.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\SIMPLECHAT\\SimpleChatService.cs",
+              "RelativeToolTip": "EasyBuy\\Services\\SIMPLECHAT\\SimpleChatService.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwB0AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T03:40:51.389Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "floating-chat.js",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\wwwroot\\js\\floating-chat.js",
+              "RelativeDocumentMoniker": "EasyBuy\\wwwroot\\js\\floating-chat.js",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\wwwroot\\js\\floating-chat.js",
+              "RelativeToolTip": "EasyBuy\\wwwroot\\js\\floating-chat.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-29T04:10:39.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "IVnPayService.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\VNPAY\\IVnPayService.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Services\\VNPAY\\IVnPayService.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\VNPAY\\IVnPayService.cs",
+              "RelativeToolTip": "EasyBuy\\Services\\VNPAY\\IVnPayService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T04:02:56.403Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "VnPayService.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\VNPAY\\VnPayService.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Services\\VNPAY\\VnPayService.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\VNPAY\\VnPayService.cs",
+              "RelativeToolTip": "EasyBuy\\Services\\VNPAY\\VnPayService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T04:02:59.921Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Controllers\\OrderController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "EasyBuy\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAANcAAAAAAAAAAAAkwNcAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T14:32:25.6Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "EasyBuyContext.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\EasyBuyContext.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\EasyBuyContext.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\EasyBuyContext.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\EasyBuyContext.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAYwDsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T07:58:08.806Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\Category.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Category.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T03:18:38.734Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "EasyBuy",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
+              "RelativeDocumentMoniker": "EasyBuy\\EasyBuy.csproj",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
+              "RelativeToolTip": "EasyBuy\\EasyBuy.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-28T14:17:06.393Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "MakeInvoiceWarehouse.cshtml",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\MakeInvoiceWarehouse.cshtml",
+              "RelativeDocumentMoniker": "EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\MakeInvoiceWarehouse.cshtml",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\MakeInvoiceWarehouse.cshtml",
+              "RelativeToolTip": "EasyBuy\\Areas\\NVKho\\Views\\InvoiceWareHouseNVKho\\MakeInvoiceWarehouse.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T14:01:21.248Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "Banner.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Banner.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\Banner.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Banner.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\Banner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T07:57:40.467Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "InvoiceWareHouse.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\InvoiceWareHouse.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\InvoiceWareHouse.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\InvoiceWareHouse.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\InvoiceWareHouse.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA9wBMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T07:47:19.745Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "WishlistController.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\WishlistController.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Controllers\\WishlistController.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Controllers\\WishlistController.cs",
+              "RelativeToolTip": "EasyBuy\\Controllers\\WishlistController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T14:50:16.113Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "OrderDetail.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\OrderDetail.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\OrderDetail.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\OrderDetail.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\OrderDetail.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T07:57:35.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "MomoService.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\MOMO\\MomoService.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Services\\MOMO\\MomoService.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Services\\MOMO\\MomoService.cs",
+              "RelativeToolTip": "EasyBuy\\Services\\MOMO\\MomoService.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAqwEAAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T14:26:17.258Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "OrderInfo.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\OrderInfo.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\OrderInfo.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\OrderInfo.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\OrderInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T14:30:07.82Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "Order.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Order.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\Order.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Order.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\Order.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwA8AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T08:33:12.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "Invoice.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Invoice.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\Invoice.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Invoice.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\Invoice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T07:56:37.988Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "PaymentMethod.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\PaymentMethod.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\PaymentMethod.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\PaymentMethod.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\PaymentMethod.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T08:07:46.898Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "Feedback.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Feedback.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\Feedback.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Feedback.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\Feedback.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T08:33:24.452Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "LogActivity.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\LogActivity.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\LogActivity.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\LogActivity.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\LogActivity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T08:07:44.774Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "Logo.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Logo.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\Logo.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Logo.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\Logo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T07:57:34.138Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "Brand.cs",
+              "DocumentMoniker": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Brand.cs",
+              "RelativeDocumentMoniker": "EasyBuy\\Models\\Brand.cs",
+              "ToolTip": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\Models\\Brand.cs",
+              "RelativeToolTip": "EasyBuy\\Models\\Brand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T07:57:39.708Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

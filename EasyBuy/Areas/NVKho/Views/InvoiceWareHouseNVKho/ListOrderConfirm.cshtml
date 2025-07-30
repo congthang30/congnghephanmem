@@ -1,0 +1,640 @@
+﻿@model IEnumerable<EasyBuy.Models.Order>
+@{
+    ViewData["Title"] = "Danh sách đơn hàng đã xác nhận";
+    Layout = "~/Areas/NVKho/Views/Layout/_LayoutNVKho.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1 text-gray-800">
+                <i class="fas fa-boxes text-primary me-2"></i>
+                Đơn hàng cần chuẩn bị
+            </h1>
+            <p class="text-muted mb-0">Danh sách đơn hàng đã được xác nhận và cần đóng gói xuất kho</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-outline-success" onclick="window.print()">
+                <i class="fas fa-print me-1"></i> In danh sách
+            </button>
+            <button type="button" class="btn btn-success" onclick="location.reload()">
+                <i class="fas fa-sync-alt me-1"></i> Làm mới
+            </button>
+        </div>
+    </div>
+
+    <!-- Thống kê tổng quan -->
+    <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Tổng đơn hàng
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(Model?.Count() ?? 0)</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Tổng sản phẩm
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(Model?.SelectMany(o => o.OrderDetails).Sum(od => od.Quantity) ?? 0)</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-box fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Tổng giá trị
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @String.Format("{0:N0}₫", Model?.Sum(o => o.FinalTotal ?? o.TotalAmount) ?? 0)
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Hôm nay
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @(Model?.Count(o => o.CreatedAt?.Date == DateTime.Today) ?? 0)
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách đơn hàng -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white border-0 py-3">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5 class="mb-0">
+                        <i class="fas fa-list text-primary me-2"></i>
+                        Danh sách đơn hàng cần chuẩn bị
+                    </h5>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm đơn hàng...">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="ordersTable">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="border-0 py-3">
+                                    Mã đơn
+                                </th>
+                                <th class="border-0 py-3">Khách hàng</th>
+                                <th class="border-0 py-3">Ngày đặt</th>
+                                <th class="border-0 py-3">Sản phẩm</th>
+                                <th class="border-0 py-3 text-center">Số lượng</th>
+                                <th class="border-0 py-3 text-end">Tổng tiền</th>
+                                <th class="border-0 py-3 text-center">Trạng thái</th>
+                                <th class="border-0 py-3 text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.OrderByDescending(o => o.CreatedAt))
+                            {
+                                <tr class="order-row">
+                                    <td class="py-3">
+                                        <div>
+                                            #@order.OrderId
+                                        </div>
+                                    </td>
+                                    <td class="py-3">
+                                        <div>
+                                            <h6 class="mb-1">@order.User?.FullName</h6>
+                                            <small class="text-muted">@order.User?.Phone</small>
+                                        </div>
+                                    </td>
+                                    <td class="py-3">
+                                        <div>
+                                            <span>@order.CreatedAt?.ToString("dd/MM/yyyy")</span>
+                                            <br>
+                                            <small class="text-muted">@order.CreatedAt?.ToString("HH:mm")</small>
+                                        </div>
+                                    </td>
+                                    <td class="py-3">
+                                        <div class="d-flex align-items-center">
+                                            @if (order.OrderDetails?.FirstOrDefault()?.Product?.ImagePr != null)
+                                            {
+                                                <img src="@order.OrderDetails.FirstOrDefault().Product.ImagePr"
+                                                     alt="Product" class="me-2 rounded"
+                                                     style="width: 40px; height: 40px; object-fit: cover;">
+                                            }
+                                            <div>
+                                                <span>@order.OrderDetails?.Count() sản phẩm</span>
+                                                @if (order.OrderDetails?.Count() > 1)
+                                                {
+                                                    <br>
+
+                                                    <small class="text-muted">và các SP khác</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 text-center">
+                                        <span class="badge bg-info fs-6">
+                                            @order.OrderDetails?.Sum(od => od.Quantity)
+                                        </span>
+                                    </td>
+                                    <td class="py-3 text-end">
+                                        <span class="fw-bold text-success">
+                                            @String.Format("{0:N0}₫", order.FinalTotal ?? order.TotalAmount)
+                                        </span>
+                                    </td>
+                                    <td class="py-3 text-center">
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check-circle me-1"></i>@order.Status
+                                        </span>
+                                    </td>
+                                    <td class="py-3 text-center">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-sm btn-outline-primary view-details-btn"
+                                                    data-order-id="@order.OrderId" title="Xem chi tiết">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            @using (Html.BeginForm("MakeInvoiceWarehouse", "InvoiceWareHouseNVKho", FormMethod.Post, new { @class = "flex-fill" }))
+                                            {
+                                                <input type="hidden" name="orderId" value="@order.OrderId" />
+                                                <button type="submit" class="btn btn-sm btn-success" title="Chuẩn bị hàng"
+                                                        onclick="return confirm('Xác nhận tạo hóa đơn xuất kho cho đơn hàng #@order.OrderId?')">
+                                                    <i class="fas fa-box-open"></i>
+                                                </button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Không có đơn hàng nào cần chuẩn bị</h5>
+                    <p class="text-muted">Tất cả đơn hàng đã được xử lý hoặc chưa có đơn hàng mới.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Modal xem chi tiết đơn hàng -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-file-invoice me-2"></i>
+                    Chi tiết đơn hàng <span id="modalOrderId"></span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="orderDetailsContent">
+                <div class="text-center py-4" id="loadingSpinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Đang tải thông tin đơn hàng...</p>
+                </div>
+
+                <div id="orderDetailsData" style="display: none;">
+                    <!-- Thông tin khách hàng và đơn hàng -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0"><i class="fas fa-user me-2"></i>Thông tin khách hàng</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col-4 text-muted">Họ tên:</div>
+                                        <div class="col-8 fw-bold" id="customerName"></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-4 text-muted">Số điện thoại:</div>
+                                        <div class="col-8" id="customerPhone"></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-4 text-muted">Email:</div>
+                                        <div class="col-8" id="customerEmail"></div>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-0">
+                                        <small class="text-muted">Địa chỉ giao hàng:</small>
+                                        <p class="mb-0 mt-1" id="deliveryAddress"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Thông tin đơn hàng</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col-5 text-muted">Ngày tạo:</div>
+                                        <div class="col-7" id="orderDate"></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-5 text-muted">Trạng thái:</div>
+                                        <div class="col-7" id="orderStatus"></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-5 text-muted">Thanh toán:</div>
+                                        <div class="col-7" id="paymentMethod"></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-5 text-muted">TT Thanh toán:</div>
+                                        <div class="col-7" id="paymentStatus"></div>
+                                    </div>
+                                    <div id="voucherInfo" style="display: none;">
+                                        <hr>
+                                        <div class="row mb-0">
+                                            <div class="col-5 text-muted">Voucher:</div>
+                                            <div class="col-7">
+                                                <span class="badge bg-success" id="voucherCode"></span>
+                                                <br>
+                                                <small class="text-success" id="voucherDiscount"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Danh sách sản phẩm -->
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h6 class="mb-0">
+                                <i class="fas fa-boxes me-2"></i>
+                                Danh sách sản phẩm cần chuẩn bị
+                            </h6>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th class="border-0">Sản phẩm</th>
+                                            <th class="border-0 text-center">Số lượng cần lấy</th>
+                                            <th class="border-0 text-end">Đơn giá</th>
+                                            <th class="border-0 text-end">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productsList">
+                                        <!-- Danh sách sản phẩm sẽ được load bằng JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tóm tắt đơn hàng -->
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h6 class="mb-3">Hướng dẫn đóng gói:</h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Kiểm tra kỹ sản phẩm trước khi đóng gói</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Đóng gói cẩn thận, chống va đập</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Dán nhãn địa chỉ giao hàng</li>
+                                        <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Ghi rõ "Dễ vỡ" nếu có sản phẩm dễ hỏng</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="bg-light p-3 rounded">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Tổng tiền hàng:</span>
+                                            <span id="totalAmount"></span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2" id="discountRow" style="display: none;">
+                                            <span class="text-success">Giảm giá:</span>
+                                            <span class="text-success" id="discountAmount"></span>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex justify-content-between fw-bold fs-5 text-primary">
+                                            <span>Tổng thanh toán:</span>
+                                            <span id="finalTotal"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i> Đóng
+                </button>
+                <button type="button" class="btn btn-info" id="printOrderBtn">
+                    <i class="fas fa-print me-1"></i> In phiếu đóng gói
+                </button>
+                <button type="button" class="btn btn-success" id="markAsPreparedBtn">
+                    <i class="fas fa-check me-1"></i> Đánh dấu đã chuẩn bị xong
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .border-left-primary {
+        border-left: 4px solid #4e73df !important;
+    }
+
+    .border-left-success {
+        border-left: 4px solid #1cc88a !important;
+    }
+
+    .border-left-info {
+        border-left: 4px solid #36b9cc !important;
+    }
+
+    .border-left-warning {
+        border-left: 4px solid #f6c23e !important;
+    }
+
+    .card {
+        border-radius: 12px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .table td {
+        vertical-align: middle;
+        border-color: #f1f3f4;
+    }
+
+    .table th {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .text-gray-800 {
+        color: #5a5c69 !important;
+    }
+
+    .btn-group .btn {
+        margin: 0 1px;
+    }
+
+    media print {
+        .btn, .card-header, .card-footer, .modal
+
+    {
+        display: none !important;
+    }
+
+    .card {
+        border: 1px solid #dee2e6 !important;
+        box-shadow: none !important;
+    }
+
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Tìm kiếm
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#ordersTable tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            // Xem chi tiết đơn hàng
+            $('.view-details-btn').click(function () {
+                var orderId = $(this).data('order-id');
+                loadOrderDetails(orderId);
+            });
+
+            // Function load chi tiết đơn hàng
+            function loadOrderDetails(orderId) {
+                // Hiển thị modal và loading spinner
+                $('#orderDetailsModal').modal('show');
+                $('#loadingSpinner').show();
+                $('#orderDetailsData').hide();
+                $('#modalOrderId').text('#' + orderId);
+
+                // Gọi API lấy chi tiết đơn hàng
+                $.ajax({
+                    url: '/NVKho/InvoiceWareHouseNVKho/GetOrderDetails',
+                    type: 'GET',
+                    data: { orderId: orderId },
+                    success: function (response) {
+                        if (response.success) {
+                            populateOrderDetails(response.data);
+                        } else {
+                            showError('Không thể tải thông tin đơn hàng: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        showError('Có lỗi xảy ra khi tải thông tin đơn hàng!');
+                    },
+                    complete: function () {
+                        $('#loadingSpinner').hide();
+                    }
+                });
+            }
+
+            // Function điền dữ liệu vào modal
+            function populateOrderDetails(data) {
+                // Thông tin khách hàng
+                $('#customerName').text(data.customerName || 'N/A');
+                $('#customerPhone').text(data.customerPhone || 'N/A');
+                $('#customerEmail').text(data.customerEmail || 'N/A');
+                $('#deliveryAddress').text(data.address || 'N/A');
+
+                // Thông tin đơn hàng
+                $('#orderDate').text(data.createdAt || 'N/A');
+                $('#orderStatus').html('<span class="badge bg-success">' + (data.status || 'N/A') + '</span>');
+                $('#paymentMethod').text(data.paymentMethod || 'N/A');
+
+                // Trạng thái thanh toán
+                var paymentStatusClass = data.statusPayment === 'Đã thanh toán' ? 'bg-success' : 'bg-warning';
+                $('#paymentStatus').html('<span class="badge ' + paymentStatusClass + '">' + (data.statusPayment || 'N/A') + '</span>');
+
+                // Voucher info
+                if (data.voucher) {
+                    $('#voucherInfo').show();
+                    $('#voucherCode').text(data.voucher.code);
+
+                    // Tính toán giảm giá: TotalAmount - FinalTotal
+                    var voucherDiscount = data.totalAmount - data.finalTotal;
+                    $('#voucherDiscount').text('-' + formatCurrency(voucherDiscount));
+                } else {
+                    $('#voucherInfo').hide();
+                }
+
+                // Danh sách sản phẩm
+                var productsList = '';
+                if (data.orderDetails && data.orderDetails.length > 0) {
+                    data.orderDetails.forEach(function (item) {
+                        productsList += '<tr>';
+                        productsList += '<td>';
+                        productsList += '<div class="d-flex align-items-center">';
+
+                        if (item.imageUrl) {
+                            productsList += '<img src="' + item.imageUrl + '" alt="' + item.productName + '" class="me-3 rounded" style="width: 50px; height: 50px; object-fit: cover;">';
+                        }
+
+                        productsList += '<div>';
+                        productsList += '<h6 class="mb-1">' + (item.productName || 'N/A') + '</h6>';
+                        if (item.brandName) {
+                            productsList += '<small class="text-muted">Thương hiệu: ' + item.brandName + '</small>';
+                        }
+                        productsList += '</div>';
+                        productsList += '</div>';
+                        productsList += '</td>';
+
+                        productsList += '<td class="text-center">';
+                        productsList += '<span class="badge bg-primary fs-6">' + (item.quantity || 0) + '</span>';
+                        productsList += '</td>';
+
+                        productsList += '<td class="text-end">' + formatCurrency(item.unitPrice) + '</td>';
+                        productsList += '<td class="text-end fw-bold text-success">' + formatCurrency(item.totalPrice) + '</td>';
+
+                        productsList += '<td class="text-center">';
+                        productsList += '</td>';
+
+                        productsList += '</tr>';
+                    });
+                }
+                $('#productsList').html(productsList);
+
+                // Tổng tiền
+                $('#totalAmount').text(formatCurrency(data.totalAmount));
+                $('#finalTotal').text(formatCurrency(data.finalTotal));
+
+                // Hiển thị giảm giá
+                var calculatedDiscount = data.totalAmount - data.finalTotal;
+                if (data.voucher && calculatedDiscount > 0) {
+                    $('#discountRow').show();
+                    $('#discountAmount').text('-' + formatCurrency(calculatedDiscount));
+                } else {
+                    $('#discountRow').hide();
+                }
+
+                // Hiển thị dữ liệu
+                $('#orderDetailsData').show();
+
+                // Set up modal buttons
+                $('#printOrderBtn').off('click').on('click', function() {
+                    printOrder(data.orderId);
+                });
+
+                $('#markAsPreparedBtn').off('click').on('click', function() {
+                    markOrderAsPrepared(data.orderId);
+                });
+            }
+
+            // Function hiển thị lỗi
+            function showError(message) {
+                $('#orderDetailsData').html('<div class="alert alert-danger text-center"><i class="fas fa-exclamation-triangle me-2"></i>' + message + '</div>').show();
+            }
+
+            // Function format tiền tệ
+            function formatCurrency(amount) {
+                if (amount == null || amount === '') return '0₫';
+                return new Intl.NumberFormat('vi-VN').format(amount) + '₫';
+            }
+
+            // Function in đơn hàng
+            function printOrder(orderId) {
+                window.open('/NVKho/InvoiceWareHouseNVKho/PrintOrder/' + orderId, '_blank');
+            }
+
+            // Function đánh dấu đã chuẩn bị xong
+            function markOrderAsPrepared(orderId) {
+                if (confirm('Xác nhận đã chuẩn bị xong tất cả sản phẩm cho đơn hàng #' + orderId + '?')) {
+                    // Tạo form ẩn để submit
+                    var form = $('<form>', {
+                        'method': 'POST',
+                        'action': '/NVKho/InvoiceWareHouseNVKho/MakeInvoiceWarehouse'
+                    });
+
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'orderId',
+                        'value': orderId
+                    }));
+
+                    // Add anti-forgery token if available
+                    var token = $('input[name="__RequestVerificationToken"]').val();
+                    if (token) {
+                        form.append($('<input>', {
+                            'type': 'hidden',
+                            'name': '__RequestVerificationToken',
+                            'value': token
+                        }));
+                    }
+
+                    // Submit form
+                    $('body').append(form);
+                    form.submit();
+                }
+            }
+        });
+    </script>
+}
+

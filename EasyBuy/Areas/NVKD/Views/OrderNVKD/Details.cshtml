@@ -1,0 +1,267 @@
+@model EasyBuy.Models.Order
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng #" + Model.OrderId;
+    Layout = "~/Areas/NVKD/Views/Layout/_LayoutNVKD.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1 text-gray-800">
+                <i class="fas fa-file-invoice text-primary me-2"></i>
+                Chi tiết đơn hàng #@Model.OrderId
+            </h1>
+            <p class="text-muted mb-0">Xem thông tin chi tiết và trạng thái đơn hàng</p>
+        </div>
+        <div>
+            <a href="@Url.Action("ListOrderConfirmed", "OrderNVKD", new { area = "NVKD" })" class="btn btn-outline-secondary me-2">
+                <i class="fas fa-arrow-left me-1"></i> Quay lại danh sách
+            </a>
+            <button type="button" class="btn btn-primary" onclick="window.print()">
+                <i class="fas fa-print me-1"></i> In đơn hàng
+            </button>
+        </div>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+        <!-- Cột trái - Thông tin chính -->
+        <div class="col-xl-8">
+            <!-- Trạng thái đơn hàng -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="mb-1">Trạng thái đơn hàng</h5>
+                            <span class="badge badge-lg fs-6 bg-success">
+                                <i class="fas fa-check-circle me-1"></i>@Model.Status
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <h5 class="mb-1">Trạng thái thanh toán</h5>
+                            @if (Model.StatusPayment == "Đã thanh toán")
+                            {
+                                <span class="badge badge-lg fs-6 bg-success">
+                                    <i class="fas fa-credit-card me-1"></i>@Model.StatusPayment
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-lg fs-6 bg-warning">
+                                    <i class="fas fa-clock me-1"></i>@Model.StatusPayment
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chi tiết sản phẩm -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-shopping-bag text-primary me-2"></i>
+                        Sản phẩm đã đặt (@Model.OrderDetails.Count() sản phẩm)
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="border-0 py-3">Sản phẩm</th>
+                                    <th class="border-0 py-3 text-center">Số lượng</th>
+                                    <th class="border-0 py-3 text-end">Đơn giá</th>
+                                    <th class="border-0 py-3 text-end">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OrderDetails)
+                                {
+                                    <tr>
+                                        <td class="py-3">
+                                            <div class="d-flex align-items-center">
+                                                @if (!string.IsNullOrEmpty(item.Product?.ImagePr))
+                                                {
+                                                    <div class="me-3">
+                                                        <img src="@item.Product.ImagePr" alt="@item.Product.ProductName" 
+                                                             class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                                                    </div>
+                                                }
+                                                <div>
+                                                    <h6 class="mb-1">@item.Product?.ProductName</h6>
+                                                    @if (!string.IsNullOrEmpty(item.Product?.Brand?.NameBrand))
+                                                    {
+                                                        <small class="text-muted">Thương hiệu: @item.Product.Brand.NameBrand</small>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 text-center">
+                                            <span class="badge bg-light text-dark fs-6">@item.Quantity</span>
+                                        </td>
+                                        <td class="py-3 text-end">
+                                            <span class="fw-medium">@String.Format("{0:N0}₫", item.UnitPrice)</span>
+                                        </td>
+                                        <td class="py-3 text-end">
+                                            <span class="fw-bold text-primary">@String.Format("{0:N0}₫", item.UnitPrice)</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải - Thông tin bổ sung -->
+        <div class="col-xl-4">
+            <!-- Thông tin đơn hàng -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Thông tin đơn hàng
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Mã đơn:</div>
+                        <div class="col-7 fw-bold">#@Model.OrderId</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Ngày tạo:</div>
+                        <div class="col-7">@Model.CreatedAt?.ToString("dd/MM/yyyy")</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Giờ tạo:</div>
+                        <div class="col-7">@Model.CreatedAt?.ToString("HH:mm")</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5 text-muted">Thanh toán:</div>
+                        <div class="col-7">@Model.PaymentMethod?.MethodName</div>
+                    </div>
+                    @if (Model.Voucher != null)
+                    {
+                        <div class="row mb-2">
+                            <div class="col-5 text-muted">Voucher:</div>
+                            <div class="col-7">
+                                <span class="badge bg-success">@Model.Voucher.Code</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Thông tin khách hàng -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-user me-2"></i>Khách hàng
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center me-3" 
+                             style="width: 40px; height: 40px;">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">@Model.User?.FullName</h6>
+                            <small class="text-muted">Khách hàng</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 text-muted">Email:</div>
+                        <div class="col-8">@Model.User?.Email</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-4 text-muted">SĐT:</div>
+                        <div class="col-8">@Model.User?.Phone</div>
+                    </div>
+                    <hr>
+                    <div class="mb-0">
+                        <small class="text-muted">Địa chỉ giao hàng:</small>
+                        <p class="mb-0 mt-1">@Model.Address?.FullAddress</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tóm tắt thanh toán -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-calculator me-2"></i>Tóm tắt thanh toán
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tổng tiền hàng:</span>
+                        <span>@String.Format("{0:N0}₫", Model.TotalAmount)</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-success">
+                        <span>Giảm giá voucher:</span>
+                        <span>
+                            @(Model.TotalAmount - Model.FinalTotal)
+                        </span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between fw-bold fs-5 text-primary">
+                        <span>Tổng thanh toán:</span>
+                        <span>@String.Format("{0:N0}₫", Model.FinalTotal)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 12px;
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .badge-lg {
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+    
+    .table td {
+        vertical-align: middle;
+        border-color: #f1f3f4;
+    }
+    
+    .table th {
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .text-gray-800 {
+        color: #5a5c69 !important;
+    }
+    
+    media print {
+        .btn, .card-header {
+            display: none !important;
+        }
+        
+        .card {
+            border: 1px solid #dee2e6 !important;
+            box-shadow: none !important;
+        }
+    }
+</style> 

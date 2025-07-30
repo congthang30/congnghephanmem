@@ -1,0 +1,288 @@
+﻿@model List<EasyBuy.Models.InvoiceWareHouse>
+
+@{
+    ViewBag.Title = "Danh sách phiếu xuất kho";
+    Layout = "~/Areas/NVKho/Views/Layout/_LayoutNVKho.cshtml";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>❌ Lỗi:</strong> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>✅ Thành công:</strong> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h2 class="mb-0">
+                        <i class="fas fa-file-export"></i> Danh sách phiếu xuất kho
+                    </h2>
+                </div>
+                <div class="card-body">
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th class="text-center">Mã phiếu</th>
+                                        <th class="text-center">Ngày xuất</th>
+                                        <th class="text-center">Khách hàng</th>
+                                        <th class="text-center">Nhân viên xuất</th>
+                                        <th class="text-center">Tổng SL</th>
+                                        <th class="text-center">Đơn hàng</th>
+                                        <th class="text-center">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var invoice in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center fw-bold text-primary">#@invoice.InvoiceWareHouseID</td>
+                                            <td class="text-center">
+                                                @invoice.ExportDate.ToString("dd/MM/yyyy HH:mm")
+                                            </td>
+                                            <td>
+                                                @if (invoice.Order?.User != null)
+                                                {
+                                                    <div>
+                                                        <strong>@invoice.Order.User.FullName</strong><br>
+                                                        <small class="text-muted">@invoice.Order.User.Email</small>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">Không xác định</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (invoice.Staff != null)
+                                                {
+                                                    <div>
+                                                        <strong>@invoice.Staff.FullName</strong><br>
+                                                        <small class="text-muted">@invoice.Staff.Email</small>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">Không xác định</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge bg-info">@invoice.TotalQuantity SP</span>
+                                            </td>
+                                            <td class="text-center">
+                                                @if (invoice.Order != null)
+                                                {
+                                                    <a href="@Url.Action("Details", "OrderNVKD", new { Area = "NVKD", id = invoice.Order.OrderId })" 
+                                                       class="text-decoration-none">
+                                                        <span class="fw-bold text-success">#@invoice.Order.OrderId</span><br>
+                                                        <small class="text-muted">@(invoice.Order.TotalAmount?.ToString("N0") ?? "0") ₫</small>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">N/A</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                            onclick="loadInvoiceDetails(@invoice.InvoiceWareHouseID)">
+                                                        <i class="fas fa-eye"></i> Xem chi tiết
+                                                    </button>
+
+                                                    <a href="@Url.Action("DetailsInvoiceWarehouse", new { invoiceId = invoice.InvoiceWareHouseID })"
+                                                       class="btn btn-outline-success btn-sm"
+                                                       title="Xem chi tiết trên trang riêng">
+                                                        <i class="fas fa-external-link-alt"></i> Xem
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">
+                                Tổng cộng: <strong>@Model.Count</strong> phiếu xuất kho
+                            </small>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-file-export fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">Chưa có phiếu xuất kho nào</h4>
+                            <p class="text-muted">Hiện tại chưa có phiếu xuất kho nào được tạo.</p>
+                            <a href="@Url.Action("ListOrderConfirm")" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Tạo phiếu xuất kho
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Chi tiết Hóa đơn Xuất kho -->
+<div class="modal fade" id="invoiceDetailsModal" tabindex="-1" aria-labelledby="invoiceDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="invoiceDetailsModalLabel">
+                    <i class="fas fa-file-invoice"></i> Chi tiết phiếu xuất kho
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="invoiceDetailsContent">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                    <p class="mt-2">Đang tải thông tin...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Đóng
+                </button>
+                <button type="button" class="btn btn-primary" id="printInvoiceBtn">
+                    <i class="fas fa-print"></i> In phiếu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table th {
+        background-color: #343a40;
+        color: white;
+        font-weight: 600;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .btn-group .btn {
+        margin-right: 2px;
+    }
+    
+    .btn-group .btn:last-child {
+        margin-right: 0;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+    
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+    
+    .badge {
+        font-size: 0.75em;
+    }
+    
+    .alert {
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .modal-xl {
+        max-width: 1200px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        // 1. Auto-hide alerts
+        setTimeout(() => $('.alert').fadeOut('slow'), 5000);
+
+        // 2. Xử lý nút xem chi tiết
+        $('.view-details-btn').click(function () {
+            const invoiceId = $(this).data('invoice-id');
+            loadInvoiceDetails(invoiceId);
+        });
+    });
+
+    // 3. Gọi API để lấy chi tiết phiếu xuất
+    function loadInvoiceDetails(invoiceId) {
+        $('#invoiceDetailsModal').modal('show');
+        $('#invoiceDetailsContent').html(`
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Đang tải...</span>
+                </div>
+                <p class="mt-2">Đang tải thông tin...</p>
+            </div>
+        `);
+
+        // Gọi API
+        $.get('/NVKho/Warehouse/GetInvoiceDetails', { invoiceId: invoiceId }) // Hoặc dùng Url.Action nếu Razor
+            .done(function (response) {
+                if (response.success) {
+                    renderInvoiceDetails(response.data);
+                } else {
+                    showError(response.message || 'Không thể tải thông tin hóa đơn');
+                }
+            })
+            .fail(function () {
+                showError('Lỗi kết nối. Vui lòng thử lại!');
+            });
+    }
+
+    // 4. Hiển thị nội dung chi tiết
+    function renderInvoiceDetails(data) {
+        const html = `
+            <div class="container-fluid">
+                <!-- Các khối thông tin như mã phiếu, khách hàng, đơn hàng, chi tiết sản phẩm -->
+                <!-- Bạn có thể tái sử dụng đoạn HTML bạn viết ở trên trong renderInvoiceDetails -->
+                <!-- Ví dụ nhỏ -->
+                <div class="row">
+                    <div class="col-md-6"><strong>Mã phiếu:</strong> ${data.invoiceId}</div>
+                    <div class="col-md-6"><strong>Ngày xuất:</strong> ${data.createdAt}</div>
+                </div>
+                <hr>
+                <div><strong>Khách hàng:</strong> ${data.customer?.name} - ${data.customer?.phone}</div>
+                <hr>
+                <div><strong>Chi tiết sản phẩm:</strong></div>
+                <ul>
+                    ${data.details.map((d, i) => `
+                        <li>${i + 1}. ${d.productName} (${d.brand}) - SL: ${d.quantity}, Giá: ${d.unitPrice} ₫</li>
+                    `).join('')}
+                </ul>
+            </div>
+        `;
+        $('#invoiceDetailsContent').html(html);
+    }
+
+    // 5. Hiển thị lỗi
+    function showError(message) {
+        $('#invoiceDetailsContent').html(`
+            <div class="alert alert-danger text-center">
+                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                <h5>Có lỗi xảy ra</h5>
+                <p>${message}</p>
+            </div>
+        `);
+    }
+</script>

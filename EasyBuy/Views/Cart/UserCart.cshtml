@@ -1,0 +1,452 @@
+﻿@model List<EasyBuy.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Giỏ hàng - EasyBuy";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+    decimal totalAmount = 0;
+    if (Model != null)
+    {
+        totalAmount = Model.Sum(item => (item.Quantity ?? 0) * (item.UnitPrice ?? 0));
+    }
+}
+
+@section Scripts {
+    <script>
+        // Quantity controls
+        function updateQuantity(productId, change) {
+            const quantityInput = document.querySelector(`input[data-product-id="${productId}"]`);
+            let currentQuantity = parseInt(quantityInput.value) || 0;
+            let newQuantity = Math.max(0, currentQuantity + change);
+            
+            quantityInput.value = newQuantity;
+            
+            // Auto submit form after quantity change
+            setTimeout(() => {
+                quantityInput.closest('form').submit();
+            }, 500);
+        }
+        
+        // Remove item with confirmation
+        function confirmRemove(productName) {
+            return confirm(`Bạn có chắc chắn muốn xóa "${productName}" khỏi giỏ hàng?`);
+        }
+        
+        // Loading state for buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('.cart-form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <style>
+        .cart-container {
+            background: #fafbfc;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .cart-header {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .cart-header h1 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .cart-header .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .cart-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+        
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .cart-item {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        
+        .cart-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .item-content {
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+        
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .item-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .item-price {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-subtotal {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: end;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 0.25rem;
+        }
+        
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .quantity-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .remove-btn:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        .cart-summary {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .summary-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .summary-row.total {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+        
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .continue-shopping {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: var(--transition);
+        }
+        
+        .continue-shopping:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .empty-cart i {
+            font-size: 4rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .empty-cart h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        .empty-cart p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        
+        media (max-width: 768px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .item-content {
+                grid-template-columns: 80px 1fr;
+                grid-template-rows: auto auto;
+                gap: 1rem;
+            }
+            
+            .item-actions {
+                grid-column: 1 / -1;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .cart-header {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+}
+
+<div class="cart-container">
+    <div class="container">
+        <!-- Cart Header -->
+        <div class="cart-header">
+            <h1><i class="fas fa-shopping-cart me-2"></i>Giỏ hàng của bạn</h1>
+        </div>
+        
+        @if (Model != null && Model.Any())
+        {
+            <div class="cart-content">
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    @foreach (var item in Model)
+                    {
+                        <div class="cart-item">
+                            <div class="item-content">
+                                <!-- Product Image -->
+                                <div class="item-image">
+                                    <img src="@item.Product?.ImagePr" alt="@item.Product?.ProductName" loading="lazy" />
+                                </div>
+                                
+                                <!-- Product Details -->
+                                <div class="item-details">
+                                    <h3>@item.Product?.ProductName</h3>
+                                    <div class="item-price">@string.Format("{0:N0}", item.UnitPrice) ₫</div>
+                                    <div class="item-subtotal">
+                                        Thành tiền: <strong>@string.Format("{0:N0}", (item.Quantity ?? 0) * (item.UnitPrice ?? 0)) ₫</strong>
+                                    </div>
+                                </div>
+                                
+                                <!-- Item Actions -->
+                                <div class="item-actions">
+                                    <!-- Quantity Controls -->
+                                    <div class="quantity-controls">
+                                        <button type="button" class="quantity-btn" onclick="updateQuantity(@item.ProductId, -1)">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        
+                                        @using (Html.BeginForm("UpdateCart", "Cart", FormMethod.Post, new { @class = "cart-form" }))
+                                        {
+                                            <input type="hidden" name="productId" value="@item.ProductId" />
+                                            <input type="number" name="quantity" value="@item.Quantity" min="0" 
+                                                   class="quantity-input" data-product-id="@item.ProductId" 
+                                                   onchange="this.form.submit()" />
+                                        }
+                                        
+                                        <button type="button" class="quantity-btn" onclick="updateQuantity(@item.ProductId, 1)">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Remove Button -->
+                                    @using (Html.BeginForm("RemoveFromCart", "Cart", FormMethod.Post, new { @class = "cart-form" }))
+                                    {
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <button type="submit" class="remove-btn" 
+                                                onclick="return confirmRemove('@item.Product?.ProductName')"
+                                                title="Xóa sản phẩm">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <div class="summary-card">
+                        <div class="summary-header">
+                            <i class="fas fa-receipt me-2"></i>Tóm tắt đơn hàng
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Số lượng sản phẩm:</span>
+                            <span>@Model.Count</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Tạm tính:</span>
+                            <span>@string.Format("{0:N0}", totalAmount) ₫</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Phí vận chuyển:</span>
+                            <span class="text-success">Miễn phí</span>
+                        </div>
+                        
+                        <div class="summary-row total">
+                            <span>Tổng cộng:</span>
+                            <span class="text-primary">@string.Format("{0:N0}", totalAmount) ₫</span>
+                        </div>
+                        
+                        @using (Html.BeginForm("Checkout", "Order", FormMethod.Get))
+                        {
+                            <button type="submit" class="checkout-btn">
+                                <i class="fas fa-credit-card me-2"></i>
+                                Tiến hành thanh toán
+                            </button>
+                        }
+                        
+                        <a href="/" class="continue-shopping">
+                            <i class="fas fa-arrow-left"></i>
+                            Tiếp tục mua sắm
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <!-- Empty Cart -->
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Giỏ hàng của bạn đang trống</h3>
+                <p>Hãy khám phá các sản phẩm tuyệt vời và thêm vào giỏ hàng!</p>
+                <a href="/" class="btn btn-primary btn-lg">
+                    <i class="fas fa-shopping-bag me-2"></i>
+                    Bắt đầu mua sắm
+                </a>
+            </div>
+        }
+    </div>
+</div>

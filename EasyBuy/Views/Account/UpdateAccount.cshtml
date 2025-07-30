@@ -1,0 +1,818 @@
+@model EasyBuy.Models.User
+
+@{
+    ViewData["Title"] = "Cập nhật thông tin - EasyBuy";
+    Layout = "~/Views/Layout/_LayoutUser.cshtml";
+}
+
+@section Scripts {
+    <script>
+        // Toggle view/edit mode
+        function toggleEditMode() {
+            const viewMode = document.getElementById('viewMode');
+            const editMode = document.getElementById('editMode');
+            const editBtn = document.getElementById('editBtn');
+
+            if (viewMode.style.display !== 'none') {
+                viewMode.style.display = 'none';
+                editMode.style.display = 'block';
+                editBtn.style.display = 'none';
+                document.getElementById('fullName').focus();
+            } else {
+                viewMode.style.display = 'block';
+                editMode.style.display = 'none';
+                editBtn.style.display = 'inline-flex';
+                clearFormErrors();
+                resetChanges();
+            }
+        }
+
+        // Validate form
+        function validateForm() {
+            let isValid = true;
+            clearFormErrors();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (fullName === '') {
+                showError('fullName', 'Họ và tên là bắt buộc');
+                isValid = false;
+            }
+
+            if (phone === '' || !/^[0-9]{10,11}$/.test(phone)) {
+                showError('phone', 'Số điện thoại không hợp lệ');
+                isValid = false;
+            }
+
+            if (email === '') {
+                showError('email', 'Email là bắt buộc');
+                isValid = false;
+            } else if (!/^[a-zA-Z0-9._%+-]+[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                showError('email', 'Email không hợp lệ');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function showError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+            field.classList.add('error');
+            field.parentElement.appendChild(errorDiv);
+        }
+
+        function clearFormErrors() {
+            document.querySelectorAll('.field-error').forEach(el => el.remove());
+            document.querySelectorAll('.form-control').forEach(el => el.classList.remove('error'));
+        }
+
+        const originalData = {
+            fullName: @Html.Raw(Json.Serialize(Model?.FullName ?? "")),
+            phone: @Html.Raw(Json.Serialize(Model?.Phone ?? "")),
+            email: @Html.Raw(Json.Serialize(Model?.Email ?? ""))
+        };
+
+        function checkForChanges() {
+            const currentData = {
+                fullName: document.getElementById('fullName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim()
+            };
+
+            const hasChanges = Object.keys(originalData).some(key =>
+                originalData[key] !== currentData[key]
+            );
+
+            const updateBtn = document.getElementById('updateBtn');
+            const changeIndicator = document.getElementById('changeIndicator');
+
+            if (hasChanges) {
+                updateBtn.classList.add('has-changes');
+                changeIndicator.style.display = 'block';
+            } else {
+                updateBtn.classList.remove('has-changes');
+                changeIndicator.style.display = 'none';
+            }
+        }
+
+        function resetChanges() {
+            const updateBtn = document.getElementById('updateBtn');
+            const changeIndicator = document.getElementById('changeIndicator');
+            updateBtn.classList.remove('has-changes');
+            changeIndicator.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const fieldsToWatch = ['fullName', 'phone', 'email'];
+            fieldsToWatch.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', checkForChanges);
+                }
+            });
+
+            // Animation
+            const container = document.querySelector('.account-container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                container.style.transition = 'all 0.5s ease-out';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        });
+
+        window.addEventListener('beforeunload', function (e) {
+            const changeIndicator = document.getElementById('changeIndicator');
+            if (changeIndicator && changeIndicator.style.display === 'block') {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+}
+
+
+
+<style>
+    .account-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+    .page-title {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .page-subtitle {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-bottom: 2rem;
+        font-weight: 400;
+    }
+
+    .user-info-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e9ecef;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .user-info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+    .user-avatar-section {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        padding: 2rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+    }
+
+    .user-avatar-large {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        color: white;
+        font-size: 3rem;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .user-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .user-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #28a745;
+        font-weight: 500;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .info-item {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+        .info-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+    .info-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .info-label i {
+            color: #667eea;
+            width: 20px;
+        }
+
+    .info-value {
+        font-size: 1.1rem;
+        color: #495057;
+        word-break: break-word;
+    }
+
+    .form-section {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid #e9ecef;
+        margin-bottom: 2rem;
+    }
+
+    .form-section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+        .form-section-title i {
+            color: #667eea;
+        }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+            .form-group label i {
+                color: #667eea;
+                width: 18px;
+            }
+
+    .form-control {
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        font-family: inherit;
+    }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            outline: none;
+            transform: translateY(-1px);
+        }
+
+        .form-control.error {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.1);
+        }
+
+    .field-error {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .change-indicator {
+        display: none;
+        background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        text-align: center;
+        font-weight: 600;
+        animation: pulse 2s infinite;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+        .btn-edit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+    .btn-update {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+        .btn-update:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-update.has-changes {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+            .btn-update.has-changes:hover {
+                box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+            }
+
+    .btn-cancel {
+        background: #6c757d;
+        border: none;
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    }
+
+        .btn-cancel:hover {
+            background: #5a6268;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+        }
+
+    .alert {
+        padding: 1.25rem;
+        margin-bottom: 2rem;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 500;
+        border: none;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+    }
+
+    .alert i {
+        font-size: 1.2rem;
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .quick-action-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid #e9ecef;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .quick-action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+    .quick-action-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .quick-action-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+
+    .quick-action-desc {
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+    }
+
+    .quick-action-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .quick-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+
+        .quick-action-btn.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+            .quick-action-btn.success:hover {
+                box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            }
+
+    /* Animations */
+    keyframes pulse {
+        0%, 100%
+
+    {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    }
+
+    /* Responsive Design */
+    media (max-width: 768px) {
+        .account-container
+
+    {
+        padding: 1rem 0.5rem;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+    }
+
+    .user-info-card {
+        padding: 1.5rem;
+    }
+
+    .form-section {
+        padding: 1.5rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-edit, .btn-update, .btn-cancel {
+        width: 100%;
+        justify-content: center;
+    }
+
+    }
+</style>
+}
+
+<div class="account-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-user-edit"></i>
+            Thông tin tài khoản
+        </h1>
+        <p class="page-subtitle">Quản lý thông tin cá nhân và cài đặt tài khoản</p>
+    </div>
+
+    <!-- User Info Card -->
+    <div class="user-info-card">
+        <!-- Messages -->
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i>
+                @TempData["Success"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i>
+                @TempData["Error"]
+            </div>
+        }
+
+        <!-- User Avatar Section -->
+        <div class="user-avatar-section">
+            <div class="user-avatar-large">
+                <i class="fas fa-user"></i>
+            </div>
+            <h4>@(Model?.FullName ?? "Chưa cập nhật")</h4>
+            <p class="text-muted mb-0">
+                @{
+                    var createdYear = Model?.CreatedAt?.Year ?? DateTime.Now.Year;
+                }
+                <i class="fas fa-calendar-alt me-1"></i>
+                Thành viên từ năm @createdYear
+            </p>
+        </div>
+
+        <!-- User Meta Info -->
+        <div class="user-meta">
+            <div class="user-status">
+                <i class="fas fa-circle"></i>
+                <span>Tài khoản hoạt động</span>
+            </div>
+            <div class="text-muted">
+                <i class="fas fa-clock me-1"></i>
+                ID: #@Model?.UserId
+            </div>
+        </div>
+
+        <!-- VIEW MODE -->
+        <div id="viewMode">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-user"></i>
+                        Họ và tên
+                    </div>
+                    <div class="info-value">@(Model?.FullName ?? "Chưa cập nhật")</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-phone"></i>
+                        Số điện thoại
+                    </div>
+                    <div class="info-value">@(Model?.Phone ?? "Chưa cập nhật")</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </div>
+                    <div class="info-value">@(Model?.Email ?? "Chưa cập nhật")</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-user-tag"></i>
+                        Vai trò
+                    </div>
+                    <div class="info-value">@(Model?.Role ?? "Khách hàng")</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" class="btn-edit" id="editBtn" onclick="toggleEditMode()">
+                    <i class="fas fa-edit"></i>
+                    Chỉnh sửa thông tin
+                </button>
+            </div>
+        </div>
+
+        <!-- EDIT MODE -->
+        <div id="editMode" style="display: none;">
+            <div id="changeIndicator" class="change-indicator">
+                <i class="fas fa-exclamation-triangle"></i>
+                Bạn có những thay đổi chưa được lưu
+            </div>
+
+            <form asp-action="UpdateAccount" method="post" onsubmit="return validateForm()" id="updateForm">
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-user-edit"></i>
+                        Chỉnh sửa thông tin
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fullName">
+                                    <i class="fas fa-user"></i>
+                                    Họ và tên
+                                </label>
+                                <input type="text"
+                                       id="fullName"
+                                       name="fullName"
+                                       class="form-control"
+                                       value="@Model?.FullName"
+                                       placeholder="Nhập họ và tên của bạn"
+                                       required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone">
+                                    <i class="fas fa-phone"></i>
+                                    Số điện thoại
+                                </label>
+                                <input type="tel"
+                                       id="phone"
+                                       name="phone"
+                                       class="form-control"
+                                       value="@Model?.Phone"
+                                       placeholder="Số điện thoại của bạn"
+                                       required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                            Email
+                        </label>
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               class="form-control"
+                               value="@Model?.Email"
+                               placeholder="Địa chỉ email của bạn"
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currentPassword">
+                            <i class="fas fa-lock"></i>
+                            Mật khẩu hiện tại
+                        </label>
+                        <input type="password"
+                               id="currentPassword"
+                               name="currentPassword"
+                               class="form-control"
+                               placeholder="Nhập mật khẩu hiện tại để xác nhận"
+                               required />
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="submit" class="btn-update" id="updateBtn">
+                        <i class="fas fa-save"></i>
+                        Cập nhật thông tin
+                    </button>
+                    <button type="button" class="btn-cancel" onclick="toggleEditMode()">
+                        <i class="fas fa-times"></i>
+                        Hủy bỏ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <div class="quick-action-card">
+            <div class="quick-action-icon" style="color: #dc3545;">
+                <i class="fas fa-key"></i>
+            </div>
+            <div class="quick-action-title">Đổi mật khẩu</div>
+            <div class="quick-action-desc">Thay đổi mật khẩu để bảo mật tài khoản của bạn</div>
+            <a href="@Url.Action("ChangePassword", "Account")" class="quick-action-btn" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                <i class="fas fa-key"></i>
+                Đổi mật khẩu
+            </a>
+        </div>
+
+        <div class="quick-action-card">
+            <div class="quick-action-icon" style="color: #28a745;">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="quick-action-title">Quản lý địa chỉ</div>
+            <div class="quick-action-desc">Thêm và chỉnh sửa các địa chỉ giao hàng</div>
+            <a href="@Url.Action("ListAdress", "Account")" class="quick-action-btn success">
+                <i class="fas fa-map-marker-alt"></i>
+                Sổ địa chỉ
+            </a>
+        </div>
+
+        <div class="quick-action-card">
+            <div class="quick-action-icon" style="color: #ffc107;">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div class="quick-action-title">Lịch sử đơn hàng</div>
+            <div class="quick-action-desc">Xem và theo dõi các đơn hàng của bạn</div>
+            <a href="@Url.Action("ListOrder", "Order")" class="quick-action-btn" style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);">
+                <i class="fas fa-shopping-bag"></i>
+                Đơn hàng
+            </a>
+        </div>
+    </div>
+</div> 

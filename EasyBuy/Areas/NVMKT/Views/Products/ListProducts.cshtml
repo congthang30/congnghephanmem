@@ -1,0 +1,452 @@
+﻿@model IEnumerable<EasyBuy.Models.Product>
+@{
+    ViewData["Title"] = "Quản lý sản phẩm";
+}
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="text-primary mb-0">
+                        <i class="fas fa-boxes me-2"></i>Quản lý sản phẩm
+                    </h2>
+                    <p class="text-muted">Quản lý thông tin sản phẩm và marketing</p>
+                </div>
+                <a href="/NVMKT/Products/CreateProducts" class="btn btn-success">
+                    <i class="fas fa-plus me-1"></i>Thêm sản phẩm mới
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(TempData["SuccessMessage"]?.ToString()))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Thống kê nhanh -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Tổng sản phẩm
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalProducts</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-box fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Sản phẩm nổi bật
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.FeaturedProducts</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-star fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Hết hàng
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.OutOfStockProducts</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Sắp hết hàng
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.LowStockProducts</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form tìm kiếm -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-search me-2"></i>Tìm kiếm sản phẩm
+            </h6>
+        </div>
+        <div class="card-body">
+            <form method="get" action="/NVMKT/Products/ListProducts">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Tên sản phẩm</label>
+                        <input type="text" class="form-control" name="productname" value="@ViewBag.ProductName" placeholder="Nhập tên sản phẩm...">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Barcode</label>
+                        <input type="text" class="form-control" name="barcode" value="@ViewBag.Barcode" placeholder="Nhập barcode...">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Danh mục</label>
+                        <select class="form-select" name="cateid">
+                            <option value="">Tất cả danh mục</option>
+                            @foreach (var category in ViewBag.Categories)
+                            {
+                                if (ViewBag.CateId?.ToString() == category.CateId.ToString())
+                                {
+                                    <option value="@category.CateId" selected>@category.CategoryName</option>
+                                }
+                                else
+                                {
+                                    <option value="@category.CateId">@category.CategoryName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Thương hiệu</label>
+                        <select class="form-select" name="brandid">
+                            <option value="">Tất cả thương hiệu</option>
+                            @foreach (var brand in ViewBag.Brands)
+                            {
+                                if (ViewBag.BrandId?.ToString() == brand.BrandId.ToString())
+                                {
+                                    <option value="@brand.BrandId" selected>@brand.NameBrand</option>
+                                }
+                                else
+                                {
+                                    <option value="@brand.BrandId">@brand.NameBrand</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select" name="statusproduct">
+                            <option value="">Tất cả trạng thái</option>
+                            @if (ViewBag.StatusProduct?.ToString() == "presently")
+                            {
+                                <option value="presently" selected>Hiện có</option>
+                            }
+                            else
+                            {
+                                <option value="presently">Hiện có</option>
+                            }
+                            @if (ViewBag.StatusProduct?.ToString() == "hidden")
+                            {
+                                <option value="hidden" selected>Đã ẩn</option>
+                            }
+                            else
+                            {
+                                <option value="hidden">Đã ẩn</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Sản phẩm nổi bật</label>
+                        <select class="form-select" name="isfeatured">
+                            <option value="">Tất cả</option>
+                            @if (ViewBag.IsFeatured == true)
+                            {
+                                <option value="true" selected>Nổi bật</option>
+                            }
+                            else
+                            {
+                                <option value="true">Nổi bật</option>
+                            }
+                            @if (ViewBag.IsFeatured == false)
+                            {
+                                <option value="false" selected>Không nổi bật</option>
+                            }
+                            else
+                            {
+                                <option value="false">Không nổi bật</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Tồn kho</label>
+                        <select class="form-select" name="quantity">
+                            <option value="">Tất cả</option>
+                            @if (ViewBag.Quantity == 0)
+                            {
+                                <option value="0" selected>Hết hàng</option>
+                            }
+                            else
+                            {
+                                <option value="0">Hết hàng</option>
+                            }
+                            @if (ViewBag.Quantity == 10)
+                            {
+                                <option value="10" selected>≤ 10</option>
+                            }
+                            else
+                            {
+                                <option value="10">≤ 10</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 d-flex align-items-end">
+                        <div class="d-flex gap-2 w-100">
+                            <button type="submit" class="btn btn-primary flex-fill">
+                                <i class="fas fa-search me-1"></i>Tìm kiếm
+                            </button>
+                            <a href="/NVMKT/Products/ListProducts" class="btn btn-outline-secondary">
+                                <i class="fas fa-refresh"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bảng sản phẩm -->
+    <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-list me-2"></i>Danh sách sản phẩm (@Model.Count() sản phẩm)
+            </h6>
+        </div>
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Hình ảnh</th>
+                                <th>Thông tin sản phẩm</th>
+                                <th>Danh mục</th>
+                                <th>Thương hiệu</th>
+                                <th>Giá</th>
+                                <th>Tồn kho</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(product.ImagePr))
+                                        {
+                                            <img src="@product.ImagePr" alt="@product.ProductName" 
+                                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" />
+                                        }
+                                        else
+                                        {
+                                            <div class="bg-light d-flex align-items-center justify-content-center" 
+                                                 style="width: 60px; height: 60px; border-radius: 8px;">
+                                                <i class="fas fa-image text-muted"></i>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <strong class="text-primary">@product.ProductName</strong>
+                                            <br>
+                                            <small class="text-muted">@product.Barcode</small>
+                                            <br>
+                                            <small class="text-muted">
+                                                <i class="fas fa-eye me-1"></i>@(product.ViewCount ?? 0) lượt xem
+                                            </small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info">@(product.Cate?.CategoryName ?? "N/A")</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-secondary">@(product.Brand?.NameBrand ?? "N/A")</span>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <div class="text-success fw-bold">
+                                                @string.Format("{0:N0} VNĐ", product.SellingPrice)
+                                            </div>
+                                            @if (product.Discount > 0)
+                                            {
+                                                <small class="text-muted">
+                                                    Giảm: @string.Format("{0:N0} VNĐ", product.Discount)
+                                                </small>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (product.Quantity <= 0)
+                                        {
+                                            <span class="badge bg-danger">Hết hàng</span>
+                                        }
+                                        else if (product.Quantity <= 10)
+                                        {
+                                            <span class="badge bg-warning">@product.Quantity</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">@product.Quantity</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column gap-1">
+                                            @if (product.IsFeatured == true)
+                                            {
+                                                <span class="badge bg-warning">
+                                                    <i class="fas fa-star me-1"></i>Nổi bật
+                                                </span>
+                                            }
+                                            <span class="badge @(product.StatusProduct == "presently" ? "bg-success" : "bg-secondary")">
+                                                @(product.StatusProduct == "presently" ? "Hiện có" : "Đã ẩn")
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="/NVMKT/Products/UpdateProducts/@product.ProductId" 
+                                               class="btn btn-sm btn-outline-primary" title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-outline-warning" 
+                                                    onclick="toggleFeatured(@product.ProductId)" title="Đổi nổi bật">
+                                                <i class="fas fa-star"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                    onclick="toggleStatus(@product.ProductId)" title="Đổi trạng thái">
+                                                <i class="fas fa-eye-slash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-box fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Không tìm thấy sản phẩm nào</h5>
+                    <p class="text-muted">Hãy thử thay đổi điều kiện tìm kiếm hoặc thêm sản phẩm mới</p>
+                    <a href="/NVMKT/Products/CreateProducts" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>Thêm sản phẩm mới
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .border-left-primary {
+        border-left: 0.25rem solid #4e73df !important;
+    }
+    .border-left-success {
+        border-left: 0.25rem solid #1cc88a !important;
+    }
+    .border-left-info {
+        border-left: 0.25rem solid #36b9cc !important;
+    }
+    .border-left-warning {
+        border-left: 0.25rem solid #f6c23e !important;
+    }
+    .text-gray-300 {
+        color: #dddfeb !important;
+    }
+    .text-gray-800 {
+        color: #5a5c69 !important;
+    }
+</style>
+
+<script>
+    function toggleFeatured(productId) {
+        if (confirm('Bạn có muốn thay đổi trạng thái nổi bật của sản phẩm này?')) {
+            fetch(`/NVMKT/Products/ToggleFeatured/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Có lỗi xảy ra: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi thực hiện thao tác');
+            });
+        }
+    }
+
+    function toggleStatus(productId) {
+        if (confirm('Bạn có muốn thay đổi trạng thái hiển thị của sản phẩm này?')) {
+            fetch(`/NVMKT/Products/ToggleStatusProduct/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Có lỗi xảy ra khi thực hiện thao tác');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra khi thực hiện thao tác');
+            });
+        }
+    }
+</script>
+
