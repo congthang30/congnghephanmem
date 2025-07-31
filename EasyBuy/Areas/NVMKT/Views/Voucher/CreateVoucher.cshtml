@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewData["Title"] = "CreateVoucher";
+    Layout = "~/Areas/NVMKT/Views/Layout/_LayoutNVMKT.cshtml";
+}
+<h2>Tạo mới Voucher</h2>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #2c3e50;
+        font-size: 22px;
+    }
+
+    form {
+        max-width: 550px;
+        margin: 0 auto;
+        background-color: #f8f9fa;
+        padding: 20px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+
+        form div {
+            margin-bottom: 16px;
+        }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        color: #34495e;
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    input[type="checkbox"] {
+        transform: scale(1.1);
+        margin-right: 6px;
+    }
+
+    button[type="submit"] {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s;
+        display: block;
+        margin: 15px auto 0;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+</style>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="error-message">@TempData["ErrorMessage"]</div>
+}
+
+<form asp-action="CreateVoucher" method="post">
+    <div>
+        <label for="Code">Mã voucher:</label>
+        <input type="text" id="Code" name="code" required value="@(ViewData["code"] ?? "")" />
+    </div>
+
+    <div>
+        <label for="Description">Mô tả:</label>
+        <input type="text" id="Description" name="description" value="@(ViewData["description"] ?? "")" />
+    </div>
+
+    <div>
+        <label for="DiscountType">Loại giảm giá:</label>
+        <select id="DiscountType" name="discountType" required>
+            <option value="">-- Chọn loại --</option>
+            <option value="percent">Phần trăm (%)</option>
+            <option value="money">Số tiền (VND)</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="DiscountValue">Giá trị giảm:</label>
+        <input type="number" id="DiscountValue" name="discountValue" step="0.01" required min="0" value="@(ViewData["discountValue"] ?? "")" />
+    </div>
+
+    <div>
+        <label for="MaxDiscountAmount">Giảm tối đa (nếu là %):</label>
+        <input type="number" id="MaxDiscountAmount" name="maxDiscountAmount" step="0.01" min="0" value="@(ViewData["maxDiscountAmount"] ?? "")" />
+    </div>
+
+    <div>
+        <label for="MinOrderAmount">Giá trị đơn hàng tối thiểu:</label>
+        <input type="number" id="MinOrderAmount" name="minOrderAmount" step="0.01" min="0" value="@(ViewData["minOrderAmount"] ?? "")" />
+    </div>
+
+    <div>
+        <label for="Quantity">Số lượng sử dụng:</label>
+        <input type="number" id="Quantity" name="quantity" required min="1" value="@(ViewData["quantity"] ?? "")" />
+    </div>
+
+    <div>
+        <label for="StartDate">Ngày bắt đầu:</label>
+        <input type="date" id="StartDate" name="startDate" required value="@(ViewData["startDate"] ?? "")" />
+    </div>
+
+    <div>
+        <label for="EndDate">Ngày kết thúc:</label>
+        <input type="date" id="EndDate" name="endDate" required value="@(ViewData["endDate"] ?? "")" />
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" name="isActive" value="true" @(ViewData["isActive"] != null && (bool)ViewData["isActive"] ? "checked" : "") />
+            Đang hoạt động
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" name="isPublic" value="true" @(ViewData["isPublic"] != null && (bool)ViewData["isPublic"] ? "checked" : "") />
+            Công khai
+        </label>
+    </div>
+
+    <div>
+        <label for="CreatedBy">Người tạo:</label>
+        <input type="text" id="CreatedBy" name="createdBy" value="@(ViewData["createdBy"] ?? "")" />
+    </div>
+
+    <button type="submit">Tạo Voucher</button>
+</form>

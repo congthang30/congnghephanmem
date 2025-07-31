@@ -12,7 +12,7 @@ using EasyBuy.Attributes;
 namespace EasyBuy.Areas.NVMKT.Controllers
 {
     [Area("NVMKT")]
-    [AuthorizeRole("NVMKT")]
+    [AuthorizeRole("NVMKT", "Admin")]
     public class ProductsController : Controller
     {
         private readonly EasyBuyContext _context;

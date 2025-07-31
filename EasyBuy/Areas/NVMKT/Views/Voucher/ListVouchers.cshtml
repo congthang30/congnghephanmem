@@ -1,0 +1,269 @@
+﻿@model List<EasyBuy.Models.Voucher>
+@{
+    ViewData["Title"] = "ListVoucher";
+    Layout = "~/Areas/NVMKT/Views/Layout/_LayoutNVMKT.cshtml";
+}
+
+
+<style>
+    .product-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 30px auto;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .product-table th, .product-table td {
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        .product-table th {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .product-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .product-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .product-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-right: 12px;
+    }
+
+    .name-cell {
+        display: flex;
+        align-items: center;
+        text-align: left;
+    }
+
+        .name-cell div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name-cell strong {
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .name-cell small {
+            font-size: 12px;
+            color: #666;
+        }
+
+    .badge {
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: white;
+    }
+
+        .badge.green {
+            background-color: #28a745;
+        }
+
+        .badge.gray {
+            background-color: #6c757d;
+        }
+
+    .action-icons {
+        text-align: center;
+    }
+
+        .action-icons a {
+            margin: 0 6px;
+            font-size: 18px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+            .action-icons a:hover {
+                color: #007bff;
+            }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .badge.green {
+        background-color: #28a745;
+        color: white;
+        padding: 3px 6px;
+        border-radius: 4px;
+    }
+
+    .badge.gray {
+        background-color: #6c757d;
+        color: white;
+        padding: 3px 6px;
+        border-radius: 4px;
+    }
+
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 0.85em;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+</style>
+
+<h2>🎁 Danh sách mã giảm giá</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form method="get" asp-action="ListVouchers" class="row g-2 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="code" value="@ViewBag.Code" class="form-control" placeholder="Mã giảm giá" />
+    </div>
+    <div class="col-md-3">
+        <select name="discountType" class="form-control">
+            <option value="">--Loại giảm--</option>
+            <option value="percent">% phần trăm</option>
+            <option value="fixed">Số tiền cố định</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="isActive" class="form-control">
+            <option value="">--Trạng thái--</option>
+            <option value="true">Đang hoạt động</option>
+            <option value="false" >Ẩn</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Lọc</button>
+    </div>
+    <div class="col-md-1">
+        <a href="@Url.Action("CreateVoucher", "Voucher", new { area = "NVMKT" })" class="btn btn-success">+ Thêm</a>
+    </div>
+</form>
+
+<table class="product-table">
+    <thead>
+        <tr>
+            <th>Mã giảm giá</th>
+            <th>Mô tả</th>
+            <th>Loại</th>
+            <th>Giá trị</th>
+            <th>Đơn hàng tối thiểu</th>
+            <th>SL</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model)
+        {
+            <tr>
+                <td><strong>@v.Code</strong></td>
+                <td>@v.Description</td>
+                <td>
+                    @if (v.DiscountType == "percent")
+                    {
+                        <span class="badge green">%</span>
+                    }
+                    else
+                    {
+                        <span class="badge gray">VND</span>
+                    }
+                </td>
+                <td>
+                    @if (v.DiscountType == "percent")
+                    {
+                        @($"{v.DiscountValue?.ToString("0")}% (Tối đa {v.MaxDiscountAmount?.ToString("N0")} VND)")
+                    }
+                    else
+                    {
+                        @($"{v.DiscountValue?.ToString("N0")} VND")
+                    }
+                </td>
+
+                <td>@(v.MinOrderAmount?.ToString("N0") ?? "0") VND</td>
+                <td>@(v.Quantity ?? 0)</td>
+                <td>@v.StartDate?.ToString("dd/MM/yyyy")</td>
+                <td>@v.EndDate?.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @if (v.IsActive == true)
+                    {
+                        <span class="badge green">Hiển thị</span>
+                    }
+                    else
+                    {
+                        <span class="badge gray">Đã ẩn</span>
+                    }
+                </td>
+                <td class="action-icons">
+                    <a href="@Url.Action("CreateVoucher", "Voucher", new { area = "NVMKT" })" title="Thêm">+</a>
+                    <a href="@Url.Action("UpdateVoucher", "Voucher", new { area = "NVMKT", id = v.VoucherId })" title="Sửa">✏️</a>
+
+                    @using (Html.BeginForm("ToggleVoucherStatus", "Voucher", FormMethod.Post, new { @class = "d-inline" }))
+                    {
+                        <input type="hidden" name="id" value="@v.VoucherId" />
+                        <button type="submit" class="btn btn-sm @(v.IsActive == true ? "btn-danger" : "btn-success")">
+                            @(v.IsActive == true ? "Ẩn" : "Hiện")
+                        </button>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

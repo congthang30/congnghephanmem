@@ -86,7 +86,7 @@
                                             <td class="text-center">
                                                 @if (invoice.Order != null)
                                                 {
-                                                    <a href="@Url.Action("Details", "OrderNVKD", new { Area = "NVKD", id = invoice.Order.OrderId })" 
+                                                    <a href="@Url.Action("Details", "OrderNVKD", new { Area = "NVKD", id = invoice.Order.OrderId })"
                                                        class="text-decoration-none">
                                                         <span class="fw-bold text-success">#@invoice.Order.OrderId</span><br>
                                                         <small class="text-muted">@(invoice.Order.TotalAmount?.ToString("N0") ?? "0") ₫</small>
@@ -116,7 +116,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <small class="text-muted">
                                 Tổng cộng: <strong>@Model.Count</strong> phiếu xuất kho
@@ -176,113 +176,156 @@
         color: white;
         font-weight: 600;
     }
-    
+
     .table tbody tr:hover {
         background-color: #f8f9fa;
     }
-    
+
     .btn-group .btn {
         margin-right: 2px;
     }
-    
-    .btn-group .btn:last-child {
-        margin-right: 0;
-    }
-    
+
+        .btn-group .btn:last-child {
+            margin-right: 0;
+        }
+
     .card {
         border: none;
         border-radius: 10px;
     }
-    
+
     .card-header {
         border-radius: 10px 10px 0 0 !important;
     }
-    
+
     .badge {
         font-size: 0.75em;
     }
-    
+
     .alert {
         border-radius: 8px;
         margin-bottom: 20px;
     }
-    
+
     .modal-xl {
         max-width: 1200px;
     }
 </style>
 
 <script>
-    $(document).ready(function () {
-        // 1. Auto-hide alerts
-        setTimeout(() => $('.alert').fadeOut('slow'), 5000);
+        $(document).ready(function () {
+            // 1. Auto-hide alerts
+            setTimeout(() => $('.alert').fadeOut('slow'), 5000);
 
-        // 2. Xử lý nút xem chi tiết
-        $('.view-details-btn').click(function () {
-            const invoiceId = $(this).data('invoice-id');
-            loadInvoiceDetails(invoiceId);
-        });
-    });
-
-    // 3. Gọi API để lấy chi tiết phiếu xuất
-    function loadInvoiceDetails(invoiceId) {
-        $('#invoiceDetailsModal').modal('show');
-        $('#invoiceDetailsContent').html(`
-            <div class="text-center">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Đang tải...</span>
-                </div>
-                <p class="mt-2">Đang tải thông tin...</p>
-            </div>
-        `);
-
-        // Gọi API
-        $.get('/NVKho/Warehouse/GetInvoiceDetails', { invoiceId: invoiceId }) // Hoặc dùng Url.Action nếu Razor
-            .done(function (response) {
-                if (response.success) {
-                    renderInvoiceDetails(response.data);
-                } else {
-                    showError(response.message || 'Không thể tải thông tin hóa đơn');
-                }
-            })
-            .fail(function () {
-                showError('Lỗi kết nối. Vui lòng thử lại!');
+            // 2. Xử lý nút xem chi tiết
+            $('.view-details-btn').click(function () {
+                const invoiceId = $(this).data('invoice-id');
+                loadInvoiceDetails(invoiceId);
             });
-    }
+        });
 
-    // 4. Hiển thị nội dung chi tiết
+        // 3. Gọi API để lấy chi tiết phiếu xuất
+        function loadInvoiceDetails(invoiceId) {
+            $('#invoiceDetailsModal').modal('show');
+            $('#invoiceDetailsContent').html(`
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                    <p class="mt-2">Đang tải thông tin...</p>
+                </div>
+            `);
+
+            // Gọi API
+        $.get('/NVKho/InvoiceWareHouseNVKho/GetInvoiceDetails', { invoiceId: invoiceId })            .done(function (response) {
+                    if (response.success) {
+                        renderInvoiceDetails(response.data);
+                    } else {
+                        showError(response.message || 'Không thể tải thông tin hóa đơn');
+                    }
+                })
+                .fail(function () {
+                    showError('Lỗi kết nối. Vui lòng thử lại!');
+                });
+        }
+
     function renderInvoiceDetails(data) {
         const html = `
-            <div class="container-fluid">
-                <!-- Các khối thông tin như mã phiếu, khách hàng, đơn hàng, chi tiết sản phẩm -->
-                <!-- Bạn có thể tái sử dụng đoạn HTML bạn viết ở trên trong renderInvoiceDetails -->
-                <!-- Ví dụ nhỏ -->
-                <div class="row">
-                    <div class="col-md-6"><strong>Mã phiếu:</strong> ${data.invoiceId}</div>
-                    <div class="col-md-6"><strong>Ngày xuất:</strong> ${data.createdAt}</div>
+            <div class="container-fluid p-3">
+                <div class="card shadow rounded-3 mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary mb-3">
+                            <i class="fas fa-file-invoice"></i> Phiếu Xuất Kho #${data.invoiceId}
+                        </h5>
+                        <div class="row mb-2">
+                            <div class="col-md-6"><strong>Ngày xuất:</strong> ${formatDate(data.createdAt)}</div>
+                            <div class="col-md-6"><strong>Khách hàng:</strong> ${data.customerName} (${data.phone})</div>
+                        </div>
+                    </div>
                 </div>
-                <hr>
-                <div><strong>Khách hàng:</strong> ${data.customer?.name} - ${data.customer?.phone}</div>
-                <hr>
-                <div><strong>Chi tiết sản phẩm:</strong></div>
-                <ul>
-                    ${data.details.map((d, i) => `
-                        <li>${i + 1}. ${d.productName} (${d.brand}) - SL: ${d.quantity}, Giá: ${d.unitPrice} ₫</li>
-                    `).join('')}
-                </ul>
+
+                <div class="card shadow rounded-3">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-3 text-muted"><i class="fas fa-boxes"></i> Danh sách sản phẩm</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Thương hiệu</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${(data.products ?? []).map((d, i) => `
+                                        <tr>
+                                            <td>${i + 1}</td>
+                                            <td>${d.productName}</td>
+                                            <td>${d.brand}</td>
+                                            <td>${d.quantity}</td>
+                                            <td>${formatCurrency(d.unitPrice)}</td>
+                                            <td>${formatCurrency(d.unitPrice * d.quantity)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
         $('#invoiceDetailsContent').html(html);
     }
 
-    // 5. Hiển thị lỗi
-    function showError(message) {
-        $('#invoiceDetailsContent').html(`
-            <div class="alert alert-danger text-center">
-                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
-                <h5>Có lỗi xảy ra</h5>
-                <p>${message}</p>
-            </div>
-        `);
+    // Helper để định dạng ngày
+    function formatDate(dateString) {
+        const d = new Date(dateString);
+        return d.toLocaleDateString('vi-VN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
     }
+
+    // Helper định dạng tiền
+    function formatCurrency(value) {
+        return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    }
+
+
+        // 5. Hiển thị lỗi
+        function showError(message) {
+            $('#invoiceDetailsContent').html(`
+                <div class="alert alert-danger text-center">
+                    <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                    <h5>Có lỗi xảy ra</h5>
+                    <p>${message}</p>
+                </div>
+            `);
+        }
 </script>

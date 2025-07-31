@@ -51,6 +51,8 @@ public partial class EasyBuyContext : DbContext
 
     public virtual DbSet<Invoice> Invoice { get; set; }
     public DbSet<InvoiceWareHouse> InvoiceWareHouses { get; set; }
+    public virtual DbSet<WarehouseReceipt> WarehouseReceipts { get; set; }
+    public virtual DbSet<WarehouseReceiptDetail> WarehouseReceiptDetails { get; set; }
     public virtual DbSet<LearnedInfo> LearnedInfos { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -302,6 +304,10 @@ public partial class EasyBuyContext : DbContext
                 .HasForeignKey(d => d.CateId)
                 .HasConstraintName("FK__Product__CateID__440B1D61");
         });
+        modelBuilder.Entity<Product>()
+    .HasIndex(p => p.Barcode)
+    .IsUnique();
+
 
         modelBuilder.Entity<Rating>(entity =>
         {
@@ -403,6 +409,51 @@ public partial class EasyBuyContext : DbContext
             entity.HasOne(d => d.CreatedByUser)
                 .WithMany()
                 .HasForeignKey(d => d.CreatedBy);
+        });
+        modelBuilder.Entity<WarehouseReceipt>(entity =>
+        {
+            entity.HasKey(e => e.ReceiptID);
+
+            entity.Property(e => e.ReceiptNumber)
+                .IsRequired()
+                .HasMaxLength(20);
+
+            entity.Property(e => e.SupplierName).HasMaxLength(100);
+            entity.Property(e => e.Notes);
+            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18,2)");
+
+            entity.HasOne(e => e.Staff)
+                .WithMany()
+                .HasForeignKey(e => e.CreatedByStaff)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_WarehouseReceipt_User");
+
+            entity.HasMany(e => e.ReceiptDetails)
+                .WithOne(d => d.Receipt)
+                .HasForeignKey(d => d.ReceiptID)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_WarehouseReceiptDetails_Receipt");
+        });
+
+        modelBuilder.Entity<WarehouseReceiptDetail>(entity =>
+        {
+            entity.HasKey(e => e.DetailID);
+
+            entity.Property(e => e.Barcode)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.ProductName).HasMaxLength(100);
+            entity.Property(e => e.UnitPrice).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.TotalPrice)
+                .HasComputedColumnSql("[Quantity] * [UnitPrice]");
+
+            entity.HasOne(e => e.Product)
+                .WithMany()
+                .HasForeignKey(e => e.Barcode)
+                .HasPrincipalKey(p => p.Barcode)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_WarehouseReceiptDetails_Product");
         });
 
         modelBuilder.Entity<InvoiceWareHouse>()

@@ -1,0 +1,189 @@
+﻿@model EasyBuy.Models.Voucher
+@{
+    ViewData["Title"] = "Cập nhật Voucher";
+    Layout = "~/Areas/NVMKT/Views/Layout/_LayoutNVMKT.cshtml";
+}
+
+<h2>Cập nhật Voucher</h2>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #2c3e50;
+        font-size: 22px;
+    }
+
+    form {
+        max-width: 550px;
+        margin: 0 auto;
+        background-color: #f8f9fa;
+        padding: 20px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+
+        form div {
+            margin-bottom: 16px;
+        }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        color: #34495e;
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    textarea {
+        resize: vertical;
+        height: 70px;
+    }
+
+    button[type="submit"] {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s;
+        display: block;
+        margin: 15px auto 0;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .text-success {
+        text-align: center;
+        color: green;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+</style>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="error-message">@TempData["ErrorMessage"]</div>
+}
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="text-success">@ViewBag.SuccessMessage</div>
+}
+
+@using (Html.BeginForm("UpdateVoucher", "Voucher", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.VoucherId)
+
+    <div>
+        <label>Mã voucher:</label>
+        @Html.TextBoxFor(m => m.Code, new { placeholder = "Mã voucher", required = "required" })
+    </div>
+
+    <div>
+        <label>Mô tả:</label>
+        @Html.TextAreaFor(m => m.Description, new { placeholder = "Mô tả", rows = 3 })
+    </div>
+
+    <div>
+        <label>Loại giảm giá:</label>
+        @Html.DropDownListFor(m => m.DiscountType,
+        new SelectList(new[]
+        {
+        new { Value = "", Text = "-- Chọn loại --" },
+        new { Value = "percent", Text = "Phần trăm (%)" },
+        new { Value = "money", Text = "Số tiền (VND)" }
+        }, "Value", "Text", Model.DiscountType),
+        new { required = "required" })
+</div>
+
+<div>
+    <label>Giá trị giảm:</label>
+    @Html.TextBoxFor(m => m.DiscountValue, new { type = "number", step = "0.01", min = "0", required = "required" })
+</div>
+
+<div>
+    <label>Giảm tối đa (nếu là %):</label>
+    @Html.TextBoxFor(m => m.MaxDiscountAmount, new { type = "number", step = "0.01", min = "0" })
+</div>
+
+<div>
+    <label>Đơn hàng tối thiểu:</label>
+    @Html.TextBoxFor(m => m.MinOrderAmount, new { type = "number", step = "0.01", min = "0" })
+</div>
+
+<div>
+    <label>Số lượng sử dụng:</label>
+    @Html.TextBoxFor(m => m.Quantity, new { type = "number", min = "0", required = "required" })
+</div>
+
+<div>
+    <label>Ngày bắt đầu:</label>
+    @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd}", new { type = "date", required = "required" })
+</div>
+
+<div>
+    <label>Ngày kết thúc:</label>
+    @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-dd}", new { type = "date", required = "required" })
+</div>
+
+<div>
+    <label>Trạng thái hiển thị:</label>
+    @Html.DropDownListFor(m => m.IsActive,
+        new SelectList(new[]
+        {
+        new { Value = "true", Text = "Hiển thị" },
+        new { Value = "false", Text = "Ẩn" }
+        }, "Value", "Text", Model.IsActive.HasValue ? Model.IsActive.Value.ToString().ToLower() : "true"),
+        new { required = "required" })
+</div>
+
+<div>
+    <label>Công khai:</label>
+    @Html.DropDownListFor(m => m.IsPublic,
+        new SelectList(new[]
+        {
+        new { Value = "true", Text = "Công khai" },
+        new { Value = "false", Text = "Riêng tư" }
+        }, "Value", "Text", Model.IsPublic.HasValue ? Model.IsPublic.Value.ToString().ToLower() : "true"),
+        new { required = "required" })
+</div>
+
+<div>
+    <label>Người tạo:</label>
+    @Html.TextBoxFor(m => m.CreatedBy, new { placeholder = "Người tạo" })
+</div>
+
+<button type="submit">Cập nhật Voucher</button>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyBuy.Areas.NVKD.Controllers
 {
     [Area("NVKD")]
-    [AuthorizeRole("NVKD")]
+    [AuthorizeRole("NVKD", "Admin")]
     public class InvoiceNVKDController : Controller
     {
         private readonly EasyBuyContext _context;

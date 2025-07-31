@@ -1,0 +1,323 @@
+﻿
+@model List<EasyBuy.Models.WarehouseReceipt>
+
+@{
+    ViewBag.Title = "Danh sách phiếu nhập kho";
+    Layout = "~/Areas/NVKho/Views/Layout/_LayoutNVKho.cshtml";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>❌ Lỗi:</strong> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>✅ Thành công:</strong> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        <i class="fas fa-file-import"></i> Danh sách phiếu nhập kho
+                    </h2>
+                </div>
+                <div class="card-body">
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th class="text-center">Mã phiếu</th>
+                                        <th class="text-center">Số phiếu</th>
+                                        <th class="text-center">Ngày nhập</th>
+                                        <th class="text-center">Nhà cung cấp</th>
+                                        <th class="text-center">Nhân viên tạo</th>
+                                        <th class="text-center">Tổng SL</th>
+                                        <th class="text-center">Tổng tiền</th>
+                                        <th class="text-center">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var receipt in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center fw-bold text-primary">#@receipt.ReceiptID</td>
+                                            <td class="text-center fw-bold">@receipt.ReceiptNumber</td>
+                                            <td class="text-center">
+                                                @receipt.ReceiptDate.ToString("dd/MM/yyyy HH:mm")
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(receipt.SupplierName))
+                                                {
+                                                    <span class="fw-bold">@receipt.SupplierName</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">Chưa có</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (receipt.Staff != null)
+                                                {
+                                                    <div>
+                                                        <strong>@receipt.Staff.FullName</strong><br>
+                                                        <small class="text-muted">@receipt.Staff.Email</small>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">Không xác định</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge bg-info">@receipt.TotalQuantity SP</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="fw-bold text-success">@receipt.TotalAmount.ToString("N0") ₫</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                            onclick="loadReceiptDetails(@receipt.ReceiptID)">
+                                                        <i class="fas fa-eye"></i> Xem chi tiết
+                                                    </button>
+@* 
+                                                    <a href="@Url.Action("DetailsWarehouseReceipt", new { receiptId = receipt.ReceiptID })"
+                                                       class="btn btn-outline-success btn-sm"
+                                                       title="Xem chi tiết trên trang riêng">
+                                                        <i class="fas fa-external-link-alt"></i> Xem
+                                                    </a> *@
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">
+                                Tổng cộng: <strong>@Model.Count</strong> phiếu nhập kho
+                            </small>
+                            <div>
+                                <a href="@Url.Action("CreateWarehouseReceipt")" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Tạo phiếu nhập kho mới
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-file-import fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">Chưa có phiếu nhập kho nào</h4>
+                            <p class="text-muted">Hiện tại chưa có phiếu nhập kho nào được tạo.</p>
+                            <a href="@Url.Action("CreateWarehouseReceipt")" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Tạo phiếu nhập kho đầu tiên
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Chi tiết Phiếu nhập kho -->
+<div class="modal fade" id="receiptDetailsModal" tabindex="-1" aria-labelledby="receiptDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="receiptDetailsModalLabel">
+                    <i class="fas fa-file-invoice"></i> Chi tiết phiếu nhập kho
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="receiptDetailsContent">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                    <p class="mt-2">Đang tải thông tin...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Đóng
+                </button>
+                <button type="button" class="btn btn-primary" id="printReceiptBtn">
+                    <i class="fas fa-print"></i> In phiếu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table th {
+        background-color: #343a40;
+        color: white;
+        font-weight: 600;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .btn-group .btn {
+        margin-right: 2px;
+    }
+
+    .btn-group .btn:last-child {
+        margin-right: 0;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+
+    .badge {
+        font-size: 0.75em;
+    }
+
+    .alert {
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .modal-xl {
+        max-width: 1200px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        // Auto-hide alerts
+        setTimeout(() => $('.alert').fadeOut('slow'), 5000);
+    });
+
+    // Gọi API để lấy chi tiết phiếu nhập
+    function loadReceiptDetails(receiptId) {
+        $('#receiptDetailsModal').modal('show');
+        $('#receiptDetailsContent').html(`
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Đang tải...</span>
+                </div>
+                <p class="mt-2">Đang tải thông tin...</p>
+            </div>
+        `);
+
+        // Gọi API (cần tạo hàm GetReceiptDetails trong controller)
+        $.get('/NVKho/WarehouseReceipt/GetReceiptDetails', { receiptId: receiptId })
+            .done(function (response) {
+                if (response.success) {
+                    renderReceiptDetails(response.data);
+                } else {
+                    showError(response.message || 'Không thể tải thông tin phiếu nhập');
+                }
+            })
+            .fail(function () {
+                showError('Lỗi kết nối. Vui lòng thử lại!');
+            });
+    }
+
+    // Hiển thị nội dung chi tiết
+    function renderReceiptDetails(data) {
+        const html = `
+            <div class="container-fluid">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Mã phiếu:</strong> ${data.receiptId}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Số phiếu:</strong> ${data.receiptNumber}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Ngày nhập:</strong> ${data.receiptDate}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Nhà cung cấp:</strong> ${data.supplierName || 'Chưa có'}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Nhân viên tạo:</strong> ${data.staffName}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Tổng tiền:</strong> <span class="text-success fw-bold">${data.totalAmount} ₫</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <strong>Ghi chú:</strong> ${data.notes || 'Không có'}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <strong>Chi tiết sản phẩm:</strong>
+                        <div class="table-responsive mt-2">
+                            <table class="table table-sm table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Mã vạch</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${(data.receiptDetails || []).map((detail, index) => `
+                                        <tr>
+                                            <td>${index + 1}</td>
+                                            <td>${detail.productName}</td>
+                                            <td>${detail.barcode}</td>
+                                            <td class="text-center">${detail.quantity}</td>
+                                            <td class="text-end">${detail.unitPrice} ₫</td>
+                                            <td class="text-end fw-bold">${detail.totalPrice} ₫</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        $('#receiptDetailsContent').html(html);
+    }
+
+    // Hiển thị lỗi
+    function showError(message) {
+        $('#receiptDetailsContent').html(`
+            <div class="alert alert-danger text-center">
+                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                <h5>Có lỗi xảy ra</h5>
+                <p>${message}</p>
+            </div>
+        `);
+    }
+</script>
+

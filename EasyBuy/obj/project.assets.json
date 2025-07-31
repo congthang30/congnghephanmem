@@ -7936,11 +7936,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
+      "projectUniqueName": "C:\\Users\\Cong Thang\\Desktop\\Project 30.07.2025\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
       "projectName": "EasyBuy",
-      "projectPath": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
+      "projectPath": "C:\\Users\\Cong Thang\\Desktop\\Project 30.07.2025\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
       "packagesPath": "C:\\Users\\Cong Thang\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Cong Thang\\congnghephanmem\\EasyBuy\\obj\\",
+      "outputPath": "C:\\Users\\Cong Thang\\Desktop\\Project 30.07.2025\\congnghephanmem\\EasyBuy\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

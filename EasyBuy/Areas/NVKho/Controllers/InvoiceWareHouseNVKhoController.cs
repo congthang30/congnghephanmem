@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyBuy.Areas.NVKho.Controllers
 {
     [Area("NVKho")]
-    [AuthorizeRole("NVKho")]
+    [AuthorizeRole("NVKD", "Admin")]
     public class InvoiceWareHouseNVKhoController : Controller
     {
         private readonly EasyBuyContext _context;
@@ -179,6 +179,7 @@ namespace EasyBuy.Areas.NVKho.Controllers
                 createdAt = invoice.ExportDate.ToString("dd/MM/yyyy HH:mm"),
                 customerName = invoice.Order?.User?.FullName,
                 address = invoice.Order?.Address?.FullAddress,
+                phone = invoice.Order?.User?.Phone,
                 staffName = invoice.Staff?.FullName,
                 products = invoice.Order?.OrderDetails.Select(od => new
                 {

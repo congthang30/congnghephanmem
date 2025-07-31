@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyBuy.Areas.NVKD.Controllers
 {
     [Area("NVKD")]
-    [AuthorizeRole("NVKD")]
+    [AuthorizeRole("NVKD", "Admin")]
     public class OrderNVKDController : Controller
     {
         private readonly IEmailService _emailService;

@@ -1,0 +1,321 @@
+@{
+    ViewBag.Title = "Tạo phiếu nhập kho";
+    Layout = "~/Areas/NVKho/Views/Layout/_LayoutNVKho.cshtml";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>❌ Lỗi:</strong> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        <i class="fas fa-plus"></i> Tạo phiếu nhập kho mới
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form id="createReceiptForm" method="post" asp-action="CreateWarehouseReceipt">
+                        @Html.AntiForgeryToken()
+                        
+                        <!-- Thông tin cơ bản -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="receiptNumber" class="form-label fw-bold">Số phiếu nhập kho</label>
+                                    <input type="text" class="form-control" id="receiptNumber" name="receiptNumber" 
+                                           value="@("PNK" + DateTime.Now.ToString("yyMMddHHmmss"))" readonly>
+                                    <small class="text-muted">Số phiếu được tạo tự động</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="receiptDate" class="form-label fw-bold">Ngày nhập kho *</label>
+                                    <input type="datetime-local" class="form-control" id="receiptDate" name="receiptDate" 
+                                           value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="supplierName" class="form-label fw-bold">Nhà cung cấp</label>
+                                    <input type="text" class="form-control" id="supplierName" name="supplierName" 
+                                           placeholder="Tên nhà cung cấp">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label for="notes" class="form-label fw-bold">Ghi chú</label>
+                                    <textarea class="form-control" id="notes" name="notes" rows="3" 
+                                              placeholder="Ghi chú về phiếu nhập kho..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Danh sách sản phẩm -->
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h4 class="fw-bold text-primary">
+                                    <i class="fas fa-boxes"></i> Chi tiết sản phẩm
+                                </h4>
+                                <p class="text-muted">Thêm các sản phẩm vào phiếu nhập kho</p>
+                            </div>
+                        </div>
+
+                        <div id="productList">
+                            <!-- Sản phẩm sẽ được thêm vào đây -->
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-success" onclick="addProductRow()">
+                                    <i class="fas fa-plus"></i> Thêm sản phẩm
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Tổng kết -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold">Tổng kết</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <strong>Tổng số lượng:</strong>
+                                            </div>
+                                            <div class="col-6">
+                                                <span id="totalQuantity" class="fw-bold text-primary">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <strong>Tổng tiền:</strong>
+                                            </div>
+                                            <div class="col-6">
+                                                <span id="totalAmount" class="fw-bold text-success">0 ₫</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nút thao tác -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <a href="@Url.Action("ListWarehouseReceipt")" class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left"></i> Quay lại
+                                    </a>
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                                        <i class="fas fa-save"></i> Tạo phiếu nhập kho
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .product-row {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+    }
+
+    .product-row:hover {
+        background-color: #e9ecef;
+    }
+
+    .remove-product {
+        color: #dc3545;
+        cursor: pointer;
+        font-size: 1.2em;
+    }
+
+    .remove-product:hover {
+        color: #c82333;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+</style>
+
+<script>
+    let productRowCount = 0;
+    const products = @Html.Raw(Json.Serialize(ViewBag.Products ?? new List<object>()));
+
+    $(document).ready(function () {
+        // Auto-hide alerts
+        setTimeout(() => $('.alert').fadeOut('slow'), 5000);
+        
+        // Thêm sản phẩm đầu tiên
+        addProductRow();
+    });
+
+    function addProductRow() {
+        productRowCount++;
+        const rowHtml = `
+            <div class="product-row" id="productRow${productRowCount}">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Sản phẩm *</label>
+                            <select class="form-select product-select" name="productIds" required onchange="updateProductInfo(this, ${productRowCount})">
+                                <option value="">-- Chọn sản phẩm --</option>
+                                ${products.map(p => `<option value="${p.productId}" data-barcode="${p.barcode}" data-name="${p.productName}" data-price="${p.sellingPrice}">${p.productName} (${p.barcode})</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Mã vạch</label>
+                            <input type="text" class="form-control" name="barcodes" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Tên sản phẩm</label>
+                            <input type="text" class="form-control" name="productNames" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Số lượng *</label>
+                            <input type="number" class="form-control quantity-input" name="quantities" min="1" value="1" required onchange="updateTotal(${productRowCount})">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mb-3">
+                            <label class="form-label fw-bold">Đơn giá *</label>
+                            <input type="number" class="form-control price-input" name="unitPrices" min="0" step="1000" required onchange="updateTotal(${productRowCount})">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Thành tiền: <span class="fw-bold text-success row-total">0 ₫</span></span>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeProductRow(${productRowCount})">
+                                <i class="fas fa-trash"></i> Xóa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        $('#productList').append(rowHtml);
+    }
+
+    function removeProductRow(rowId) {
+        $(`#productRow${rowId}`).remove();
+        updateGrandTotal();
+    }
+
+    function updateProductInfo(selectElement, rowId) {
+        const selectedOption = $(selectElement).find('option:selected');
+        const row = $(`#productRow${rowId}`);
+        
+        if (selectedOption.val()) {
+            const barcode = selectedOption.data('barcode') || '';
+            const name = selectedOption.data('name') || '';
+            const price = selectedOption.data('price') || 0;
+            
+            row.find('input[name="barcodes"]').val(barcode);
+            row.find('input[name="productNames"]').val(name);
+            row.find('input[name="unitPrices"]').val(price);
+            
+            updateTotal(rowId);
+        } else {
+            row.find('input[name="barcodes"]').val('');
+            row.find('input[name="productNames"]').val('');
+            row.find('input[name="unitPrices"]').val('');
+            updateTotal(rowId);
+        }
+    }
+
+    function updateTotal(rowId) {
+        const row = $(`#productRow${rowId}`);
+        const quantity = parseInt(row.find('.quantity-input').val()) || 0;
+        const price = parseFloat(row.find('.price-input').val()) || 0;
+        const total = quantity * price;
+        
+        row.find('.row-total').text(total.toLocaleString('vi-VN') + ' ₫');
+        updateGrandTotal();
+    }
+
+    function updateGrandTotal() {
+        let totalQuantity = 0;
+        let totalAmount = 0;
+        
+        $('.quantity-input').each(function() {
+            totalQuantity += parseInt($(this).val()) || 0;
+        });
+        
+        $('.price-input').each(function(index) {
+            const quantity = parseInt($('.quantity-input').eq(index).val()) || 0;
+            const price = parseFloat($(this).val()) || 0;
+            totalAmount += quantity * price;
+        });
+        
+        $('#totalQuantity').text(totalQuantity);
+        $('#totalAmount').text(totalAmount.toLocaleString('vi-VN') + ' ₫');
+    }
+
+    // Validate form trước khi submit
+    $('#createReceiptForm').on('submit', function(e) {
+        const productRows = $('.product-row');
+        if (productRows.length === 0) {
+            e.preventDefault();
+            alert('Phải có ít nhất một sản phẩm trong phiếu nhập kho.');
+            return false;
+        }
+        
+        let hasValidProduct = false;
+        productRows.each(function() {
+            const productId = $(this).find('.product-select').val();
+            const quantity = $(this).find('.quantity-input').val();
+            const price = $(this).find('.price-input').val();
+            
+            if (productId && quantity > 0 && price > 0) {
+                hasValidProduct = true;
+            }
+        });
+        
+        if (!hasValidProduct) {
+            e.preventDefault();
+            alert('Phải có ít nhất một sản phẩm hợp lệ trong phiếu nhập kho.');
+            return false;
+        }
+    });
+</script> 
