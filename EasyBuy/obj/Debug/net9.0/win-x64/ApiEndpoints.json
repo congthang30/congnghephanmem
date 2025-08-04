@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "EasyBuy.Controllers.ChatApiController",
+    "Method": "SendMessage",
+    "RelativePath": "api/ChatApi/send",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "EasyBuy.Controllers.ChatRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

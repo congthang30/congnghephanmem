@@ -1,0 +1,341 @@
+/* ==========================================================================
+   EasyBuy Checkout - Modern UI Styles
+   ========================================================================== */
+
+.checkout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Progress Bar */
+.checkout-progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e9ecef;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.progress-step.active .step-number {
+    background: var(--primary-color, #667eea);
+    color: white;
+}
+
+.progress-step.completed .step-number {
+    background: #28a745;
+    color: white;
+}
+
+.step-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    text-align: center;
+}
+
+.progress-line {
+    width: 100px;
+    height: 2px;
+    background: #e9ecef;
+    margin: 0 1rem;
+    position: relative;
+    top: -20px;
+}
+
+.progress-line.completed {
+    background: #28a745;
+}
+
+/* Order Items */
+.order-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.quantity-badge {
+    background: #f8f9fa;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Address Options */
+.address-option {
+    position: relative;
+}
+
+.address-radio {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.address-label {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.address-card {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.address-radio:checked + .address-label .address-card {
+    border-color: var(--primary-color, #667eea);
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.address-card:hover {
+    border-color: var(--primary-color, #667eea);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.address-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.address-details p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Payment Methods */
+.payment-option {
+    position: relative;
+}
+
+.payment-radio {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.payment-label {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.payment-card {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.payment-radio:checked + .payment-label .payment-card {
+    border-color: var(--primary-color, #667eea);
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.payment-card:hover {
+    border-color: var(--primary-color, #667eea);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.payment-icon {
+    font-size: 1.5rem;
+}
+
+/* Order Summary */
+.order-summary {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.summary-row:last-child {
+    margin-bottom: 0;
+}
+
+.total-row {
+    font-size: 1.1rem;
+}
+
+.discount-row {
+    color: #28a745;
+}
+
+/* Voucher */
+.voucher-input .input-group {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Security Badge */
+.security-badge {
+    padding: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+/* Cards */
+.card {
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    background: white;
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 12px 12px 0 0;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color, #667eea);
+    color: var(--primary-color, #667eea);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary-color, #667eea);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .checkout-container {
+        padding: 10px;
+    }
+    
+    .progress-line {
+        width: 50px;
+    }
+    
+    .order-item .row > div {
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .sticky-top {
+        position: static !important;
+    }
+}
+
+/* Loading State */
+.btn-loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Alert improvements */
+.alert {
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Input improvements */
+.form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color, #667eea);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Icons */
+.text-primary {
+    color: var(--primary-color, #667eea) !important;
+}
+
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+} 

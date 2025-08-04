@@ -1,0 +1,631 @@
+﻿@using EasyBuy.Models
+@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "Quản lý người dùng";
+    Layout = "~/Areas/Admin/Views/Layout/_LayoutAdmin.cshtml";
+}
+
+@section Styles {
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .user-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .user-table .table {
+            margin-bottom: 0;
+        }
+
+        .user-table .table th {
+            background: #f8f9fa;
+            border: none;
+            font-weight: 600;
+            color: #495057;
+            padding: 1rem;
+        }
+
+        .user-table .table td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-locked {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Thêm tooltip để hiển thị text tiếng Việt khi hover */
+        .status-badge[title] {
+            cursor: help;
+        }
+
+        .role-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .role-admin {
+            background: #dc3545;
+            color: white;
+        }
+
+        .role-customer {
+            background: #28a745;
+            color: white;
+        }
+
+        .role-nvkd {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .role-nvkho {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .role-nvkt {
+            background: #6f42c1;
+            color: white;
+        }
+
+        .role-nvmkt {
+            background: #fd7e14;
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .pagination .page-link {
+            color: #667eea;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: #667eea;
+            border-color: #667eea;
+        }
+    </style>
+}
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="mb-0"><i class="fas fa-users me-2"></i>Quản lý người dùng</h1>
+            <p class="mb-0 mt-2">Quản lý tất cả người dùng trong hệ thống</p>
+        </div>
+        <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createUserModal">
+            <i class="fas fa-plus me-2"></i>Thêm người dùng mới
+        </button>
+    </div>
+</div>
+
+<!-- Thống kê -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="stats-card text-center">
+            <i class="fas fa-users fa-2x text-primary mb-2"></i>
+            <h4 class="mb-1">@Model.Count()</h4>
+            <p class="text-muted mb-0">Tổng người dùng</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card text-center">
+            <i class="fas fa-user-check fa-2x text-success mb-2"></i>
+            <h4 class="mb-1">@Model.Count(u => u.AccountStatus == "Active")</h4>
+            <p class="text-muted mb-0">Đang hoạt động</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card text-center">
+            <i class="fas fa-user-lock fa-2x text-warning mb-2"></i>
+            <h4 class="mb-1">@Model.Count(u => u.AccountStatus == "Locked")</h4>
+            <p class="text-muted mb-0">Đã khóa</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card text-center">
+            <i class="fas fa-user-shield fa-2x text-danger mb-2"></i>
+            <h4 class="mb-1">@Model.Count(u => u.Role == "Admin")</h4>
+            <p class="text-muted mb-0">Quản trị viên</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tìm kiếm và lọc -->
+<div class="search-box">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm theo tên, email, số điện thoại...">
+        </div>
+        <div class="col-md-3">
+            <select id="statusFilter" class="form-select">
+                <option value="">Tất cả trạng thái</option>
+                <option value="Active">Đang hoạt động</option>
+                <option value="Inactive">Không hoạt động</option>
+                <option value="Locked">Đã khóa</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select id="roleFilter" class="form-select">
+                <option value="">Tất cả vai trò</option>
+                <option value="Admin">Quản trị viên</option>
+                <option value="Customer">Khách hàng</option>
+                <option value="NVKD">Nhân viên kinh doanh</option>
+                <option value="NVKho">Nhân viên kho</option>
+                <option value="NVKT">Nhân viên kỹ thuật</option>
+                <option value="NVMKT">Nhân viên marketing</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100" onclick="clearFilters()">
+                <i class="fas fa-refresh me-1"></i>Làm mới
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Bảng người dùng -->
+<div class="user-table">
+    <div class="table-responsive">
+        <table class="table table-hover" id="usersTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Vai trò</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.UserId</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm me-2">
+                                    <i class="fas fa-user-circle fa-2x text-muted"></i>
+                                </div>
+                                <div>
+                                    <strong>@user.FullName</strong>
+                                    @if (user.FailedLoginCount > 0)
+                                    {
+                                        <br><small class="text-danger">Đăng nhập sai @user.FailedLoginCount lần</small>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                        <td>@user.Email</td>
+                        <td>@user.Phone</td>
+                        <td>
+                            <span class="role-badge role-@(user.Role?.ToLower())">
+                                @user.Role
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-@(user.AccountStatus?.ToLower())" 
+                                  title="@(user.AccountStatus == "Active" ? "Hoạt động" : 
+                                          user.AccountStatus == "Inactive" ? "Không hoạt động" : 
+                                          user.AccountStatus == "Locked" ? "Đã khóa" : user.AccountStatus)">
+                                @(user.AccountStatus == "Active" ? "Active" : 
+                                  user.AccountStatus == "Inactive" ? "Inactive" : 
+                                  user.AccountStatus == "Locked" ? "Locked" : user.AccountStatus)
+                            </span>
+                        </td>
+                        <td>@(user.CreatedAt?.ToString("dd/MM/yyyy"))</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-info btn-sm" onclick="viewUserDetail(@user.UserId)" title="Xem chi tiết">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-warning btn-sm" onclick="editUser(@user.UserId)" title="Chỉnh sửa">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteUser(@user.UserId)" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal tạo người dùng mới -->
+<div class="modal fade" id="createUserModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-user-plus me-2"></i>Thêm người dùng mới</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="createUserForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Họ tên *</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Số điện thoại *</label>
+                                <input type="tel" class="form-control" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Mật khẩu *</label>
+                                <input type="password" class="form-control" name="password" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Vai trò *</label>
+                                <select class="form-select" name="role" required>
+                                    <option value="">Chọn vai trò</option>
+                                    <option value="Customer">Khách hàng</option>
+                                    <option value="Admin">Quản trị viên</option>
+                                    <option value="NVKD">Nhân viên kinh doanh</option>
+                                    <option value="NVKho">Nhân viên kho</option>
+                                    <option value="NVKT">Nhân viên kỹ thuật</option>
+                                    <option value="NVMKT">Nhân viên marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Trạng thái *</label>
+                                <select class="form-select" name="accountstatus" required>
+                                    <option value="Active">Hoạt động</option>
+                                    <option value="Inactive">Không hoạt động</option>
+                                    <option value="Locked">Đã khóa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Tạo người dùng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal chỉnh sửa người dùng -->
+<div class="modal fade" id="editUserModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-user-edit me-2"></i>Chỉnh sửa người dùng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="editUserForm">
+                <input type="hidden" id="editUserId" name="userid">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Họ tên</label>
+                                <input type="text" class="form-control" id="editName" name="name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="editEmail" name="email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Số điện thoại</label>
+                                <input type="tel" class="form-control" id="editPhone" name="phone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Mật khẩu mới (để trống nếu không đổi)</label>
+                                <input type="password" class="form-control" id="editPassword" name="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Vai trò</label>
+                                <select class="form-select" id="editRole" name="role">
+                                    <option value="Customer">Khách hàng</option>
+                                    <option value="Admin">Quản trị viên</option>
+                                    <option value="NVKD">Nhân viên kinh doanh</option>
+                                    <option value="NVKho">Nhân viên kho</option>
+                                    <option value="NVKT">Nhân viên kỹ thuật</option>
+                                    <option value="NVMKT">Nhân viên marketing</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Trạng thái</label>
+                                <select class="form-select" id="editAccountStatus" name="accountstatus">
+                                    <option value="Active">Hoạt động</option>
+                                    <option value="Inactive">Không hoạt động</option>
+                                    <option value="Locked">Đã khóa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal chi tiết người dùng -->
+<div class="modal fade" id="userDetailModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-user me-2"></i>Chi tiết người dùng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="userDetailContent">
+                <!-- Nội dung sẽ được load bằng JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Tìm kiếm và lọc
+        function filterUsers() {
+            const searchTerm = $('#searchInput').val().toLowerCase();
+            const statusFilter = $('#statusFilter').val();
+            const roleFilter = $('#roleFilter').val();
+
+            $('#usersTable tbody tr').each(function() {
+                const row = $(this);
+                const name = row.find('td:eq(1)').text().toLowerCase();
+                const email = row.find('td:eq(2)').text().toLowerCase();
+                const phone = row.find('td:eq(3)').text().toLowerCase();
+                const role = row.find('td:eq(4)').text();
+                const status = row.find('td:eq(5)').text();
+
+                const matchesSearch = name.includes(searchTerm) || email.includes(searchTerm) || phone.includes(searchTerm);
+                const matchesStatus = !statusFilter || status.includes(statusFilter);
+                const matchesRole = !roleFilter || role.includes(roleFilter);
+
+                if (matchesSearch && matchesStatus && matchesRole) {
+                    row.show();
+                } else {
+                    row.hide();
+                }
+            });
+        }
+
+        function clearFilters() {
+            $('#searchInput').val('');
+            $('#statusFilter').val('');
+            $('#roleFilter').val('');
+            $('#usersTable tbody tr').show();
+        }
+
+        // Xem chi tiết người dùng
+        function viewUserDetail(userId) {
+            $.get('/Admin/Users/UserDetail', { userid: userId })
+                .done(function(data) {
+                    const content = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>ID:</strong> ${data.userId}</p>
+                                <p><strong>Họ tên:</strong> ${data.fullName}</p>
+                                <p><strong>Email:</strong> ${data.email}</p>
+                                <p><strong>Số điện thoại:</strong> ${data.phone}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Vai trò:</strong> <span class="role-badge role-${data.role.toLowerCase()}">${data.role}</span></p>
+                                <p><strong>Trạng thái:</strong> <span class="status-badge status-${data.accountStatus.toLowerCase()}">${data.accountStatus === 'Active' ? 'Active' : data.accountStatus === 'Inactive' ? 'Inactive' : data.accountStatus === 'Locked' ? 'Locked' : data.accountStatus}</span></p>
+                                <p><strong>Ngày tạo:</strong> ${data.createdAt}</p>
+                                <p><strong>Lần đăng nhập sai:</strong> ${data.failedLoginCount}</p>
+                                ${data.lockedAt ? `<p><strong>Ngày khóa:</strong> ${data.lockedAt}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                    $('#userDetailContent').html(content);
+                    $('#userDetailModal').modal('show');
+                })
+                .fail(function() {
+                    alert('Không thể tải thông tin người dùng');
+                });
+        }
+
+        // Chỉnh sửa người dùng
+        function editUser(userId) {
+            // Lấy thông tin người dùng hiện tại
+            $.get('/Admin/Users/UserDetail', { userid: userId })
+                .done(function(data) {
+                    $('#editUserId').val(data.userId);
+                    $('#editName').val(data.fullName);
+                    $('#editEmail').val(data.email);
+                    $('#editPhone').val(data.phone);
+                    $('#editRole').val(data.role);
+                    $('#editAccountStatus').val(data.accountStatus);
+                    $('#editPassword').val('');
+                    $('#editUserModal').modal('show');
+                })
+                .fail(function() {
+                    alert('Không thể tải thông tin người dùng');
+                });
+        }
+
+        // Xóa người dùng
+        function deleteUser(userId) {
+            if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+                $.post('/Admin/Users/DeleteUser', { userid: userId })
+                    .done(function() {
+                        location.reload();
+                    })
+                    .fail(function() {
+                        alert('Không thể xóa người dùng');
+                    });
+            }
+        }
+
+        // Xử lý form tạo người dùng
+        $('#createUserForm').on('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            $.post('/Admin/Users/CreateUser', data)
+                .done(function() {
+                    $('#createUserModal').modal('hide');
+                    location.reload();
+                })
+                .fail(function(xhr) {
+                    alert(xhr.responseText || 'Có lỗi xảy ra khi tạo người dùng');
+                });
+        });
+
+        // Xử lý form chỉnh sửa người dùng
+        $('#editUserForm').on('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            $.post('/Admin/Users/EditUser', data)
+                .done(function() {
+                    $('#editUserModal').modal('hide');
+                    location.reload();
+                })
+                .fail(function(xhr) {
+                    alert(xhr.responseText || 'Có lỗi xảy ra khi cập nhật người dùng');
+                });
+        });
+
+        // Event listeners
+        $('#searchInput, #statusFilter, #roleFilter').on('input change', filterUsers);
+
+        // Hiển thị thông báo từ TempData
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+            $(document).ready(function() {
+                alert('@TempData["SuccessMessage"]');
+            });
+            </text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+            $(document).ready(function() {
+                alert('@TempData["ErrorMessage"]');
+            });
+            </text>
+        }
+    </script>
+}

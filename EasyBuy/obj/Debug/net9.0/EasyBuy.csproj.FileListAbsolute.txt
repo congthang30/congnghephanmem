@@ -2085,3 +2085,7 @@ C:\Users\Cong Thang\Desktop\Project 30.07.2025\congnghephanmem\EasyBuy\obj\Debug
 C:\Users\Cong Thang\Desktop\Project 30.07.2025\congnghephanmem\EasyBuy\obj\Debug\net9.0\EasyBuy.pdb
 C:\Users\Cong Thang\Desktop\Project 30.07.2025\congnghephanmem\EasyBuy\obj\Debug\net9.0\EasyBuy.genruntimeconfig.cache
 C:\Users\Cong Thang\Desktop\Project 30.07.2025\congnghephanmem\EasyBuy\obj\Debug\net9.0\ref\EasyBuy.dll
+C:\Users\Cong Thang\Desktop\Project 30.07.2025\congnghephanmem\EasyBuy\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Cong Thang\Desktop\Project 30.07.2025\congnghephanmem\EasyBuy\bin\Debug\net9.0\System.Drawing.Common.dll
+C:\Users\Cong Thang\Desktop\Project 30.07.2025\congnghephanmem\EasyBuy\bin\Debug\net9.0\System.Private.Windows.Core.dll
+C:\Users\Cong Thang\Desktop\Project 30.07.2025\congnghephanmem\EasyBuy\bin\Debug\net9.0\runtimes\win\lib\net9.0\Microsoft.Win32.SystemEvents.dll

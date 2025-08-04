@@ -16,7 +16,8 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.6",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.6",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "9.0.0",
-          "RestSharp": "112.1.0"
+          "RestSharp": "112.1.0",
+          "System.Drawing.Common": "9.0.7"
         },
         "runtime": {
           "EasyBuy.dll": {}
@@ -1760,6 +1761,22 @@
           }
         }
       },
+      "Microsoft.Win32.SystemEvents/9.0.7": {
+        "runtime": {
+          "lib/net9.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.725.31616"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net9.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.725.31616"
+          }
+        }
+      },
       "MimeKit/4.13.0": {
         "dependencies": {
           "BouncyCastle.Cryptography": "2.5.1",
@@ -1999,6 +2016,21 @@
         }
       },
       "System.Diagnostics.EventLog/8.0.0": {},
+      "System.Drawing.Common/9.0.7": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "9.0.7"
+        },
+        "runtime": {
+          "lib/net9.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.725.31604"
+          },
+          "lib/net9.0/System.Private.Windows.Core.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.725.31604"
+          }
+        }
+      },
       "System.Formats.Asn1/9.0.6": {
         "runtime": {
           "lib/net9.0/System.Formats.Asn1.dll": {
@@ -2926,6 +2958,13 @@
       "path": "microsoft.visualstudio.web.codegenerators.mvc/9.0.0",
       "hashPath": "microsoft.visualstudio.web.codegenerators.mvc.9.0.0.nupkg.sha512"
     },
+    "Microsoft.Win32.SystemEvents/9.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lFGY2aGgmMREPJEfOmZcA6v0CLjWVpcfNHRgqYMoSQhy80+GxhYqdW5xe+DCLrVqE1M7/0RpOkIo49/KH/cd/A==",
+      "path": "microsoft.win32.systemevents/9.0.7",
+      "hashPath": "microsoft.win32.systemevents.9.0.7.nupkg.sha512"
+    },
     "MimeKit/4.13.0": {
       "type": "package",
       "serviceable": true,
@@ -3107,6 +3146,13 @@
       "sha512": "sha512-fdYxcRjQqTTacKId/2IECojlDSFvp7LP5N78+0z/xH7v/Tuw5ZAxu23Y6PTCRinqyu2ePx+Gn1098NC6jM6d+A==",
       "path": "system.diagnostics.eventlog/8.0.0",
       "hashPath": "system.diagnostics.eventlog.8.0.0.nupkg.sha512"
+    },
+    "System.Drawing.Common/9.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1k/Pk7hcM3vP2tfIRRS2ECCCN7ya+hvocsM1JMc4ZDCU6qw7yOuUmqmCDfgXZ4Q4FS6jass2EAai5ByKodDi0g==",
+      "path": "system.drawing.common/9.0.7",
+      "hashPath": "system.drawing.common.9.0.7.nupkg.sha512"
     },
     "System.Formats.Asn1/9.0.6": {
       "type": "package",

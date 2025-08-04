@@ -772,7 +772,7 @@ namespace EasyBuy.Controllers
                     FullName = name,
                     Phone = null,
                     Password = passwordHash,
-                    Role = "User",
+                    Role = "Customer",
                     AccountStatus = "Active",
                     FailedLoginCount = 0,
                     CreatedAt = DateTime.Now,

@@ -1,0 +1,479 @@
+@using EasyBuy.Models
+@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Quản lý sản phẩm";
+    Layout = "~/Areas/Admin/Views/Layout/_LayoutAdmin.cshtml";
+}
+
+@section Styles {
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .product-table .table {
+            margin-bottom: 0;
+        }
+
+        .product-table .table th {
+            background: #f8f9fa;
+            border: none;
+            font-weight: 600;
+            color: #495057;
+            padding: 1rem;
+        }
+
+        .product-table .table td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .status-presently {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-hidden {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .featured-badge {
+            background: #ffc107;
+            color: #212529;
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .stock-warning {
+            color: #dc3545;
+            font-weight: 500;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .stock-low {
+            color: #ffc107;
+            font-weight: 500;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .stock-ok {
+            color: #28a745;
+            font-weight: 500;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .price-format {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .table th {
+            white-space: nowrap;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+    </style>
+}
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="mb-0"><i class="fas fa-boxes me-2"></i>Quản lý sản phẩm</h1>
+            <p class="mb-0 mt-2">Quản lý tất cả sản phẩm trong hệ thống</p>
+        </div>
+        <a href="@Url.Action("CreateProducts", "Products", new { area = "Admin" })" class="btn btn-light">
+            <i class="fas fa-plus me-2"></i>Thêm sản phẩm mới
+        </a>
+    </div>
+</div>
+
+<!-- Thống kê -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="stats-card text-center">
+            <i class="fas fa-boxes fa-2x text-primary mb-2"></i>
+            <h4 class="mb-1">@ViewBag.TotalProducts</h4>
+            <p class="text-muted mb-0">Tổng sản phẩm</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card text-center">
+            <i class="fas fa-eye fa-2x text-success mb-2"></i>
+            <h4 class="mb-1">@ViewBag.ActiveProducts</h4>
+            <p class="text-muted mb-0">Đang hiển thị</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card text-center">
+            <i class="fas fa-eye-slash fa-2x text-warning mb-2"></i>
+            <h4 class="mb-1">@ViewBag.HiddenProducts</h4>
+            <p class="text-muted mb-0">Đã ẩn</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stats-card text-center">
+            <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2"></i>
+            <h4 class="mb-1">@ViewBag.OutOfStockProducts</h4>
+            <p class="text-muted mb-0">Hết hàng</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tìm kiếm và lọc -->
+<div class="search-box">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm theo tên, barcode...">
+        </div>
+        <div class="col-md-3">
+            <select id="statusFilter" class="form-select">
+                <option value="">Tất cả trạng thái</option>
+                <option value="presently">Đang hiển thị</option>
+                <option value="hidden">Đã ẩn</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select id="stockFilter" class="form-select">
+                <option value="">Tất cả tồn kho</option>
+                <option value="out">Hết hàng</option>
+                <option value="low">Tồn kho thấp</option>
+                <option value="ok">Còn hàng</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100" onclick="clearFilters()">
+                <i class="fas fa-refresh me-1"></i>Làm mới
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Bảng sản phẩm -->
+<div class="product-table">
+    <div class="table-responsive">
+        <table class="table table-hover" id="productsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Barcode</th>
+                    <th>Thương hiệu</th>
+                    <th>Danh mục</th>
+                    <th>Tồn kho</th>
+                    <th>Giá bán</th>
+                    <th>Trạng thái</th>
+                    <th>Nổi bật</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.ProductId</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(product.ImagePr))
+                            {
+                                <img src="@product.ImagePr" alt="@product.ProductName" class="product-image" />
+                            }
+                            else
+                            {
+                                <div class="product-image bg-light d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-image text-muted"></i>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            <div>
+                                <strong>@product.ProductName</strong>
+                                @if (!string.IsNullOrEmpty(product.Description))
+                                {
+                                    <br><small class="text-muted">@(product.Description.Length > 50 ? product.Description.Substring(0, 50) + "..." : product.Description)</small>
+                                }
+                            </div>
+                        </td>
+                        <td><code>@product.Barcode</code></td>
+                        <td>@product.Brand?.NameBrand</td>
+                        <td>@product.Cate?.CategoryName</td>
+                        <td>
+                            @{
+                                var stockClass = product.Quantity <= 0 ? "stock-warning" : 
+                                               product.Quantity <= 10 ? "stock-low" : "stock-ok";
+                                var stockText = product.Quantity <= 0 ? "Hết hàng" : 
+                                              product.Quantity <= 10 ? "Tồn kho thấp" : "Còn hàng";
+                            }
+                            <div class="@stockClass">
+                                <strong>@product.Quantity</strong>
+                                <br><small>(@stockText)</small>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price-format">
+                                @product.SellingPrice?.ToString("N0") ₫
+                                @if (product.Discount > 0)
+                                {
+                                    <br><small class="text-success">-@product.Discount%</small>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            @if (product.StatusProduct == "presently")
+                            {
+                                <span class="status-badge status-presently">Hiển thị</span>
+                            }
+                            else if (product.StatusProduct == "hidden")
+                            {
+                                <span class="status-badge status-hidden">Ẩn</span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-hidden">@product.StatusProduct</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (product.IsFeatured == true)
+                            {
+                                <span class="featured-badge">
+                                    <i class="fas fa-star me-1"></i>Nổi bật
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-info btn-sm" onclick="viewProductDetail(@product.ProductId)" title="Xem chi tiết">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <a href="@Url.Action("UpdateProducts", "Products", new { area = "Admin", id = product.ProductId })" 
+                                   class="btn btn-warning btn-sm" title="Chỉnh sửa">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProduct(@product.ProductId)" title="Xóa">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal chi tiết sản phẩm -->
+<div class="modal fade" id="productDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-box me-2"></i>Chi tiết sản phẩm</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="productDetailContent">
+                <!-- Nội dung sẽ được load bằng JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Tìm kiếm và lọc
+        function filterProducts() {
+            const searchTerm = $('#searchInput').val().toLowerCase();
+            const statusFilter = $('#statusFilter').val();
+            const stockFilter = $('#stockFilter').val();
+
+            $('#productsTable tbody tr').each(function() {
+                const row = $(this);
+                const name = row.find('td:eq(2)').text().toLowerCase();
+                const barcode = row.find('td:eq(3)').text().toLowerCase();
+                const status = row.find('td:eq(8)').text();
+                const stockText = row.find('td:eq(6)').text().toLowerCase();
+
+                const matchesSearch = name.includes(searchTerm) || barcode.includes(searchTerm);
+                const matchesStatus = !statusFilter || status.includes(statusFilter);
+                
+                let matchesStock = true;
+                if (stockFilter === 'out') {
+                    matchesStock = stockText.includes('hết hàng');
+                } else if (stockFilter === 'low') {
+                    matchesStock = stockText.includes('tồn kho thấp');
+                } else if (stockFilter === 'ok') {
+                    matchesStock = stockText.includes('còn hàng');
+                }
+
+                if (matchesSearch && matchesStatus && matchesStock) {
+                    row.show();
+                } else {
+                    row.hide();
+                }
+            });
+        }
+
+        function clearFilters() {
+            $('#searchInput').val('');
+            $('#statusFilter').val('');
+            $('#stockFilter').val('');
+            $('#productsTable tbody tr').show();
+        }
+
+        // Xem chi tiết sản phẩm
+        function viewProductDetail(productId) {
+            $.get('/Admin/Products/ProductDetail', { id: productId })
+                .done(function(data) {
+                    const content = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>ID:</strong> ${data.productId}</p>
+                                <p><strong>Tên sản phẩm:</strong> ${data.productName}</p>
+                                <p><strong>Barcode:</strong> <code>${data.barcode}</code></p>
+                                <p><strong>Mô tả:</strong> ${data.description || 'Không có mô tả'}</p>
+                                <p><strong>Thương hiệu:</strong> ${data.brandName || 'Chưa phân loại'}</p>
+                                <p><strong>Danh mục:</strong> ${data.categoryName || 'Chưa phân loại'}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Tồn kho:</strong> ${data.quantity}</p>
+                                <p><strong>Giá nhập:</strong> ${data.importPrice?.toLocaleString()} ₫</p>
+                                <p><strong>Giá bán:</strong> ${data.sellingPrice?.toLocaleString()} ₫</p>
+                                <p><strong>Giảm giá:</strong> ${data.discount || 0}%</p>
+                                <p><strong>Trạng thái:</strong> <span class="status-badge status-${data.statusProduct?.toLowerCase()}">${data.statusProduct === 'presently' ? 'Hiển thị' : 'Ẩn'}</span></p>
+                                <p><strong>Nổi bật:</strong> ${data.isFeatured ? '<span class="featured-badge"><i class="fas fa-star me-1"></i>Có</span>' : 'Không'}</p>
+                                <p><strong>Cập nhật:</strong> ${data.updatedAt}</p>
+                            </div>
+                        </div>
+                        ${data.imagePr ? `<div class="text-center mt-3"><img src="${data.imagePr}" alt="${data.productName}" style="max-width: 200px; border-radius: 8px;"></div>` : ''}
+                    `;
+                    $('#productDetailContent').html(content);
+                    $('#productDetailModal').modal('show');
+                })
+                .fail(function() {
+                    alert('Không thể tải thông tin sản phẩm');
+                });
+        }
+
+        // Xóa sản phẩm
+        function deleteProduct(productId) {
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                $.post('/Admin/Products/DeleteProducts', { id: productId })
+                    .done(function() {
+                        location.reload();
+                    })
+                    .fail(function() {
+                        alert('Không thể xóa sản phẩm');
+                    });
+            }
+        }
+
+        // Event listeners
+        $('#searchInput, #statusFilter, #stockFilter').on('input change', filterProducts);
+
+        // Hiển thị thông báo từ TempData
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+            $(document).ready(function() {
+                alert('@TempData["SuccessMessage"]');
+            });
+            </text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+            $(document).ready(function() {
+                alert('@TempData["ErrorMessage"]');
+            });
+            </text>
+        }
+    </script>
+} 
