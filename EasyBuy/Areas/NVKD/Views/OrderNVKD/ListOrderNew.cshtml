@@ -91,7 +91,7 @@
                 button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Đang xử lý...');
 
                 $.ajax({
-                    url: '/NVKD/OrderNVKD/ExportInvoice',
+                    url: '@Url.Action("ExportInvoice", "OrderNVKD", new { area = "NVKD" })',
                     type: 'POST',
                     data: { orderId: orderId },
                     success: function (response) {

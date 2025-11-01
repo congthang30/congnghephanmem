@@ -150,22 +150,22 @@
                 </div>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="/NVKD/Home/Index" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
+                        <a href="@Url.Action("Index", "Home", new { area = "NVKD" })" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
                             <i class="fas fa-home"></i> Trang chủ
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/NVKD/OrderNVKD/ListOrderNew" class="nav-link @(currentController == "OrderNVKD" && currentAction == "ListOrderNew" ? "active" : "")">
+                        <a href="@Url.Action("ListOrderNew", "OrderNVKD", new { area = "NVKD" })" class="nav-link @(currentController == "OrderNVKD" && currentAction == "ListOrderNew" ? "active" : "")">
                             <i class="fas fa-shopping-cart"></i> Đơn hàng mới
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/NVKD/OrderNVKD/ListOrderConfirmed" class="nav-link @(currentController == "OrderNVKD" && currentAction == "ListOrderConfirmed" ? "active" : "")">
+                        <a href="@Url.Action("ListOrderConfirmed", "OrderNVKD", new { area = "NVKD" })" class="nav-link @(currentController == "OrderNVKD" && currentAction == "ListOrderConfirmed" ? "active" : "")">
                             <i class="fas fa-check-circle"></i> Đơn hàng đã xác nhận
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/NVKD/InvoiceNVKD/ListInvoice" class="nav-link @(currentController == "InvoiceNVKD" && currentAction == "ListInvoice" ? "active" : "")">
+                        <a href="@Url.Action("ListInvoice", "InvoiceNVKD", new { area = "NVKD" })" class="nav-link @(currentController == "InvoiceNVKD" && currentAction == "ListInvoice" ? "active" : "")">
                             <i class="fas fa-file-invoice"></i> Danh sách hóa đơn
                         </a>
                     </li>

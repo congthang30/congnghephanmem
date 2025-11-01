@@ -90,7 +90,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-clock me-2"></i>Đơn hàng chờ xử lý
                     </h6>
-                    <a href="/NVKho/InvoiceWareHouseNVKho/ListOrderConfirm" class="btn btn-sm btn-primary">
+                    <a href="@Url.Action("ListOrderConfirm", "InvoiceWareHouseNVKho", new { area = "NVKho" })" class="btn btn-sm btn-primary">
                         <i class="fas fa-eye me-1"></i>Xem tất cả
                     </a>
                 </div>
@@ -207,14 +207,14 @@
                             <i class="fas fa-bolt me-2"></i>Thao tác nhanh
                         </h6>
                         <div class="d-grid gap-2">
-                            <a href="/NVKho/InvoiceWareHouseNVKho/ListOrderConfirm" class="btn btn-outline-primary btn-sm">
+                            <a href="@Url.Action("ListOrderConfirm", "InvoiceWareHouseNVKho", new { area = "NVKho" })" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-box me-1"></i>Xử lý đơn hàng
                             </a>
-                            <a href="/NVKho/InvoiceWareHouseNVKho/ListInvoiceWarehouse" class="btn btn-outline-success btn-sm">
+                            <a href="@Url.Action("ListInvoiceWarehouse", "InvoiceWareHouseNVKho", new { area = "NVKho" })" class="btn btn-outline-success btn-sm">
                                 <i class="fas fa-file-invoice me-1"></i>Danh sách hóa đơn
                             </a>
-                            <a href="/NVKho/Products/ListProducts" class="btn btn-outline-info btn-sm">
-                                <i class="fas fa-boxes me-1"></i>Quản lý sản phẩm
+                            <a href="@Url.Action("ListWarehouseReceipt", "WarehouseReceipt", new { area = "NVKho" })" class="btn btn-outline-info btn-sm">
+                                <i class="fas fa-box-arrow-in-left me-1"></i>Phiếu nhập kho
                             </a>
                         </div>
                     </div>

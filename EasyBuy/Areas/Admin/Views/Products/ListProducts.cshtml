@@ -409,7 +409,7 @@
 
         // Xem chi tiết sản phẩm
         function viewProductDetail(productId) {
-            $.get('/Admin/Products/ProductDetail', { id: productId })
+            $.get('@Url.Action("ProductDetail", "Products", new { area = "Admin" })', { id: productId })
                 .done(function(data) {
                     const content = `
                         <div class="row">
@@ -444,7 +444,7 @@
         // Xóa sản phẩm
         function deleteProduct(productId) {
             if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
-                $.post('/Admin/Products/DeleteProducts', { id: productId })
+                $.post('@Url.Action("DeleteProducts", "Products", new { area = "Admin" })', { id: productId })
                     .done(function() {
                         location.reload();
                     })

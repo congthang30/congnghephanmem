@@ -515,7 +515,7 @@
 
         // Xem chi tiết người dùng
         function viewUserDetail(userId) {
-            $.get('/Admin/Users/UserDetail', { userid: userId })
+            $.get('@Url.Action("UserDetail", "Users", new { area = "Admin" })', { userid: userId })
                 .done(function(data) {
                     const content = `
                         <div class="row">
@@ -545,7 +545,7 @@
         // Chỉnh sửa người dùng
         function editUser(userId) {
             // Lấy thông tin người dùng hiện tại
-            $.get('/Admin/Users/UserDetail', { userid: userId })
+            $.get('@Url.Action("UserDetail", "Users", new { area = "Admin" })', { userid: userId })
                 .done(function(data) {
                     $('#editUserId').val(data.userId);
                     $('#editName').val(data.fullName);
@@ -564,7 +564,7 @@
         // Xóa người dùng
         function deleteUser(userId) {
             if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
-                $.post('/Admin/Users/DeleteUser', { userid: userId })
+                $.post('@Url.Action("DeleteUser", "Users", new { area = "Admin" })', { userid: userId })
                     .done(function() {
                         location.reload();
                     })
@@ -580,7 +580,7 @@
             const formData = new FormData(this);
             const data = Object.fromEntries(formData);
 
-            $.post('/Admin/Users/CreateUser', data)
+            $.post('@Url.Action("CreateUser", "Users", new { area = "Admin" })', data)
                 .done(function() {
                     $('#createUserModal').modal('hide');
                     location.reload();
@@ -596,7 +596,7 @@
             const formData = new FormData(this);
             const data = Object.fromEntries(formData);
 
-            $.post('/Admin/Users/EditUser', data)
+            $.post('@Url.Action("EditUser", "Users", new { area = "Admin" })', data)
                 .done(function() {
                     $('#editUserModal').modal('hide');
                     location.reload();

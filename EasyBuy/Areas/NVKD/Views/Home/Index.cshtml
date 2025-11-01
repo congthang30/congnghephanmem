@@ -110,7 +110,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-clock me-2"></i>Đơn hàng mới nhất
                     </h6>
-                    <a href="/NVKD/OrderNVKD/ListOrderNew" class="btn btn-sm btn-primary">
+                    <a href="@Url.Action("ListOrderNew", "OrderNVKD", new { area = "NVKD" })" class="btn btn-sm btn-primary">
                         <i class="fas fa-eye me-1"></i>Xem tất cả
                     </a>
                 </div>
@@ -205,13 +205,13 @@
                             <i class="fas fa-bolt me-2"></i>Thao tác nhanh
                         </h6>
                         <div class="d-grid gap-2">
-                            <a href="/NVKD/OrderNVKD/ListOrderNew" class="btn btn-outline-primary btn-sm">
+                            <a href="@Url.Action("ListOrderNew", "OrderNVKD", new { area = "NVKD" })" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-shopping-cart me-1"></i>Xem đơn hàng mới
                             </a>
-                            <a href="/NVKD/OrderNVKD/ListOrderConfirmed" class="btn btn-outline-success btn-sm">
+                            <a href="@Url.Action("ListOrderConfirmed", "OrderNVKD", new { area = "NVKD" })" class="btn btn-outline-success btn-sm">
                                 <i class="fas fa-check-circle me-1"></i>Đơn hàng đã xác nhận
                             </a>
-                            <a href="/NVKD/InvoiceNVKD/ListInvoice" class="btn btn-outline-info btn-sm">
+                            <a href="@Url.Action("ListInvoice", "InvoiceNVKD", new { area = "NVKD" })" class="btn btn-outline-info btn-sm">
                                 <i class="fas fa-file-invoice me-1"></i>Danh sách hóa đơn
                             </a>
                         </div>

@@ -12,17 +12,9 @@
                 <i class="fas fa-arrow-left me-1"></i> Quay lại
             </a>
             <div class="btn-group" role="group">
-                <a href="@Url.Action("DownloadInvoicePdf", "InvoiceNVKD", new { area = "NVKD", invoiceId = Model.InvoiceId })" 
-                   class="btn btn-primary">
-                    <i class="fas fa-download me-1"></i> Tải PDF
-                </a>
-                <button type="button" class="btn btn-success" onclick="showPrintModal()">
+                <button type="button" class="btn btn-primary" onclick="window.print()">
                     <i class="fas fa-print me-1"></i> In hóa đơn
                 </button>
-                <a href="@Url.Action("SaveInvoicePdf", "InvoiceNVKD", new { area = "NVKD", invoiceId = Model.InvoiceId })" 
-                   class="btn btn-info" onclick="return confirm('Bạn có muốn lưu PDF hóa đơn?')">
-                    <i class="fas fa-save me-1"></i> Lưu PDF
-                </a>
             </div>
         </div>
     </div>

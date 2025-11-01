@@ -6,7 +6,7 @@ using EasyBuy.Attributes;
 namespace EasyBuy.Areas.NVKho.Controllers
 {
     [Area("NVKho")]
-    [AuthorizeRole("NVKD", "Admin")]
+    [AuthorizeRole("NVKho", "Admin")]
     public class HomeController : Controller
     {
         private readonly EasyBuyContext _context;

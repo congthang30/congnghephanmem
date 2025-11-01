@@ -478,7 +478,7 @@
 
                 // Gọi API lấy chi tiết đơn hàng
                 $.ajax({
-                    url: '/NVKho/InvoiceWareHouseNVKho/GetOrderDetails',
+                    url: '@Url.Action("GetOrderDetails", "InvoiceWareHouseNVKho", new { area = "NVKho" })',
                     type: 'GET',
                     data: { orderId: orderId },
                     success: function (response) {
@@ -601,7 +601,8 @@
 
             // Function in đơn hàng
             function printOrder(orderId) {
-                window.open('/NVKho/InvoiceWareHouseNVKho/PrintOrder/' + orderId, '_blank');
+                // Chức năng in đơn hàng - có thể mở chi tiết đơn hàng để in
+                window.open('@Url.Action("DetailsInvoiceWarehouse", "InvoiceWareHouseNVKho", new { area = "NVKho" })' + '/' + orderId + '?print=true', '_blank');
             }
 
             // Function đánh dấu đã chuẩn bị xong
@@ -610,7 +611,7 @@
                     // Tạo form ẩn để submit
                     var form = $('<form>', {
                         'method': 'POST',
-                        'action': '/NVKho/InvoiceWareHouseNVKho/MakeInvoiceWarehouse'
+                        'action': '@Url.Action("MakeInvoiceWarehouse", "InvoiceWareHouseNVKho", new { area = "NVKho" })'
                     });
 
                     form.append($('<input>', {

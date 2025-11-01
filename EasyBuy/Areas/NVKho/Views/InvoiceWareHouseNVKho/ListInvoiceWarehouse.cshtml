@@ -237,7 +237,7 @@
             `);
 
             // Gọi API
-        $.get('/NVKho/InvoiceWareHouseNVKho/GetInvoiceDetails', { invoiceId: invoiceId })            .done(function (response) {
+        $.get('@Url.Action("GetInvoiceDetails", "InvoiceWareHouseNVKho", new { area = "NVKho" })', { invoiceId: invoiceId })            .done(function (response) {
                     if (response.success) {
                         renderInvoiceDetails(response.data);
                     } else {

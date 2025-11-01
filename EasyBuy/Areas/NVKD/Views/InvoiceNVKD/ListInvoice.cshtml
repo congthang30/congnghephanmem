@@ -136,7 +136,7 @@
 @section Scripts {
     <script>
         function printInvoice(invoiceId) {
-            const printWindow = window.open(`/NVKD/InvoiceNVKD/DetailsInvoice/${invoiceId}?print=true`, '_blank');
+            const printWindow = window.open('@Url.Action("DetailsInvoice", "InvoiceNVKD", new { area = "NVKD" })' + '/' + invoiceId + '?print=true', '_blank');
             printWindow.onload = function () {
                 printWindow.print();
             };

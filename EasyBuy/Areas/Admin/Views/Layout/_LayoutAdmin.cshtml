@@ -150,43 +150,18 @@
             </div>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="/Admin/Home/Index" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Home", new { area = "Admin" })" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/Admin/Users/ListUsers" class="nav-link @(currentController == "Users" ? "active" : "")">
+                    <a href="@Url.Action("ListUsers", "Users", new { area = "Admin" })" class="nav-link @(currentController == "Users" ? "active" : "")">
                         <i class="fas fa-users"></i> Quản lý người dùng
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/Admin/Products/ListProducts" class="nav-link @(currentController == "Products" ? "active" : "")">
+                    <a href="@Url.Action("ListProducts", "Products", new { area = "Admin" })" class="nav-link @(currentController == "Products" ? "active" : "")">
                         <i class="fas fa-boxes"></i> Quản lý sản phẩm
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Admin/Orders/ListOrders" class="nav-link @(currentController == "Orders" ? "active" : "")">
-                        <i class="fas fa-shopping-cart"></i> Quản lý đơn hàng
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Admin/Categories/ListCategories" class="nav-link @(currentController == "Categories" ? "active" : "")">
-                        <i class="fas fa-tags"></i> Quản lý danh mục
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Admin/Brands/ListBrands" class="nav-link @(currentController == "Brands" ? "active" : "")">
-                        <i class="fas fa-crown"></i> Quản lý thương hiệu
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Admin/Reports/Index" class="nav-link @(currentController == "Reports" ? "active" : "")">
-                        <i class="fas fa-chart-bar"></i> Báo cáo
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Admin/Settings/Index" class="nav-link @(currentController == "Settings" ? "active" : "")">
-                        <i class="fas fa-cog"></i> Cài đặt
                     </a>
                 </li>
             </ul>

@@ -103,46 +103,40 @@
             font-size: 0.95rem;
         }
 
-        media (max-width: 991.98px) {
-            .sidebar-nvkd
-
-        {
-            position: relative;
-            width: 100%;
-            min-height: auto;
+        @@media (max-width: 991.98px) {
+            .sidebar-nvkd {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+            }
+            
+            main.content {
+                margin-left: 1rem;
+            }
+            
+            footer {
+                margin-left: 1rem !important;
+            }
         }
-
-        main.content {
-            margin-left: 1rem;
-        }
-
-        footer {
-            margin-left: 1rem !important;
-        }
-
-        }
-
-        media (max-width: 768px) {
-            .sidebar-nvkd
-
-        {
-            position: fixed;
-            left: -280px;
-            transition: left 0.3s ease;
-        }
-
-        .sidebar-nvkd.show {
-            left: 0;
-        }
-
-        main.content {
-            margin-left: 1rem;
-        }
-
-        footer {
-            margin-left: 1rem !important;
-        }
-
+        
+        @@media (max-width: 768px) {
+            .sidebar-nvkd {
+                position: fixed;
+                left: -280px;
+                transition: left 0.3s ease;
+            }
+            
+            .sidebar-nvkd.show {
+                left: 0;
+            }
+            
+            main.content {
+                margin-left: 1rem;
+            }
+            
+            footer {
+                margin-left: 1rem !important;
+            }
         }
     </style>
 </head>
@@ -156,23 +150,23 @@
             </div>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="/NVKho/Home/Index" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Home", new { area = "NVKho" })" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
                         <i class="fas fa-home"></i> Trang chủ
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/NVKho/InvoiceWareHouseNVKho/ListOrderConfirm" class="nav-link @(currentController == "OrderNVKD" && currentAction == "ListOrderNew" ? "active" : "")">
+                    <a href="@Url.Action("ListOrderConfirm", "InvoiceWareHouseNVKho", new { area = "NVKho" })" class="nav-link @(currentController == "InvoiceWareHouseNVKho" && currentAction == "ListOrderConfirm" ? "active" : "")">
                         <i class="fas fa-shopping-cart"></i> Đơn hàng cần xuất kho
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/NVKho/InvoiceWareHouseNVKho/ListInvoiceWarehouse" class="nav-link @(currentController == "OrderNVKD" && currentAction == "ListOrderConfirmed" ? "active" : "")">
+                    <a href="@Url.Action("ListInvoiceWarehouse", "InvoiceWareHouseNVKho", new { area = "NVKho" })" class="nav-link @(currentController == "InvoiceWareHouseNVKho" && currentAction == "ListInvoiceWarehouse" ? "active" : "")">
                         <i class="fas fa-check-circle"></i> Danh sách hóa đơn đã xuất kho
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/NVKho/WarehouseReceipt/ListWarehouseReceipt" class="nav-link @(currentController == "WarehouseReceipt" && currentAction == "ListWarehouseReceipt" ? "active" : "")">
-                        <i class="bi bi-box-arrow-in-left"></i> Danh sách phiếu nhập kho
+                    <a href="@Url.Action("ListWarehouseReceipt", "WarehouseReceipt", new { area = "NVKho" })" class="nav-link @(currentController == "WarehouseReceipt" && currentAction == "ListWarehouseReceipt" ? "active" : "")">
+                        <i class="fas fa-box-arrow-in-left"></i> Danh sách phiếu nhập kho
                     </a>
                 </li>
             </ul>

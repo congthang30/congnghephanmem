@@ -109,7 +109,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-star me-2"></i>Sản phẩm nổi bật
                     </h6>
-                    <a href="/NVMKT/Products/ListProducts" class="btn btn-sm btn-primary">
+                    <a href="@Url.Action("ListProducts", "Products", new { area = "NVMKT" })" class="btn btn-sm btn-primary">
                         <i class="fas fa-eye me-1"></i>Xem tất cả
                     </a>
                 </div>
@@ -184,7 +184,7 @@
                                                 </small>
                                             </td>
                                             <td>
-                                                <a href="/NVMKT/Products/EditProduct/@product.ProductId" 
+                                                <a href="@Url.Action("UpdateProducts", "Products", new { area = "NVMKT", id = product.ProductId })" 
                                                    class="btn btn-sm btn-outline-primary">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
@@ -259,17 +259,14 @@
                             <i class="fas fa-bolt me-2"></i>Thao tác nhanh
                         </h6>
                         <div class="d-grid gap-2">
-                            <a href="/NVMKT/Products/ListProducts" class="btn btn-outline-primary btn-sm">
+                            <a href="@Url.Action("ListProducts", "Products", new { area = "NVMKT" })" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-boxes me-1"></i>Quản lý sản phẩm
                             </a>
-                            <a href="/NVMKT/Products/CreateProducts" class="btn btn-outline-success btn-sm">
+                            <a href="@Url.Action("CreateProducts", "Products", new { area = "NVMKT" })" class="btn btn-outline-success btn-sm">
                                 <i class="fas fa-plus me-1"></i>Thêm sản phẩm mới
                             </a>
-                            <a href="/NVMKT/Categories/ListCategories" class="btn btn-outline-info btn-sm">
-                                <i class="fas fa-tags me-1"></i>Quản lý danh mục
-                            </a>
-                            <a href="/NVMKT/Brands/ListBrands" class="btn btn-outline-warning btn-sm">
-                                <i class="fas fa-crown me-1"></i>Quản lý thương hiệu
+                            <a href="@Url.Action("ListVouchers", "Voucher", new { area = "NVMKT" })" class="btn btn-outline-info btn-sm">
+                                <i class="fas fa-ticket-alt me-1"></i>Quản lý mã giảm giá
                             </a>
                         </div>
                     </div>
@@ -375,7 +372,7 @@
                                                 <small class="text-muted">
                                                     <i class="fas fa-eye me-1"></i>@(product.ViewCount ?? 0)
                                                 </small>
-                                                <a href="/NVMKT/Products/EditProduct/@product.ProductId" 
+                                                <a href="@Url.Action("UpdateProducts", "Products", new { area = "NVMKT", id = product.ProductId })" 
                                                    class="btn btn-sm btn-outline-primary">
                                                     <i class="fas fa-edit"></i>
                                                 </a>

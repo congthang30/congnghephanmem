@@ -150,33 +150,23 @@
             </div>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="/NVMKT/Home/Index" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Home", new { area = "NVMKT" })" class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
                         <i class="fas fa-home"></i> Trang chủ
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/NVMKT/Products/ListProducts" class="nav-link @(currentController == "Products" && currentAction == "ListProducts" ? "active" : "")">
+                    <a href="@Url.Action("ListProducts", "Products", new { area = "NVMKT" })" class="nav-link @(currentController == "Products" && currentAction == "ListProducts" ? "active" : "")">
                         <i class="fas fa-boxes"></i> Quản lý sản phẩm
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/NVMKT/Products/CreateProducts" class="nav-link @(currentController == "Products" && currentAction == "CreateProducts" ? "active" : "")">
+                    <a href="@Url.Action("CreateProducts", "Products", new { area = "NVMKT" })" class="nav-link @(currentController == "Products" && currentAction == "CreateProducts" ? "active" : "")">
                         <i class="fas fa-plus"></i> Thêm sản phẩm
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/NVMKT/Categories/ListCategories" class="nav-link @(currentController == "Categories" ? "active" : "")">
-                        <i class="fas fa-tags"></i> Quản lý danh mục
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/NVMKT/Brands/ListBrands" class="nav-link @(currentController == "Brands" ? "active" : "")">
-                        <i class="fas fa-crown"></i> Quản lý thương hiệu
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/NVMKT/Voucher/ListVouchers" class="nav-link @(currentController == "Brands" ? "active" : "")">
-                        <i class="fas fa-crown"></i> Quản lý mã giảm giá
+                    <a href="@Url.Action("ListVouchers", "Voucher", new { area = "NVMKT" })" class="nav-link @(currentController == "Voucher" && currentAction == "ListVouchers" ? "active" : "")">
+                        <i class="fas fa-ticket-alt"></i> Quản lý mã giảm giá
                     </a>
                 </li>
             </ul>

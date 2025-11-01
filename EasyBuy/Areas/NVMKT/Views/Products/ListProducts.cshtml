@@ -14,7 +14,7 @@
                     </h2>
                     <p class="text-muted">Quản lý thông tin sản phẩm và marketing</p>
                 </div>
-                <a href="/NVMKT/Products/CreateProducts" class="btn btn-success">
+                <a href="@Url.Action("CreateProducts", "Products", new { area = "NVMKT" })" class="btn btn-success">
                     <i class="fas fa-plus me-1"></i>Thêm sản phẩm mới
                 </a>
             </div>
@@ -119,7 +119,7 @@
             </h6>
         </div>
         <div class="card-body">
-            <form method="get" action="/NVMKT/Products/ListProducts">
+            <form method="get" action="@Url.Action("ListProducts", "Products", new { area = "NVMKT" })">
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Tên sản phẩm</label>
@@ -236,7 +236,7 @@
                             <button type="submit" class="btn btn-primary flex-fill">
                                 <i class="fas fa-search me-1"></i>Tìm kiếm
                             </button>
-                            <a href="/NVMKT/Products/ListProducts" class="btn btn-outline-secondary">
+                            <a href="@Url.Action("ListProducts", "Products", new { area = "NVMKT" })" class="btn btn-outline-secondary">
                                 <i class="fas fa-refresh"></i>
                             </a>
                         </div>
@@ -347,7 +347,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="/NVMKT/Products/UpdateProducts/@product.ProductId" 
+                                            <a href="@Url.Action("UpdateProducts", "Products", new { area = "NVMKT", id = product.ProductId })" 
                                                class="btn btn-sm btn-outline-primary" title="Chỉnh sửa">
                                                 <i class="fas fa-edit"></i>
                                             </a>
@@ -373,7 +373,7 @@
                     <i class="fas fa-box fa-3x text-muted mb-3"></i>
                     <h5 class="text-muted">Không tìm thấy sản phẩm nào</h5>
                     <p class="text-muted">Hãy thử thay đổi điều kiện tìm kiếm hoặc thêm sản phẩm mới</p>
-                    <a href="/NVMKT/Products/CreateProducts" class="btn btn-primary">
+                    <a href="@Url.Action("CreateProducts", "Products", new { area = "NVMKT" })" class="btn btn-primary">
                         <i class="fas fa-plus me-1"></i>Thêm sản phẩm mới
                     </a>
                 </div>
@@ -404,32 +404,16 @@
 </style>
 
 <script>
+    var toggleStatusUrl = '@Url.Action("ToggleStatusProduct", "Products", new { area = "NVMKT" })';
+    
     function toggleFeatured(productId) {
-        if (confirm('Bạn có muốn thay đổi trạng thái nổi bật của sản phẩm này?')) {
-            fetch(`/NVMKT/Products/ToggleFeatured/${productId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                } else {
-                    alert('Có lỗi xảy ra: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Có lỗi xảy ra khi thực hiện thao tác');
-            });
-        }
+        alert('Chức năng này chưa được triển khai. Vui lòng sử dụng chức năng chỉnh sửa sản phẩm.');
     }
 
     function toggleStatus(productId) {
         if (confirm('Bạn có muốn thay đổi trạng thái hiển thị của sản phẩm này?')) {
-            fetch(`/NVMKT/Products/ToggleStatusProduct/${productId}`, {
+            var url = toggleStatusUrl + '/' + productId;
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

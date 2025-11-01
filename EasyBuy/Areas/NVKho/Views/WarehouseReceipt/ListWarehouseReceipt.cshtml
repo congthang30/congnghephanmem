@@ -225,7 +225,7 @@
         `);
 
         // Gọi API (cần tạo hàm GetReceiptDetails trong controller)
-        $.get('/NVKho/WarehouseReceipt/GetReceiptDetails', { receiptId: receiptId })
+        $.get('@Url.Action("GetReceiptDetails", "WarehouseReceipt", new { area = "NVKho" })', { receiptId: receiptId })
             .done(function (response) {
                 if (response.success) {
                     renderReceiptDetails(response.data);

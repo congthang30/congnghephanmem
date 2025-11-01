@@ -489,24 +489,14 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <a href="/Admin/Users/ListUsers" class="btn btn-outline-primary w-100">
+                        <div class="col-md-6 mb-3">
+                            <a href="@Url.Action("ListUsers", "Users", new { area = "Admin" })" class="btn btn-outline-primary w-100">
                                 <i class="fas fa-users me-1"></i>Quản lý người dùng
                             </a>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="/Admin/Products/ListProducts" class="btn btn-outline-success w-100">
+                        <div class="col-md-6 mb-3">
+                            <a href="@Url.Action("ListProducts", "Products", new { area = "Admin" })" class="btn btn-outline-success w-100">
                                 <i class="fas fa-boxes me-1"></i>Quản lý sản phẩm
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="/Admin/Orders/ListOrders" class="btn btn-outline-info w-100">
-                                <i class="fas fa-shopping-cart me-1"></i>Quản lý đơn hàng
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="/Admin/Categories/ListCategories" class="btn btn-outline-warning w-100">
-                                <i class="fas fa-tags me-1"></i>Quản lý danh mục
                             </a>
                         </div>
                     </div>
