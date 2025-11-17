@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CKuBOMQMpeQ=",
+  "dgSpecHash": "2UXK3DEFbSg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Thang\\Desktop\\KDCLPM\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
+  "projectFilePath": "C:\\Users\\Thang\\Desktop\\Kiểm thử phần mềm\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Thang\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Thang\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

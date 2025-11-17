@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Thang\\Desktop\\KDCLPM\\congnghephanmem\\EasyBuy\\EasyBuy.csproj": {}
+    "C:\\Users\\Thang\\Desktop\\Kiểm thử phần mềm\\congnghephanmem\\EasyBuy\\EasyBuy.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Thang\\Desktop\\KDCLPM\\congnghephanmem\\EasyBuy\\EasyBuy.csproj": {
+    "C:\\Users\\Thang\\Desktop\\Kiểm thử phần mềm\\congnghephanmem\\EasyBuy\\EasyBuy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Thang\\Desktop\\KDCLPM\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
+        "projectUniqueName": "C:\\Users\\Thang\\Desktop\\Kiểm thử phần mềm\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
         "projectName": "EasyBuy",
-        "projectPath": "C:\\Users\\Thang\\Desktop\\KDCLPM\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
+        "projectPath": "C:\\Users\\Thang\\Desktop\\Kiểm thử phần mềm\\congnghephanmem\\EasyBuy\\EasyBuy.csproj",
         "packagesPath": "C:\\Users\\Thang\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Thang\\Desktop\\KDCLPM\\congnghephanmem\\EasyBuy\\obj\\",
+        "outputPath": "C:\\Users\\Thang\\Desktop\\Kiểm thử phần mềm\\congnghephanmem\\EasyBuy\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
