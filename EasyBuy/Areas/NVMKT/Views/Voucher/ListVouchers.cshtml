@@ -260,6 +260,15 @@
                         </button>
                     }
 
+                    @using (Html.BeginForm("DeleteVoucher", "Voucher", FormMethod.Post, new { @class = "d-inline", onsubmit = "return confirm('Bạn có chắc chắn muốn xóa mã giảm giá này?');" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@v.VoucherId" />
+                        <button type="submit" class="btn btn-sm btn-danger" title="Xóa" style="background-color: #dc3545; color: white; padding: 4px 10px; border: none; border-radius: 4px; cursor: pointer;">
+                            🗑️
+                        </button>
+                    }
+
                 </td>
             </tr>
         }

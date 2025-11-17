@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using EasyBuy.Models;
 using EasyBuy.Attributes;
 
@@ -224,6 +225,41 @@ namespace EasyBuy.Areas.NVMKT.Controllers
             ViewBag.ExpiredBefore = expiredBefore;
 
             return View("ListVouchers", filtered);
+        }
+
+        // 6. Xóa mã giảm giá
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteVoucher(int id)
+        {
+            try
+            {
+                var voucher = await _context.Vouchers.FindAsync(id);
+                if (voucher == null)
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy mã giảm giá.";
+                    return RedirectToAction("ListVouchers");
+                }
+
+                // Kiểm tra xem có đơn hàng nào đang sử dụng voucher này không
+                var hasOrders = await _context.Orders.AnyAsync(o => o.VoucherId == id);
+                if (hasOrders)
+                {
+                    TempData["ErrorMessage"] = "Không thể xóa mã giảm giá này vì đã có đơn hàng sử dụng.";
+                    return RedirectToAction("ListVouchers");
+                }
+
+                _context.Vouchers.Remove(voucher);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Xóa mã giảm giá thành công!";
+                return RedirectToAction("ListVouchers");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Có lỗi xảy ra khi xóa mã giảm giá: " + ex.Message;
+                return RedirectToAction("ListVouchers");
+            }
         }
     }
 }
